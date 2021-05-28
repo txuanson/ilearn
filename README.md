@@ -14,7 +14,7 @@ iLearn is an online learning platform which bring the convinient to users who is
 - Tutor's courses management
    - Manage zoom's meetings through sections
    - Sections have rescourses and written content
-   - Import section content by upload doc/docx file
+   - Import section content by uploading doc/docx file
    - Option to set the course free or not
    - Limit the number of participants
    - Member's subcribe 
