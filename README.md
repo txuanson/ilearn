@@ -43,7 +43,7 @@ iLearn requires [Node.js] v10+ and [Yarn] to run.
 Install the dependencies and devDependencies and start the server.
 
 ```sh
-cd <platform>
+cd ilearn
 yarn
 yarn start
 ```
