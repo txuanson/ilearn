@@ -11,19 +11,28 @@ iLearn is an online learning platform which bring the convinient to users who is
    - Member sign in through social account (facebook/google)
    - Import social account avatar(info) to platform
    - Custom profile
+- Admin
+   - Account management (for tutor and normal user)
+   - Courses management
+   - Category management
+   - Website resources management
 - Tutor's courses management
    - Manage zoom's meetings through sections
    - Sections have rescourses and written content
    - Import section content by uploading doc/docx file
    - Option to set the course free or not
+   - Create quiz (4 options)
    - Limit the number of participants
-   - Member's subcribe 
+   - Member's subcribe
+   - Upload the meeting's record
+   - List upcoming events
 - User's feature
    - Can subcribe to course
    - Participate in the course (after subcribed to course)
-   - Note in course/section
+   - Note in section (watching the record)
    - Rate course
    - Comment in course
+   - List upcoming events
 
 ## Tech
 
