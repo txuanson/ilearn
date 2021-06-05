@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "ilearn",
+    "password": "hJ2gCcMWMcfYBakT",
+    "database": "ilearn_dev",
+    "host": "54.169.247.131",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "ilearn",
+    "password": "hJ2gCcMWMcfYBakT",
+    "database": "ilearn_test",
+    "host": "54.169.247.131",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "ilearn",
+    "password": "hJ2gCcMWMcfYBakT",
+    "database": "ilearn",
+    "host": "54.169.247.131",
+    "dialect": "postgres"
+  }
+}
