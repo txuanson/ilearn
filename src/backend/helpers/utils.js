@@ -14,7 +14,12 @@ const errorHandler = (err, req, res, next) =>{
     })
 }
 
-export default {
+const getModelByName = (name) => {
+    return require(`../models/${name}`); 
+} 
+
+module.exports = {
     asyncCatch,
-    errorHandler
+    errorHandler,
+    getModelByName
 }

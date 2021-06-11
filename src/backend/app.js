@@ -1,14 +1,53 @@
-import express, { json, urlencoded, static } from 'express';
-import { join } from 'path';
-import cookieParser from 'cookie-parser';
-import logger from 'morgan';
-import cors from 'cors';
-import helmet from 'helmet';
-import { STATUS_CODE } from './helpers/response';
-import { errorHandler } from './helpers/utils';
-import indexRouter from './routes/index';
+const express = require('express');
+const { join } = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
+const helmet = require('helmet');
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const { STATUS_CODE } = require('./helpers/response');
+const { errorHandler } = require('./helpers/utils');
+const indexRouter = require('./routes/index');
+const mongoose = require('mongoose');
+const {MONGO_URI} = require('./config/env');
+
+mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+});
+
+const db = mongoose.connection;
+db.on('error', () => console.log('Database connection failed'));
+db.once('open', async () => {
+    console.log("Database connection established...");
+});
 
 const app = express();
+
+const options = {
+	definition: {
+		openapi: "3.0.0",
+		info: {
+			title: "iLearn API",
+			version: "1.0.0",
+			description: "Online learning platform with Zoom intergrated",
+		},
+		servers: [
+			{
+				url: "http://localhost:3000",
+			},
+		],
+	},
+	apis: ["./routes/*.js"],
+};
+
+const specs = swaggerJsDoc(options);
+
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use((req, res, next) => {
     // Website you wish to allow to connect
@@ -50,14 +89,14 @@ app.use((req, res, next) => {
 
 app.use(helmet());
 app.use(logger('dev'));
-app.use(json());
-app.use(urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(static(join(__dirname, 'public')));
+app.use(express.static(join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
-// catch 404
+// catch 404 - no route found!
 app.use((req, res, next) => {
     res.status(STATUS_CODE.INTERNAL_SERVER_ERROR)
         .json({
@@ -68,4 +107,4 @@ app.use((req, res, next) => {
 // catch error
 app.use(errorHandler);
 
-export default app;
+module.exports = app;
