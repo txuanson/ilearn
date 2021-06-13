@@ -6,21 +6,20 @@ iLearn is an online learning platform which bring the convinient to users who is
 ## Features
 
 - Account service
-   - Sign in/Sign up as Member/Tutor with email and password
+   - Sign in / sign up as Tutor / Student with email and password
    - Connect Zoom account to Tutor account
-   - Member sign in/sign up through social account (facebook)
    - Custom profile
    - Upcoming event
 - Admin
-   - Account management (for tutor and normal user)
+   - Account management
    - Courses management
    - Category management
    - Website resources management
 - Tutor's courses management
    - CRUD courses: To create, read, upload, and delete the courses.
-   - Set the course pay or not! Public or private (need approval of the course’s tutor)
+   - Set the course Public or private (need approval of the course’s tutor)
    - CRUD sections in each course.
-   - Manage zoom’s meeting (attached to sections).
+   - Manage zoom’s meeting (attached to section).
    - Import course/ section content by uploading doc/ docx file
    - Create quiz (multiple-choice)
    - Limit number of participants
@@ -30,14 +29,13 @@ iLearn is an online learning platform which bring the convinient to users who is
    - Subcribe to course
    - Join section meeting
    - Watch section record
-   - Note in section (watching the record)
-   - Rate course
    - Comment in section (Q&A)
 ## Tech
 
 iLearn uses a number of tools to work properly:
 
-- [Postgresql] - powerful, open source object-relational database system
+- [Mongodb] - a source-available cross-platform document-oriented database program
+- [Mongoose] - a MongoDB object modeling tool designed to work in an asynchronous environment
 - [Yarn] - fast, reliable, and secure dependency management
 - [Node.js] - evented I/O for the backend
 - [Express] - fast node.js network app framework [@tjholowaychuk]
@@ -47,18 +45,24 @@ iLearn uses a number of tools to work properly:
 ## Installation
 
 ### Backend
+
+#### API-DOC: <htpp://localhost:3000/api-docs>
+
 iLearn server-side requires [Node.js] v14+ and [Yarn] to run.
 
 Install the dependencies and devDependencies and start the server.
 
 ```sh
-cd ilearn/src/backend
+git pull
+git checkout backend
+cd src/backend
 yarn
 yarn start
 ```
    [Yarn]: <https://yarnpkg.com/>
-   [Node.js]: <http://nodejs.org>
-   [Postgresql]: <http://www.postgresql.org>
+   [Node.js]: <https://nodejs.org>
+   [Mongodb]: <https://www.mongodb.com>
+   [Mongoose]: <https://mongoosejs.com>
    [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
    [express]: <http://expressjs.com>
    [Swagger]: <https://swagger.io>
