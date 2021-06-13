@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
 
 const zoomSchema = new mongoose.Schema({
-    userId: {
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        unique: true
     },
-    zoomUserId: {
+    zoom_user_id: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    zoomRefreshToken: {
+    zoom_refresh_token: {
         type: String,
         required: true
     }

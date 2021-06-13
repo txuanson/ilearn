@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
-
+const Section = require('./section');
 
 const courseSchema = mongoose.Schema({
     name: String,
-    _uid: {
+    tutorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     content: String,
-    userLimit: Number,
+    user_limit: Number,
     cover: String,
     category: [
         {
@@ -26,14 +26,14 @@ const courseSchema = mongoose.Schema({
             },
             status: Boolean
         }
-    ],
-    section: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Section',
-            unique: true
-        }
     ]
+},
+    { timestamps: true }
+)
+
+courseSchema.pre('deleteOne', (next) => {
+    console.log('Prehook course:');
+    Section.deleteMany({ course_id: this._id });
 })
 
 module.exports = mongoose.model('Course', courseSchema);

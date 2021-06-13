@@ -28,9 +28,7 @@ module.exports = asyncCatch(async (req, res, next) => {
         password: hashPassword(value.password),
         name: value.name
     })
-
-    user.save();
-    console.log(user);
+    
     res.send(
         {
             userData: {

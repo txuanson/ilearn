@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Course = require('./course');
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -33,5 +34,11 @@ const userSchema = new mongoose.Schema({
         default: null
     }
 })
+
+// userSchema.pre('remove', (next)=>{
+//     Course.remove({tutorId: this._id}).exec;
+//     Course.updateMany({},{})
+//     next();
+// })
 
 module.exports = mongoose.model('User', userSchema);

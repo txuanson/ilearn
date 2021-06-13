@@ -2,6 +2,7 @@ const { asyncCatch } = require("../../helpers/utils");
 const userLoginValidator = require("../../validators/userLogin.validator");
 const User = require('../../models/user');
 const { BadReqest } = require("../../helpers/response");
+const { comparePassword, signJwtData } = require("../../helpers/crypto");
 
 module.exports = asyncCatch(async (req, res, next) => {
     const { error, value } = userLoginValidator.validate(req.body);
@@ -16,7 +17,6 @@ module.exports = asyncCatch(async (req, res, next) => {
     if (!correctPwd)
         throw new BadReqest('Wrong email or password!2');
 
-    console.log(user);
     res.send(
         {
             name: user.name,
