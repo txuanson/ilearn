@@ -9,8 +9,8 @@ const categorySchema = mongoose.Schema({
 })
 
 categorySchema.pre('remove', (next) => {
-    console.log('Prehook course:');
-    Course.updateMany({ category: { $in: this._id } }, { $pull: { category: this._id } })
+    console.log('Prehook category:');
+    Course.updateMany({ category: { $in: this._id } }, { category: null })
 })
 
 module.exports = mongoose.model('Category', categorySchema);

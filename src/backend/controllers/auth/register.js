@@ -1,14 +1,14 @@
 const { BadReqest } = require("../../helpers/response");
 const { asyncCatch } = require("../../helpers/utils");
-const userRegValidator = require("../../validators/userReg.validator");
-const User = require('../../models/user');
+const registerValidator = require("../../validators/register.validator");
+const Account = require('../../models/account');
 const { hashPassword, signJwtData } = require("../../helpers/crypto");
 module.exports = asyncCatch(async (req, res, next) => {
-    const { error, value } = userRegValidator.validate(req.body);
+    const { error, value } = registerValidator.validate(req.body);
     if (error)
         throw new BadReqest(error.message);
 
-    const checkUser = await User.find({
+    const checkAccount = await Account.find({
         $or: [
             {
                 email: value.email
@@ -19,10 +19,10 @@ module.exports = asyncCatch(async (req, res, next) => {
         ]
     }).exec();
 
-    if (checkUser.length !== 0)
+    if (checkAccount.length !== 0)
         throw new BadReqest('Email or username used!');
 
-    const user = await User.create({
+    const account = await Account.create({
         email: value.email,
         username: value.username,
         password: hashPassword(value.password),
@@ -32,11 +32,11 @@ module.exports = asyncCatch(async (req, res, next) => {
     res.send(
         {
             userData: {
-                name: user.name,
-                username: user.username,
-                avatar: user.avatar
+                name: account.name,
+                username: account.username,
+                avatar: account.avatar
             }
             ,
-            token: signJwtData(user)
+            token: signJwtData(account)
         })
 })

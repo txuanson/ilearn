@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { User, Tutor, Admin } = require('../configs/role');
 const Course = require('./course');
 
-const userSchema = new mongoose.Schema({
+const accountSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -16,6 +17,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+    role:{
+        type: Number,
+        enum: [User, Tutor, Admin],
+        default: User
     },
     name: {
         type: String,
@@ -32,13 +38,20 @@ const userSchema = new mongoose.Schema({
     cover: {
         type: String,
         default: null
-    }
+    },
+    courses: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course',
+            unique: true
+        }
+    ]
 })
 
-// userSchema.pre('remove', (next)=>{
-//     Course.remove({tutorId: this._id}).exec;
-//     Course.updateMany({},{})
-//     next();
-// })
+accountSchema.pre('remove', (next)=>{
+    console.log('Account prehook:')
+    Course.remove({tutorId: this._id}).exec;
+    next();
+})
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Account', accountSchema);

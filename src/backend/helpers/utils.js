@@ -1,4 +1,4 @@
-const { PAGE_SIZE } = require("../config/env");
+const { PAGE_SIZE } = require("../configs/env");
 const { HttpError, STATUS_CODE } = require("./response");
 
 const asyncCatch = (fn) => (req, res, next) => fn(req, res, next).catch(next);

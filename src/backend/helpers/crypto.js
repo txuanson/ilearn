@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const config = require('../config/env');
+const config = require('../configs/env');
 const jwt = require('jsonwebtoken');
 
 const hashPassword = (password) =>{

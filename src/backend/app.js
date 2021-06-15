@@ -10,7 +10,7 @@ const { STATUS_CODE } = require('./helpers/response');
 const { errorHandler } = require('./helpers/utils');
 const indexRouter = require('./routes/index');
 const mongoose = require('mongoose');
-const {MONGO_URI} = require('./config/env');
+const { MONGO_URI } = require('./configs/env');
 
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
@@ -28,20 +28,19 @@ db.once('open', async () => {
 const app = express();
 
 const options = {
-	definition: {
-		openapi: "3.0.0",
-		info: {
-			title: "iLearn API",
-			version: "1.0.0",
-			description: "Online learning platform with Zoom intergrated",
-		},
-		servers: [
-			{
-				url: "http://localhost:3000",
-			},
-		],
-	},
-	apis: ["./routes/**/*.js"],
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "iLearn API",
+            version: "1.0.0",
+            description: "Online learning platform with Zoom intergrated",
+        },
+        servers: [{
+            url: "http://localhost:3000",
+        }
+        ],
+    },
+    apis: ["./routes/**/*.js"],
 };
 
 const specs = swaggerJsDoc(options);

@@ -1,13 +1,14 @@
 const { BadReqest, NotFound } = require("../../helpers/response");
-const { asyncCatch } = require("../../helpers/utils");
+const { asyncCatch, pagination } = require("../../helpers/utils");
 const cateCreateValidator = require("../../validators/cateCreate.validator");
 const Category = require('../../models/category');
+const Course = require("../../models/course");
 
 const createCategory = asyncCatch(async (req, res, next) => {
     const { error, value } = cateCreateValidator.validate(req.body);
     if (error)
         throw new BadReqest(error.message);
-    
+
     await Category.create(req.body);
     res.send("Success");
 })
@@ -16,12 +17,12 @@ const findCategory = asyncCatch(async (req, res, next) => {
     const pagi = pagination(req.query.page);
     const name = req.query.name ? req.query.name : "";
 
-    const user = await Category.find({
+    const category = await Category.find({
         name: {
             $regex: name, $options: "i"
         }
-    },
-        "_id name username email")
+    })
+        .select("_id name")
         .limit(pagi.limit)
         .skip(pagi.skip)
         .exec();
@@ -34,8 +35,8 @@ const findCategory = asyncCatch(async (req, res, next) => {
         .exec();
 
     res.send({
-        items: user,
-        itemsCount: itemsCount
+        items,
+        items_count: itemsCount
     });
 });
 
@@ -43,10 +44,10 @@ const editCategory = asyncCatch(async (req, res, next) => {
     if (!req.params.category_id) throw new NotFound('Category not found!');
 
     const { error, value } = cateCreateValidator.validate(req.body);
-    if (error) 
+    if (error)
         throw new BadReqest(error.message);
 
-    await Category.updateOne({ _id: req.params.category_id }, {name: value.name});
+    await Category.updateOne({ _id: req.params.category_id }, { name: value.name });
 
     res.send("Success!");
 })

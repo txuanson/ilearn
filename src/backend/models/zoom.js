@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { Tutor } = require('../configs/role');
+const Account = require('./account');
 
 const zoomSchema = new mongoose.Schema({
     user_id: {
@@ -16,5 +18,10 @@ const zoomSchema = new mongoose.Schema({
         required: true
     }
 });
+
+zoomSchema.pre('save', async (next) => {
+    console.log('Zoom save pre hook!');
+    await Account.updateOne({ _id: this.user_id }, { role: Tutor });
+})
 
 module.exports = mongoose.model('Zoom', zoomSchema);

@@ -3,28 +3,34 @@ const Section = require('./section');
 
 const courseSchema = mongoose.Schema({
     name: String,
-    tutorId: {
+    tutor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     content: String,
     user_limit: Number,
     cover: String,
-    category: [
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        default: null
+    },
+    public: {
+        type: Boolean,
+        default: true
+    },
+    subscriber: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Category',
+            ref: 'User',
             unique: true
         }
     ],
-    subscribe: [
+    queue: [
         {
-            userId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User',
-                unique: true
-            },
-            status: Boolean
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            unique: true
         }
     ]
 },

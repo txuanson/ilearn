@@ -1,6 +1,6 @@
 module.exports = {
     MONGO_URI: "mongodb+srv://root:3IziS8WSjAPXiE2Q@ilearn.vnhaj.mongodb.net/ilearn?retryWrites=true&w=majority",
-    JWT_TIMEOUT_DURATION: "1d",
+    JWT_TIMEOUT_DURATION: "30d",
     JWT_SECRET: "ZQXj<#$?>p-9=55V",
     ZOOM_API_URI: 'https://api.zoom.us/v2',
     ZOOM_AUTH_URI: 'https://zoom.us/oauth/token',

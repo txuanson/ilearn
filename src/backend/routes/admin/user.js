@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../../controllers/admin/user');
+const user = require('../../controllers/admin/account');
 
 /**
  * @openapi

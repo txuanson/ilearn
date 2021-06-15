@@ -1,24 +1,24 @@
-const { PAGE_SIZE } = require("../../config/env");
+const { PAGE_SIZE } = require("../../configs/env");
 const { asyncCatch, pagination } = require("../../helpers/utils");
-const User = require('../../models/user');
+const User = require('../../models/account');
 
-const listUser = asyncCatch(async (req, res, next) => {
+const listAccount = asyncCatch(async (req, res, next) => {
     const pagi = pagination(req.query.page);
 
-    const user = await User.find({}, "_id name username email").limit(pagi.limit).skip(pagi.skip).exec();
+    const items = await User.find({}, "_id name username email").limit(pagi.limit).skip(pagi.skip).exec();
     const itemsCount = await User.estimatedDocumentCount().exec();
 
     res.send({
-        items: user,
-        itemsCount: itemsCount
+        items,
+        items_count: itemsCount
     });
 });
 
-const findUser = asyncCatch(async (req, res, next) => {
+const findAccount = asyncCatch(async (req, res, next) => {
     const pagi = pagination(req.query.page);
     const username = req.query.username ? req.query.username : "";
     
-    const user = await User.find({
+    const items = await User.find({
         username: {
             $regex: username, $options: "i"
         }
@@ -36,12 +36,12 @@ const findUser = asyncCatch(async (req, res, next) => {
         .exec();
 
     res.send({
-        items: user,
-        itemsCount: itemsCount
+        items,
+        items_count: itemsCount
     });
 })
 
 module.exports = {
-    list: listUser,
-    find: findUser
+    list: listAccount,
+    find: findAccount
 }

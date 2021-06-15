@@ -1,7 +1,7 @@
 const Zoom = require("../models/zoom");
-const zoomEnv = require('../config/env').ZOOM_AUTH.PROD;
+const zoomEnv = require('../configs/env').ZOOM_AUTH.PROD;
 const { default: axios } = require("axios");
-const { ZOOM_API_URI, ZOOM_AUTH_URI } = require('../config/env');
+const { ZOOM_API_URI, ZOOM_AUTH_URI } = require('../configs/env');
 module.exports.zoomInitialize = async (user_id, access_code) => {
     const options = {
         method: 'POST',
@@ -28,16 +28,16 @@ module.exports.zoomInitialize = async (user_id, access_code) => {
         .catch(err => {
             throw new Error(err);
         })
-    await Zoom.create({
+    return {
         user_id: user_id,
         zoom_user_id: zoomUserInfo.id,
         zoom_refresh_token: res.refresh_token
-    })
+    }
 }
 
 module.exports.zoomGetToken = async (user_id) => {
     const token = await Zoom.findOne({ user_id: user_id }).exec();
-
+    console.log(token);
     const options = {
         method: 'POST',
         url: `${ZOOM_AUTH_URI}?grant_type=refresh_token&refresh_token=${token.zoom_refresh_token}`,
@@ -89,10 +89,10 @@ module.exports.zoomCreateMeeting = async (user_id, options = {
 
 module.exports.zoomDeleteMeeting = async (user_id, meeting_id) => {
     const token = await this.zoomGetToken(user_id);
-    const user = await Zoom.findOne({ user_id: user_id });
+    // const user = await Zoom.findOne({ user_id: user_id });
     const res = await axios({
         method: 'DELETE',
-        url: `${ZoomApiBaseUri}/meetings/${meeting_id}?`,
+        url: `${ZOOM_API_URI}/meetings/${meeting_id}?`,
         headers: {
             Authorization: `Bearer ${token}`
         }
