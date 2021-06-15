@@ -4,6 +4,6 @@
   "private": true,
   "scripts": {
     "postinstall": "yarn --prefix src/backend",
-    "start": "nodemon .src/backend/bin/www"
+    "start": "nodemon ./src/backend/bin/www"
   }
 }
