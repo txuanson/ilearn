@@ -1,7 +1,7 @@
 [![HCMUS](https://www.hcmus.edu.vn/images/logo81.png)](https://www.hcmus.edu.vn/)
 # iLearn - Online learning platform with Zoom intergrated
 
-iLearn is an online learning platform which bring the convinient to users who is an amatuer tutors and who want to study online with just a click!
+iLearn is an online learning platform which bring the convinient to users who is an amateur tutors and who want to study online with just a click!
 
 ## Features
 
