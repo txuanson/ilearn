@@ -30,7 +30,7 @@ const router = express.Router();
  *       requestBody:
  *         required: true
  *         content:
- *           application/x-www-form-urlencoded:
+ *           application/json:
  *             schema:
  *               type: object
  *               properties:
@@ -52,7 +52,7 @@ const router = express.Router();
  *       requestBody:
  *         required: true
  *         content:
- *           application/x-www-form-urlencoded:
+ *           application/json:
  *             schema:
  *               type: object
  *               properties:

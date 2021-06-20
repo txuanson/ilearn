@@ -3,6 +3,7 @@ const { asyncCatch, pagination } = require("../../helpers/utils");
 const cateCreateValidator = require("../../validators/cateCreate.validator");
 const Category = require('../../models/category');
 const Course = require("../../models/course");
+const { PAGE_SIZE } = require("../../configs/env");
 
 const createCategory = asyncCatch(async (req, res, next) => {
     const { error, value } = cateCreateValidator.validate(req.body);
@@ -14,8 +15,8 @@ const createCategory = asyncCatch(async (req, res, next) => {
 })
 
 const findCategory = asyncCatch(async (req, res, next) => {
-    const pagi = pagination(req.query.page);
-    const name = req.query.name ? req.query.name : "";
+    const pagi = pagination(req.query.page, parseInt(req.query.page_size, 10));
+    const name = req.query.name ?? "";
 
     const category = await Category.find({
         name: {
@@ -33,9 +34,9 @@ const findCategory = asyncCatch(async (req, res, next) => {
         }
     })
         .exec();
-
+    console.log(pagi.limit);
     res.send({
-        items,
+        items: category,
         items_count: itemsCount
     });
 });

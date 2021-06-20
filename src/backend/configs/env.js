@@ -1,10 +1,15 @@
+const {resolve} = require('path');
+
 module.exports = {
+    HOST: 'https://ilearn-19clc3.herokuapp.com',
     MONGO_URI: "mongodb+srv://root:3IziS8WSjAPXiE2Q@ilearn.vnhaj.mongodb.net/ilearn?retryWrites=true&w=majority",
     JWT_TIMEOUT_DURATION: "30d",
     JWT_SECRET: "ZQXj<#$?>p-9=55V",
     ZOOM_API_URI: 'https://api.zoom.us/v2',
     ZOOM_AUTH_URI: 'https://zoom.us/oauth/token',
     PAGE_SIZE: 20,
+    STATIC_PATH: resolve(`${__dirname}/../public/`),
+    TEMP_DURATION: 3,
     ZOOM_AUTH: {
         DEV: {
             CLIENT_ID: "0IZXDRSjRqi8N1HnRX233g",

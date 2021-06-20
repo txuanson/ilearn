@@ -18,27 +18,40 @@ const router = express.Router();
 
 const authRoute = require('./auth');
 const adminRoute = require('./admin');
+const tutorRoute = require('./tutor');
 const userRoute = require('./user');
 const courseRoute = require('./course');
 const authMiddleware = require('../middlewares/auth.middleware');
 const userMiddleware = require('../middlewares/user.middleware');
+const tutorMiddleware = require('../middlewares/tutor.middleware');
 
 router.use('/auth', authRoute);
 router.use('/admin', adminRoute);
+router.use('/tutor', authMiddleware, tutorMiddleware, tutorRoute);
 router.use('/user', authMiddleware, userMiddleware, userRoute);
 
 router.use('/course', authMiddleware, courseRoute);
 
 //test
 const { asyncCatch } = require('../helpers/utils');
-const { zoomInitialize, zoomCreateMeeting } = require('../services/zoom.service');
-router.get('/', asyncCatch(async(req, res, next)=>{
-    const meeting = await zoomCreateMeeting("60c61e35a8b01c45a0bb1a67", {
-        topic: "Buổi học test trên iLearn",
-        duration: 45,
-        start_time: "2021-06-13T14-23-30"
-    });
-    res.send(meeting);
+const { zoomInitialize, zoomCreateMeeting, zoomDeleteMeeting, zoomEditMeeting } = require('../services/zoom.service');
+router.get('/', authMiddleware, asyncCatch(async (req, res, next) => {
+    // const meeting = await zoomCreateMeeting(req.user_data._id, {
+    //     topic: "Buổi học test trên iLearn",
+    //     duration: 45,
+    //     start_time: "2021-06-18T14-23-30"
+    // });
+    // res.send(meeting);
+    
+    // const meeting = await zoomEditMeeting(req.user_data._id, 86953860559, {
+    //     topic: "Buổi học test trên iLearn 111111111",
+    //     duration: 30,
+    //     start_time: "2021-06-18T14-23-30"
+    // });
+    // res.send(meeting);
+
+    await zoomDeleteMeeting(req.user_data._id, 86953860559);
+    res.send("Success!");
 }))
 
 module.exports = router;

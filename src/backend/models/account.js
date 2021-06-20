@@ -38,14 +38,14 @@ const accountSchema = new mongoose.Schema({
     cover: {
         type: String,
         default: null
-    },
-    courses: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Course',
-            unique: true
-        }
-    ]
+    }
+    // ,
+    // courses: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'Course'
+    //     }
+    // ]
 })
 
 accountSchema.pre('remove', (next)=>{

@@ -25,7 +25,7 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port, async() =>{
+server.listen(port, async () => {
   console.log("Server up at port 3000...");
 });
 server.on('error', onError);

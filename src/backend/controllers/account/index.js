@@ -7,7 +7,7 @@ const Account = require('../../models/account');
 const { Tutor } = require("../../configs/role");
 
 const upgradeAccount = asyncCatch(async (req, res, next) => {
-    const user_id = req.userData._id;
+    const user_id = req.user_data._id;
 
     const { error, value } = accountUpgradeValidator.validate(req.body);
     if (error)

@@ -6,7 +6,7 @@ const { comparePassword, signJwtData } = require("../../helpers/crypto");
 
 module.exports = asyncCatch(async (req, res, next) => {
     const { error, value } = loginValidator.validate(req.body);
-    if (error) 
+    if (error)
         throw new BadReqest(error.message);
     const account = await Account.findOne({ username: value.username }, 'name username password avatar').exec();
 
@@ -19,9 +19,11 @@ module.exports = asyncCatch(async (req, res, next) => {
 
     res.send(
         {
-            name: account.name,
-            username: account.username,
-            avatar: account.avatar,
+            user_data: {
+                name: account.name,
+                username: account.username,
+                avatar: account.avatar
+            },
             token: signJwtData(account)
         })
 })

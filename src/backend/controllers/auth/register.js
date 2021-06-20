@@ -31,7 +31,7 @@ module.exports = asyncCatch(async (req, res, next) => {
     
     res.send(
         {
-            userData: {
+            user_data: {
                 name: account.name,
                 username: account.username,
                 avatar: account.avatar

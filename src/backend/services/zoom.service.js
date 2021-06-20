@@ -37,7 +37,6 @@ module.exports.zoomInitialize = async (user_id, access_code) => {
 
 module.exports.zoomGetToken = async (user_id) => {
     const token = await Zoom.findOne({ user_id: user_id }).exec();
-    console.log(token);
     const options = {
         method: 'POST',
         url: `${ZOOM_AUTH_URI}?grant_type=refresh_token&refresh_token=${token.zoom_refresh_token}`,
@@ -70,6 +69,7 @@ module.exports.zoomCreateMeeting = async (user_id, options = {
         data: {
             topic: options.topic,
             type: 2,
+            duration: options.duration,
             start_time: options.start_time,
             settings: {
                 host_video: true,
@@ -102,8 +102,38 @@ module.exports.zoomDeleteMeeting = async (user_id, meeting_id) => {
         return false;
     })
         .catch(err => {
-            console.log(err);
+            console.error(err);
             return false;
         });
+    return res;
+}
+
+module.exports.zoomEditMeeting = async (user_id, meeting_id, options = {
+    topic: "Buổi học trực tuyến trên iLearn",
+    duration: 45,
+    start_time
+}) => {
+    const token = await this.zoomGetToken(user_id);
+
+    const res = await axios({
+        method: 'PATCH',
+        url: `${ZOOM_API_URI}/meetings/${meeting_id}`,
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        data: {
+            topic: options.topic,
+            type: 2,
+            duration: options.duration,
+            start_time: options.start_time
+        }
+    }).then(res => {
+        if (res.status == 204) return true;
+        return false;
+    }).catch(err =>{
+        console.error(err);
+        return false;
+    });
+
     return res;
 }

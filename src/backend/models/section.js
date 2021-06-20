@@ -12,9 +12,12 @@ const sectionSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Upcoming', 'Started', 'Ended'] 
+        enum: ['Current', 'Started', 'Ended'] 
     },
     content: String,
+    storage: [{
+        type: String
+    }],
     join_url: String,
     start_url: String,
     meeting_id: {
@@ -28,19 +31,18 @@ const sectionSchema = mongoose.Schema({
     duration: {
         type: Number,
         default: 45
+    },
+    visible: {
+        type: Boolean,
+        default: true
     }
 },
     { timestamps: true }
 )
 
-sectionSchema.pre('remove', next => {
-    // remove associated zoom meeting
-    next();
-})
-
-sectionSchema.pre('update', next =>{
-    // update associated zoom meeting
-    next();
+sectionSchema.pre('/^delete/', async (next) =>{
+    console.log('Prehook delete section:');
+    await removeUnusedFile(this.storage);
 })
 
 module.exports = mongoose.model('Section', sectionSchema);

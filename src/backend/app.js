@@ -10,7 +10,10 @@ const { STATUS_CODE } = require('./helpers/response');
 const { errorHandler } = require('./helpers/utils');
 const indexRouter = require('./routes/index');
 const mongoose = require('mongoose');
-const { MONGO_URI } = require('./configs/env');
+const { MONGO_URI, STATIC_PATH } = require('./configs/env');
+const fs = require('fs-extra');
+
+fs.ensureDirSync(`${STATIC_PATH}/storage`);
 
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
@@ -36,9 +39,22 @@ const options = {
             description: "Online learning platform with Zoom intergrated",
         },
         servers: [{
+            url: "https://ilearn-19clc3.herokuapp.com"
+        }, {
             url: "http://localhost:3000",
-        }
-        ],
+        }],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                }
+            }
+        },
+        security: [{
+            bearerAuth: []
+        }]
     },
     apis: ["./routes/**/*.js"],
 };

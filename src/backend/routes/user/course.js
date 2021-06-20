@@ -1,24 +1,22 @@
 const express = require('express');
-const course = require('../controllers/course');
 const router = express.Router();
+const course = require("../../controllers/course");
 
 /**
  * @openapi
  * paths:
- *   /course:
- *     get:
- *       summary: List courses by category/tutor.
+ *   /user/course/{course_id}:
+ *     post:
+ *       summary: Get Course Info
  *       tags:
- *         - public
+ *         - user
  *       parameters:
  *         - in: path
  *           name: course_id
+ *           required: true
  *           schema:
  *             type: string
- *           required: true
- *           description: Id of the course
  */
-router.get('/', course.getCourseBy);
-
+router.get('/:course_id', course.info);
 
 module.exports = router;

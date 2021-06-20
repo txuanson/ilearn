@@ -4,11 +4,13 @@ module.exports = Joi.object({
         .string()
         .required(),
     content: Joi
-    .string()
-    .allow(null, ""),
-    user_limit: Joi
-    .number()
-    .integer()
-    .min(0)
-    .default(0)
+        .string()
+        .allow(null, "")
+        .default(""),
+    category: Joi
+        .string()
+        .required(),
+    public: Joi
+        .boolean()
+        .default(true)
 });

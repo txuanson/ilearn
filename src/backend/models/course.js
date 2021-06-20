@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Section = require('./section');
+const { removeUnusedFile } = require('../helpers/utils');
 
 const courseSchema = mongoose.Schema({
     name: String,
@@ -8,12 +9,13 @@ const courseSchema = mongoose.Schema({
         ref: 'User'
     },
     content: String,
-    user_limit: Number,
+    storage: [{
+        type: String
+    }],
     cover: String,
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        default: null
+        ref: 'Category'
     },
     public: {
         type: Boolean,
@@ -22,24 +24,28 @@ const courseSchema = mongoose.Schema({
     subscriber: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            unique: true
+            ref: 'User'
         }
     ],
     queue: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            unique: true
+            ref: 'User'
         }
-    ]
+    ],
+    section: [{
+        section_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            refPath: 'section_type'
+        },
+        section_type: {
+            type: String,
+            required: true,
+            enum: ['Section', 'Quiz']
+        }
+    }]
 },
     { timestamps: true }
 )
-
-courseSchema.pre('deleteOne', (next) => {
-    console.log('Prehook course:');
-    Section.deleteMany({ course_id: this._id });
-})
 
 module.exports = mongoose.model('Course', courseSchema);

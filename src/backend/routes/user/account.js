@@ -5,7 +5,7 @@ const accountService = require('../../controllers/account');
 /**
  * @openapi
  * paths:
- *   /admin/attachZoom:
+ *   /user/account/attachZoom:
  *     post:
  *       summary: Link Zoom account to this iLearn account.
  *       tags:
@@ -13,7 +13,7 @@ const accountService = require('../../controllers/account');
  *       requestBody:
  *         required: true
  *         content:
- *           application/x-www-form-urlencoded:
+ *           application/json:
  *             schema:
  *               type: object
  *               properties:
