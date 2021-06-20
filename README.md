@@ -44,6 +44,15 @@ iLearn uses a number of tools to work properly:
 
 ## Installation
 
+### Frontend
+
+```
+git pull
+git checkout frontend
+cd src/frontend
+yarn
+yarn start
+```
 ### Backend
 
 #### API-DOC: <htpp://localhost:3000/api-docs>
