@@ -55,7 +55,7 @@ yarn start
 ```
 ### Backend
 
-#### API-DOC: <htpp://localhost:3000/api-docs>
+#### API-DOC: <https://ilearn-19clc3.herokuapp.com/api-docs>
 
 iLearn server-side requires [Node.js] v14+ and [Yarn] to run.
 
