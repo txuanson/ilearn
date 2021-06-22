@@ -90,7 +90,7 @@ app.use((req, res, next) => {
 
  const allowlist = [
     'http://localhost:3000',
-     'https://ilearn-two.vercel.app/'
+     'https://ilearn-two.vercel.app'
  ];
  const corsOptionsDelegate = function (req, callback) {
      var corsOptions;
