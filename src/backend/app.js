@@ -88,19 +88,20 @@ app.use((req, res, next) => {
     next();
 });
 
-// const allowlist = [
-
-// ];
-// const corsOptionsDelegate = function (req, callback) {
-//     var corsOptions;
-//     if (allowlist.indexOf(req.header("Origin")) !== -1) {
-//         corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
-//     } else {
-//         corsOptions = { origin: false }; // disable CORS for this request
-//     }
-//     callback(null, corsOptions); // callback expects two parameters: error and options
-// };
-// app.use(cors(corsOptionsDelegate));
+ const allowlist = [
+    'http://localhost:3000',
+     'https://ilearn-two.vercel.app/'
+ ];
+ const corsOptionsDelegate = function (req, callback) {
+     var corsOptions;
+     if (allowlist.indexOf(req.header("Origin")) !== -1) {
+         corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+     } else {
+         corsOptions = { origin: false }; // disable CORS for this request
+     }
+     callback(null, corsOptions); // callback expects two parameters: error and options
+ };
+ app.use(cors(corsOptionsDelegate));
 
 app.use(helmet());
 app.use(logger('dev'));
