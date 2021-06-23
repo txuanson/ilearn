@@ -1,6 +1,6 @@
 const { PAGE_SIZE, STATIC_PATH } = require("../configs/env");
 const { HttpError, STATUS_CODE } = require("./response");
-const Storage = require('../models/storage');
+const Storage = require('../models/Storage');
 const fs = require('fs-extra');
 
 const asyncCatch = (fn) => (req, res, next) => fn(req, res, next).catch(next);
@@ -17,9 +17,8 @@ const errorHandler = (err, req, res, next) => {
     })
 }
 
-const getModelByName = (name) => {
-    return require(`../models/${name}`);
-}
+const getModelByName = (name) => require(`../models/${name}`);
+
 
 const pagination = (page, pageSize = PAGE_SIZE) => {
     return {
@@ -29,7 +28,7 @@ const pagination = (page, pageSize = PAGE_SIZE) => {
 }
 
 const filterImg = /^courses\/\d+\/[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}.jpeg$/g;
-const filterImageUrl = (content) => content.match(filterImg);
+const filterImageUrl = (content) => content.match(filterImg) ?? [];
 
 const removeTempFlag = async (path = []) => {
     await Storage.deleteMany({ path: { $in: path } }).exec();

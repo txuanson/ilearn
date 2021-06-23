@@ -66,6 +66,54 @@ const courseUploadFileMiddleware = upload.fields([{ name: 'cover', maxCount: 1 }
  *           schema:
  *             type: string
  *           required: true  
+ * 
+ * /tutor/course/{course_id}/subscriber:
+ *   get:
+ *     summary: List subscriber of course
+ *     tags:
+ *       - tutor
+ *     parameters:
+ *       - in: path
+ *         name: course_id
+ *         schema:
+ *           type: string
+ *         required: true
+ * 
+ * /tutor/course/{course_id}/queue:
+ *   get:
+ *     summary: List users queuing for approve of course
+ *     tags:
+ *       - tutor
+ *     parameters:
+ *       - in: path
+ *         name: course_id
+ *         schema:
+ *           type: string
+ *         required: true
+ * 
+ * /tutor/course/{course_id}/banned:
+ *   get:
+ *     summary: List users banned from course
+ *     tags:
+ *       - tutor
+ *     parameters:
+ *       - in: path
+ *         name: course_id
+ *         schema:
+ *           type: string
+ *         required: true
+ * 
+ * /tutor/course/{course_id}/section:
+ *   get:
+ *     summary: List sections of course
+ *     tags:
+ *       - tutor
+ *     parameters:
+ *       - in: path
+ *         name: course_id
+ *         schema:
+ *           type: string
+ *         required: true
  */
 router.post('/',
     courseUploadFileMiddleware,
@@ -77,4 +125,8 @@ router.patch('/:course_id',
 
 router.delete('/:course_id', course.delete);
 
+router.get('/:course_id/subscriber', course.listSubscriber);
+router.get('/:course_id/queue', course.listQueue);
+router.get('/:course_id/banned', course.listQueue);
+router.get('/:course_id/section', course.listSection);
 module.exports = router;

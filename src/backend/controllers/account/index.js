@@ -2,8 +2,8 @@ const { BadReqest } = require("../../helpers/response");
 const { asyncCatch } = require("../../helpers/utils");
 const { zoomInitialize } = require("../../services/zoom.service");
 const accountUpgradeValidator = require("../../validators/accountUpgrade.validator");
-const Zoom = require('../../models/zoom');
-const Account = require('../../models/account');
+const Zoom = require('../../models/Zoom');
+const Account = require('../../models/Account');
 const { Tutor } = require("../../configs/role");
 
 const upgradeAccount = asyncCatch(async (req, res, next) => {

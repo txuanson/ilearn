@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { Unauthorized } = require("../helpers/response");
 const { asyncCatch } = require("../helpers/utils");
 const { JWT_SECRET } = require('../configs/env');
-const Account = require('../models/account');
+const Account = require('../models/Account');
 
 module.exports = asyncCatch(async (req, res, next) => {
 	const authHeader = req.headers['authorization'];

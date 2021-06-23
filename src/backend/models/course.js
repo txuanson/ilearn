@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
-const Section = require('./section');
-const { removeUnusedFile } = require('../helpers/utils');
+
+const sectionSubDoc = mongoose.Schema({
+    section_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        refPath: 'section_type'
+    },
+    section_type: {
+        type: String,
+        required: true,
+        enum: ['Section', 'Quiz']
+    }
+}, { _id: false })
 
 const courseSchema = mongoose.Schema({
     name: String,
@@ -24,26 +34,25 @@ const courseSchema = mongoose.Schema({
     subscriber: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'Account'
         }
     ],
     queue: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'Account'
         }
     ],
-    section: [{
-        section_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            refPath: 'section_type'
-        },
-        section_type: {
-            type: String,
-            required: true,
-            enum: ['Section', 'Quiz']
+    banned: [
+        {
+            account_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Account'
+            },
+            reason: String
         }
-    }]
+    ],
+    section: [sectionSubDoc]
 },
     { timestamps: true }
 )

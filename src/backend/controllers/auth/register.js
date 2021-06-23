@@ -1,7 +1,7 @@
 const { BadReqest } = require("../../helpers/response");
 const { asyncCatch } = require("../../helpers/utils");
 const registerValidator = require("../../validators/register.validator");
-const Account = require('../../models/account');
+const Account = require('../../models/Account');
 const { hashPassword, signJwtData } = require("../../helpers/crypto");
 module.exports = asyncCatch(async (req, res, next) => {
     const { error, value } = registerValidator.validate(req.body);
@@ -34,7 +34,8 @@ module.exports = asyncCatch(async (req, res, next) => {
             user_data: {
                 name: account.name,
                 username: account.username,
-                avatar: account.avatar
+                avatar: account.avatar,
+                role: account.role
             }
             ,
             token: signJwtData(account)

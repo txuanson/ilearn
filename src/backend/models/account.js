@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { User, Tutor, Admin } = require('../configs/role');
-const Course = require('./course');
 
 const accountSchema = new mongoose.Schema({
     email: {
@@ -46,12 +45,6 @@ const accountSchema = new mongoose.Schema({
     //         ref: 'Course'
     //     }
     // ]
-})
-
-accountSchema.pre('remove', (next)=>{
-    console.log('Account prehook:')
-    Course.remove({tutorId: this._id}).exec;
-    next();
 })
 
 module.exports = mongoose.model('Account', accountSchema);

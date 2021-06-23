@@ -1,8 +1,8 @@
 const { BadReqest, NotFound } = require("../../helpers/response");
 const { asyncCatch, pagination } = require("../../helpers/utils");
 const cateCreateValidator = require("../../validators/cateCreate.validator");
-const Category = require('../../models/category');
-const Course = require("../../models/course");
+const Category = require('../../models/Category');
+const Course = require("../../models/Course");
 const { PAGE_SIZE } = require("../../configs/env");
 
 const createCategory = asyncCatch(async (req, res, next) => {
@@ -34,7 +34,7 @@ const findCategory = asyncCatch(async (req, res, next) => {
         }
     })
         .exec();
-    console.log(pagi.limit);
+        
     res.send({
         items: category,
         items_count: itemsCount

@@ -1,17 +1,15 @@
 const mongoose = require("mongoose");
-const { BadReqest, Forbidden, NotFound, Unauthorized } = require("../../helpers/response");
+const { BadReqest, Forbidden, NotFound } = require("../../helpers/response");
 const { asyncCatch, pagination, filterImageUrl, removeTempFlag, removeUnusedFile } = require("../../helpers/utils");
-const Course = require('../../models/course');
+const Course = require('../../models/Course');
 const courseCreateValidator = require("../../validators/courseCreate.validator");
 const getCourseValidator = require("../../validators/getCourseByFilter.validator");
 const { v4: uuidv4 } = require('uuid');
 const { STATIC_PATH, HOST } = require("../../configs/env");
 const compress = require("../../helpers/compress");
 const { Admin } = require("../../configs/role");
-const fs = require('fs-extra');
-const { remove } = require("../../models/storage");
-const Storage = require("../../models/storage");
-const Section = require("../../models/section");
+const { deleteCourseHelper } = require("../../helpers/query");
+
 
 const getCourseBy = asyncCatch(async (req, res, next) => {
     const { error, value } = getCourseValidator.validate(req.query);
@@ -27,11 +25,17 @@ const getCourseBy = asyncCatch(async (req, res, next) => {
 
     const items = await Course.aggregate()
         .match(filter)
+        .lookup({ from: 'accounts', localField: 'tutor', foreignField: '_id', as: 'tutor' })
+        .unwind('tutor')
         .project({
             _id: 1,
             name: 1,
-            cover: 1,
+            cover: { $concat: [HOST, '/', '$cover'] },
             public: 1,
+            tutor: {
+                _id: 1,
+                name: 1
+            },
             subscriber_count: { $size: "$subscriber" },
             section_count: { $size: "$section" }
         })
@@ -51,14 +55,22 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
     const courseInfo = await Course.aggregate()
         .match({ _id: new mongoose.Types.ObjectId(course_id) })
-        .lookup({ from: 'categories', localField: 'category', foreignField: '_id', as: 'categoryArr' })
+        .lookup({ from: 'categories', localField: 'category', foreignField: '_id', as: 'category' })
+        .lookup({ from: 'accounts', localField: 'tutor', foreignField: '_id', as: 'tutor' })
+        .lookup({ from: 'sections', localField: 'sections.section_id', foreignField: '_id', as: 'tutor' })
+        .unwind('category')
+        .unwind('tutor')
         .project({
             _id: 1,
             name: 1,
             public: 1,
             content: 1,
+            tutor: {
+                _id: 1,
+                name: 1
+            },
             cover: { $concat: [HOST, '/', '$cover'] },
-            category: { $arrayElemAt: ["$categoryArr", 0] },
+            category: 1,
             subscriber_count: { $size: "$subscriber" },
             section_count: { $size: "$section" }
         })
@@ -103,17 +115,17 @@ const createCourse = asyncCatch(async (req, res, next) => {
 
 const editCourse = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
-    const oldCourse = await Course.findById(course_id).exec();
-    if (!oldCourse) throw new NotFound('Course not found!');
+    const course = await Course.findById(course_id).exec();
+    if (!course) throw new NotFound('Course not found!');
 
-    if (req.user_data.role !== Admin && !oldCourse.tutor.equals(req.user_data._id))
+    if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
         throw new Forbidden('You do not have permission to this course');
 
     const { error, value } = courseCreateValidator.validate(req.body);
     if (error)
         throw new BadReqest(error.message);
 
-    const old_img = oldCourse.storage;
+    const old_img = course.storage;
     const new_img = filterImageUrl(value.content) ?? [];
 
     const img_to_del = old_img.filter(e => !new_img.includes(e));
@@ -134,7 +146,7 @@ const editCourse = asyncCatch(async (req, res, next) => {
             console.log(err);
             throw err;
         });
-        await removeUnusedFile([oldCourse.cover]);
+        await removeUnusedFile([course.cover]);
         await Course.updateOne({ _id: course_id }, { cover: filename });
     }
 
@@ -143,26 +155,57 @@ const editCourse = asyncCatch(async (req, res, next) => {
 
 const deleteCourse = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
-    const courseInfo = await Course.findById(course_id).exec();
+    const course = await Course.findById(course_id).exec();
 
-    if (!courseInfo) throw new NotFound('Course not found!');
-    if (req.user_data.role !== Admin && !courseInfo.tutor.equals(req.user_data._id))
+    if (!course) throw new NotFound('Course not found!');
+    if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
         throw new Forbidden('You do not have permission to this course');
 
-    await Course.deleteOne({ _id: course_id });
+    await deleteCourseHelper(req.user_data._id, course_id);
 
     res.send("Success!");
-
-    await removeUnusedFile([...courseInfo.storage, courseInfo.cover]);
-    await Section.deleteMany({ course_id: this._id }).exec();
 })
 
 const listSubscriber = asyncCatch(async (req, res, next) => {
-
+    const course_id = req.params.course_id;
+    const items = await Course.findById(course_id, "-_id subscriber")
+        .populate("subscriber", "_id name avatar")
+        .exec();
+    res.send({
+        items: items.subscriber
+    })
 })
 
 const listQueue = asyncCatch(async (req, res, next) => {
+    const course_id = req.params.course_id;
+    const items = await Course.findById(course_id, "-_id queue")
+        .populate("queue", "_id name avatar")
+        .exec();
+    res.send({
+        items: items.queue
+    })
+})
 
+const listBanned = asyncCatch(async (req, res, next) => {
+    const course_id = req.params.course_id;
+    const items = await Course.findById(course_id, "-_id banned")
+        .populate("banned.account_id", "_id name avatar")
+        .exec();
+    res.send({
+        items: items.queue
+    })
+})
+
+const listSection = asyncCatch(async (req, res, next) => {
+    const course_id = req.params.course_id;
+    const items = await Course.findById(course_id)
+        .select('section')
+        .populate('section.section_id', '_id, topic')
+        .lean()
+        .exec();
+    res.send({
+        items: items.section
+    });
 })
 
 module.exports = {
@@ -170,5 +213,9 @@ module.exports = {
     info: getCourseInfo,
     create: createCourse,
     delete: deleteCourse,
-    edit: editCourse
+    edit: editCourse,
+    listSubscriber,
+    listQueue,
+    listBanned,
+    listSection
 }

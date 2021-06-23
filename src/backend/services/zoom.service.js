@@ -1,4 +1,4 @@
-const Zoom = require("../models/zoom");
+const Zoom = require("../models/Zoom");
 const zoomEnv = require('../configs/env').ZOOM_AUTH.PROD;
 const { default: axios } = require("axios");
 const { ZOOM_API_URI, ZOOM_AUTH_URI } = require('../configs/env');

@@ -10,10 +10,6 @@ const sectionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     },
-    status: {
-        type: String,
-        enum: ['Current', 'Started', 'Ended'] 
-    },
     content: String,
     storage: [{
         type: String
@@ -34,15 +30,10 @@ const sectionSchema = mongoose.Schema({
     },
     visible: {
         type: Boolean,
-        default: true
+        default: false
     }
 },
     { timestamps: true }
 )
-
-sectionSchema.pre('/^delete/', async (next) =>{
-    console.log('Prehook delete section:');
-    await removeUnusedFile(this.storage);
-})
 
 module.exports = mongoose.model('Section', sectionSchema);

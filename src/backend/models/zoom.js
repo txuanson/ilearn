@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const { Tutor } = require('../configs/role');
-const Account = require('./account');
+const Account = require('./Account');
 
 const zoomSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Account',
         unique: true
     },
     zoom_user_id: {

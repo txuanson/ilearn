@@ -1,5 +1,5 @@
 const { asyncCatch } = require('../../helpers/utils');
-const Course = require('../../models/course');
+const Course = require('../../models/Course');
 
 const createCourse = asyncCatch(async (req, res, next) => {
     
