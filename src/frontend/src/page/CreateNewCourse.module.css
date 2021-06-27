@@ -1,0 +1,28 @@
+.flex {
+  display: flex;
+  align-items: stretch;
+  background-color: white;
+}
+
+.flex_left {
+  margin-left: 10em;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.flex_right {
+  margin-right: 10em;
+  flex-grow: 3;
+  
+}
+
+
+@media screen and (max-width: 768px) {
+  .flex_left {
+    opacity: 0;
+  }
+
+  .flex_right {
+    margin-right: 0;
+  }
+}
