@@ -20,7 +20,7 @@ module.exports = {
         PROD: {
             CLIENT_ID: "iui08Y6kR8G5HvrZn9m9A",
             CLIENT_SECRET: "G2D2s5hcLJ2ZB9SYw7UFYEZCnkhSmN2c",
-            REDIRECT: "https://marketplace.zoom.us/docs/oauth/callback/success"
+            REDIRECT: "https://ilearn-two.vercel.app/connect-zoom"
         }
     }
 }
