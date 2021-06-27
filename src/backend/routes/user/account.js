@@ -15,12 +15,11 @@ const accountService = require('../../controllers/account');
  *         content:
  *           application/json:
  *             schema:
- *               type: object
  *               properties:
  *                 access_code:
  *                   type: string
  *               required:
- *                 - access_code     
+ *                 - access_code
  */
 router.post('/attachZoom', accountService.upgrade);
 

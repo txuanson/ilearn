@@ -106,8 +106,7 @@ const createCourse = asyncCatch(async (req, res, next) => {
     const newCourse = await Course.create({
         ...value,
         tutor: req.user_data._id,
-        cover: filename,
-        storage: contentImg ?? []
+        cover: filename
     });
 
     res.send(newCourse._id);
@@ -125,8 +124,8 @@ const editCourse = asyncCatch(async (req, res, next) => {
     if (error)
         throw new BadReqest(error.message);
 
-    const old_img = course.storage;
-    const new_img = filterImageUrl(value.content) ?? [];
+    const old_img = filterImageUrl(course.content);
+    const new_img = filterImageUrl(value.content);
 
     const img_to_del = old_img.filter(e => !new_img.includes(e));
     const img_to_update = new_img.filter(e => !old_img.includes(e));
@@ -135,8 +134,7 @@ const editCourse = asyncCatch(async (req, res, next) => {
     await removeTempFlag(img_to_update);
 
     await Course.updateOne({ _id: course_id }, {
-        ...value,
-        storage: new_img
+        ...value
     });
 
     if (req.files?.cover) {
@@ -169,42 +167,49 @@ const deleteCourse = asyncCatch(async (req, res, next) => {
 const listSubscriber = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
     const items = await Course.findById(course_id, "-_id subscriber")
+        .select('-_id subscriber')
         .populate("subscriber", "_id name avatar")
+        .lean()
         .exec();
     res.send({
-        items: items.subscriber
+        items: items?.subscriber ?? []
     })
 })
 
 const listQueue = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
     const items = await Course.findById(course_id, "-_id queue")
+        .select('-_id queue')
         .populate("queue", "_id name avatar")
+        .lean()
         .exec();
     res.send({
-        items: items.queue
+        items: items?.queue ?? []
     })
 })
 
 const listBanned = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
     const items = await Course.findById(course_id, "-_id banned")
+        .select('-_id banned')
         .populate("banned.account_id", "_id name avatar")
+        .lean()
         .exec();
     res.send({
-        items: items.queue
+        items: items?.banned ?? []
     })
 })
 
 const listSection = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
     const items = await Course.findById(course_id)
-        .select('section')
+        .select('-_id section')
         .populate('section.section_id', '_id, topic')
         .lean()
         .exec();
+    console.log(items)
     res.send({
-        items: items.section
+        items: items?.section ?? []
     });
 })
 

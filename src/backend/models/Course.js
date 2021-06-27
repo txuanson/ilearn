@@ -1,17 +1,5 @@
 const mongoose = require('mongoose');
 
-const sectionSubDoc = mongoose.Schema({
-    section_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        refPath: 'section_type'
-    },
-    section_type: {
-        type: String,
-        required: true,
-        enum: ['Section', 'Quiz']
-    }
-}, { _id: false })
-
 const courseSchema = mongoose.Schema({
     name: String,
     tutor: {
@@ -19,9 +7,6 @@ const courseSchema = mongoose.Schema({
         ref: 'User'
     },
     content: String,
-    storage: [{
-        type: String
-    }],
     cover: String,
     category: {
         type: mongoose.Schema.Types.ObjectId,
@@ -52,7 +37,17 @@ const courseSchema = mongoose.Schema({
             reason: String
         }
     ],
-    section: [sectionSubDoc]
+    section: [{
+        section_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            refPath: 'section.section_type'
+        },
+        section_type: {
+            type: String,
+            required: true,
+            enum: ['Section', 'Quiz']
+        }
+    }]
 },
     { timestamps: true }
 )

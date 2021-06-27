@@ -17,7 +17,7 @@ const accountSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    role:{
+    role: {
         type: Number,
         enum: [User, Tutor, Admin],
         default: User
@@ -32,11 +32,7 @@ const accountSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: null
-    },
-    cover: {
-        type: String,
-        default: null
+        default: 'storage/default_avatar.svg'
     }
     // ,
     // courses: [

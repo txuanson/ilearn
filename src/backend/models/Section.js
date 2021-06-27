@@ -11,9 +11,6 @@ const sectionSchema = mongoose.Schema({
         ref: 'Course'
     },
     content: String,
-    storage: [{
-        type: String
-    }],
     join_url: String,
     start_url: String,
     meeting_id: {

@@ -14,6 +14,7 @@ const getSectionWithTutor = asyncCatch(async (req, res, next) => {
     const section = await Section.findById(section_id)
         .select("_id topic content duration start_time")
         .exec();
+    if (!section) throw new NotFound('Section not found!');
     res.send(section);
 })
 
@@ -40,7 +41,6 @@ const createSection = asyncCatch(async (req, res, next) => {
         topic: value.topic,
         course_id: value.course_id,
         content: value.content,
-        storage: content,
         join_url: meeting.join_url,
         start_url: meeting.start_url,
         meeting_id: meeting.meeting_id,
@@ -48,11 +48,12 @@ const createSection = asyncCatch(async (req, res, next) => {
         duration: value.duration,
         visible: value.visible
     })
+
     await Course.updateOne({ _id: value.course_id }, {
         "$push": {
             section: {
                 section_id: newSection._id,
-                section_type: "Section"
+                section_type: 'Section'
             }
         }
     })
@@ -67,17 +68,17 @@ const editSection = asyncCatch(async (req, res, next) => {
 
     const section = await Section
         .findById(section_id)
-        .select('-content').exec();
+        .exec();
     const course = await Course
         .findOne({ "section.section_id": section_id })
         .select('-content')
         .exec();
 
-    if (!course) throw new NotFound('Course not found!');
+    if (!section || !course) throw new NotFound('Not found!');
     if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
         throw new Forbidden('You do not have permission to this course');
 
-    const old_img = section.storage;
+    const old_img = filterImageUrl(section.content);
     const new_img = filterImageUrl(value.content);
 
     const img_to_del = old_img.filter(e => !new_img.includes(e));
@@ -97,8 +98,7 @@ const editSection = asyncCatch(async (req, res, next) => {
 
     await Section.updateOne({ _id: section_id }, {
         ...value,
-        ...meeting,
-        storage: new_img
+        ...meeting
     })
 
     res.send("Success!");
@@ -114,9 +114,9 @@ const deleteSection = asyncCatch(async (req, res, next) => {
         .select('-content')
         .exec();
 
-    if (!course) throw new NotFound('Course not found!');
-    if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
-        throw new Forbidden('You do not have permission to this course');
+    // if (!section || !course) throw new NotFound('Not found!');
+    // if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
+    //     throw new Forbidden('You do not have permission to this course');
 
     await deleteSectionHelper(req.user_data._id, section_id);
 

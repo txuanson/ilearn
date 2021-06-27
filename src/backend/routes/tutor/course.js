@@ -127,6 +127,6 @@ router.delete('/:course_id', course.delete);
 
 router.get('/:course_id/subscriber', course.listSubscriber);
 router.get('/:course_id/queue', course.listQueue);
-router.get('/:course_id/banned', course.listQueue);
+router.get('/:course_id/banned', course.listBanned);
 router.get('/:course_id/section', course.listSection);
 module.exports = router;

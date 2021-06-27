@@ -11,12 +11,24 @@ const router = express.Router();
  *       tags:
  *         - public
  *       parameters:
- *         - in: path
- *           name: course_id
+ *         - in: query
+ *           name: field
  *           schema:
  *             type: string
+ *             enum: ['category', 'tutor']
  *           required: true
- *           description: Id of the course
+ *         - in: query
+ *           name: query
+ *           schema:
+ *             type: ObjectId
+ *         - in: query
+ *           name: page
+ *           schema:
+ *             type: int
+ *         - in: query
+ *           name: page_size
+ *           schema:
+ *             type: int
  */
 router.get('/', course.getCourseBy);
 

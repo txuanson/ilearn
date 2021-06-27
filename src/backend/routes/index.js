@@ -20,6 +20,8 @@ const authRoute = require('./auth');
 const adminRoute = require('./admin');
 const tutorRoute = require('./tutor');
 const userRoute = require('./user');
+const profileRoute = require('./profile');
+
 const courseRoute = require('./course');
 const authMiddleware = require('../middlewares/auth.middleware');
 const userMiddleware = require('../middlewares/user.middleware');
@@ -31,6 +33,7 @@ router.use('/tutor', authMiddleware, tutorMiddleware, tutorRoute);
 router.use('/user', authMiddleware, userMiddleware, userRoute);
 
 router.use('/course', authMiddleware, courseRoute);
+router.use('/profile', profileRoute);
 
 //test
 const { asyncCatch } = require('../helpers/utils');

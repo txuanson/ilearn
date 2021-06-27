@@ -8,6 +8,7 @@ module.exports = {
     ZOOM_API_URI: 'https://api.zoom.us/v2',
     ZOOM_AUTH_URI: 'https://zoom.us/oauth/token',
     PAGE_SIZE: 20,
+    DEFAULT_AVA: 'storage/default_avatar.svg',
     STATIC_PATH: resolve(`${__dirname}/../public/`),
     TEMP_DURATION: 3,
     ZOOM_AUTH: {
