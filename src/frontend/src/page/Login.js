@@ -6,7 +6,7 @@ import "./Login.css";
 
 const Login = () => {
   const [username, setEnterUsername] = useState("");
-  const [pass, setEnterPass] = useState("");
+  const [password, setEnterPass] = useState("");
   const usernameChangeHandler = (event) => {
     setEnterUsername(event.target.value);
   };
@@ -17,7 +17,7 @@ const Login = () => {
   const submitClickHandler = async (event) => {
     //console.log(email, pass);
     try {
-      const res = await postLogin({ username: email, password: pass });
+      const res = await postLogin({ username: username, password: password });
       //console.log(res.token);
       login(res);
     } catch (error) {
@@ -35,7 +35,7 @@ const Login = () => {
         <div className="align-items-center"></div>
         <div className="form-group">
           <input type="text" className="form-control" name="username" id="username" placeholder="Enter your username" onChange={usernameChangeHandler}/>
-          <input type="password" className="form-control" name="psw" id="pws" placeholder="Enter your password" onChange={passChangeHandler}/>
+          <input type="password" className="form-control" name="password" id="password" placeholder="Enter your password" onChange={passChangeHandler}/>
 
           <div className="row ">
             <div className="col"> <span className="pass"><u>Haven't got an account yet?</u></span></div>
