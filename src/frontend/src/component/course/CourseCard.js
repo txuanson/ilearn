@@ -8,7 +8,7 @@ export default function CourseCard({ data }) {
   return (
     <Col xs={12} md={4}>
       <Card>
-        <CardImg top width="100%" src={data?.cover ? generateLink(data.cover) : "/img/default-class-cover.png"} alt={data?.name ?? "Course Card Cover"} />
+        <CardImg top width="100%" src={data?.cover ? data.cover : "/img/default-class-cover.png"} alt={data?.name ?? "Course Card Cover"} />
         <CardBody>
           <CardTitle tag="h5">{data.name}</CardTitle>
           {/* <Link to={`/profile/${data.tutor._id}`}>

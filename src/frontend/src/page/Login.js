@@ -18,8 +18,8 @@ const Login = () => {
     //console.log(email, pass);
     try {
       const res = await postLogin({ username: email, password: pass });
-      console.log(res);
-      login(res.token);
+      //console.log(res.token);
+      login(res);
     } catch (error) {
       handleErrorApi(error);
     }

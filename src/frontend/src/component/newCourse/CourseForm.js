@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import classes from "./CourseForm.module.css";
 
 const CATEGORY_DATA = ['Depelopment', 'Design', 'Marketing', 'Finance', 'Art']

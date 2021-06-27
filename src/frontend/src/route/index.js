@@ -3,6 +3,8 @@ import { AnimatePresence } from "framer-motion";
 import HomePage from "../page/HomePage";
 import SplashRoute from "../component/animation/splashRoute";
 import Login from "../page/Login";
+import DashBoard from "../page/DashBoard";
+import AuthenZoom from "../page/AuthZoom";
 
 export default function MyRoute() {
     return(
@@ -20,6 +22,12 @@ export default function MyRoute() {
                     </SplashRoute>
                 </Route>
             </AnimatePresence>
+
+                <Route exact path="/connect-zoom">
+                    <SplashRoute key="/connect-zoom">
+                     <AuthenZoom/>
+                    </SplashRoute>
+                </Route>
         </Router>
     )
 }
