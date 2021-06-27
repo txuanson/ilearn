@@ -15,7 +15,7 @@ export default function AuthenZoom() {
     useEffect(async () => {
         try {
             if (token) {
-                const res = await postAttachZoom({ token });
+                const res = await postAttachZoom({ access_code: token });
                 window.location.href = "/";
             }
         } catch (err) {
