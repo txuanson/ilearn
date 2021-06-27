@@ -5,6 +5,7 @@ export const login = ({ token }) => {
     window.location.href = "/";
   };
 
+
 export const auth = () => {
     const token = cookie.get("userToken");
   

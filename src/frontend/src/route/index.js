@@ -5,6 +5,7 @@ import SplashRoute from "../component/animation/splashRoute";
 import Login from "../page/Login";
 import DashBoard from "../page/DashBoard";
 import AuthenZoom from "../page/AuthZoom";
+import Register from "../page/Register";
 
 export default function MyRoute() {
     return(
@@ -19,6 +20,12 @@ export default function MyRoute() {
                 <Route exact path="/login">
                     <SplashRoute key="/login">
                      <Login/>
+                    </SplashRoute>
+                </Route>
+
+                <Route exact path="/register">
+                    <SplashRoute key="/register">
+                     <Register/>
                     </SplashRoute>
                 </Route>
             </AnimatePresence>
