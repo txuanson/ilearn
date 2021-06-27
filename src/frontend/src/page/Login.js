@@ -28,7 +28,7 @@ const Login = () => {
 <div>
   <div className="container">
       <div id="img" className="row">
-        <img src= "/logo-ilearn.svg" alt=""/>
+        <img src= "/logo-iLearn.svg" alt=""/>
       </div>
     <div className="row">
       <div className="col-md-4 mx-auto">

@@ -39,7 +39,7 @@ const Register = () => {
             <input type="password" className="form-control" name="psw" id="pws" placeholder="Enter your password" onChange={(event) => {setEnterPass(event.target.value)}}/>
             <input type="password" className="form-control" name="cfpsw" id="cfpsw" placeholder="Confirm your password" onChange={(event) => {setEnterConfirmPass(event.target.value)}}/>
 
-            <div className="text-center container"><button type="button" className="btn btn-outline-info" onClick = {submitClickHandler}>Login</button></div>
+            <div className="text-center container"><button type="button" className="btn btn-outline-info" onClick = {submitClickHandler}>Register</button></div>
           </div>
         </div> 
       </div>
