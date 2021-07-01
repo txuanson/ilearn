@@ -6,6 +6,7 @@ import Login from "../page/Login";
 import DashBoard from "../page/DashBoard";
 import AuthenZoom from "../page/AuthZoom";
 import Register from "../page/Register";
+import Footer from "../footer/Footer";
 
 export default function MyRoute() {
     return(
@@ -26,6 +27,12 @@ export default function MyRoute() {
                 <Route exact path="/register">
                     <SplashRoute key="/register">
                      <Register/>
+                    </SplashRoute>
+                </Route>
+
+                <Route exact path="/footer">
+                    <SplashRoute key="/footer">
+                     <Footer/>
                     </SplashRoute>
                 </Route>
             </AnimatePresence>
