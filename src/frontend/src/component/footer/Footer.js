@@ -1,35 +1,46 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Footer.css";
+/*--style={{ backgroundColor: "#14254a" }}--*/
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: "#14254a" }} className="">
-      <div className="container mx-auto text-white py-8 flex items-baseline flex-wrap">
-        <div className="mx-2 flex items-baseline">
-          <Link to="/">
-            <h2 className="text-white font-semibold text-3xl md:mx-2">
-              <span className="text-blue-500">i</span>Learn
-            </h2>
-          </Link>
-          <p className="ml-2">© 2021 iLearn</p>
-          <p className="ml-2">Power by iHelloWorld</p>
+    <footer className="footer-component">
+      <div class="footer-left">
+        <div id="logo" className="row">
+          <img src="/logo-iLearn.svg" alt="iLearn logo" />
+        </div>
+        <p class="footer-copyright">© 2021 iLearn</p>
+      </div>
+
+      <div class="footer-center">
+        <div>
+          <i class="fa fa-map-marker"></i>
+          <p><span>227 Nguyen Van Cu, District 5</span>
+              <span>University of Science, </span>
+              <span>Ho Chi Minh City </span></p>
+        </div>
+        <div>
+          <i class="fa fa-phone"></i>
+          <p>(+84)123456789</p>
         </div>
 
-        <ul className="flex md:ml-auto items-baseline justify-center h-full">
-          <Link to="/">
-            <li className="mx-2 text-white">Home</li>
-          </Link>
-          <Link to="/new">
-            <li className="mx-2 text-white">New class</li>
-          </Link>
-          <Link to="/trending">
-            <li className="mx-2 text-white">Trending</li>
-          </Link>
-          <Link to="/about">
-            <li className="mx-2 text-white">About us</li>
-          </Link>
-        </ul>
+        <div>
+          <i class="fa fa-envelope"></i>
+          <p><a href="mailto:lkhanh4401@gmail.com">iLearn@gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="footer-right">
+        <div class="footer-icons">
+          <a href="#"><i class="fa fa-facebook"></i></a>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="#"><i class="fa fa-instagram"></i></a>
+        </div>
       </div>
     </footer>
   );
 }
+
+
+
