@@ -159,7 +159,7 @@ const deleteCourse = asyncCatch(async (req, res, next) => {
     if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
         throw new Forbidden('You do not have permission to this course');
 
-    await deleteCourseHelper(req.user_data._id, course_id);
+    await deleteCourseHelper(course.tutor, course_id);
 
     res.send("Success!");
 })

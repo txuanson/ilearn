@@ -28,7 +28,7 @@ const createSection = asyncCatch(async (req, res, next) => {
     if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
         throw new Forbidden('You do not have permission to this course');
 
-    const meeting = await zoomCreateMeeting(req.user_data._id, {
+    const meeting = await zoomCreateMeeting(course.tutor, {
         topic: value.topic,
         duration: value.duration,
         start_time: value.start_time
@@ -89,7 +89,7 @@ const editSection = asyncCatch(async (req, res, next) => {
 
     let meeting = {};
     if (value.topic != section.topic || value.duration != section.duration || value.start_time != section.duration) {
-        meeting = await zoomEditMeeting(req.user_data._id, section.meeting_id, {
+        meeting = await zoomEditMeeting(course.tutor, section.meeting_id, {
             topic: value.topic,
             duration: value.duration,
             start_time: value.start_time
@@ -114,11 +114,11 @@ const deleteSection = asyncCatch(async (req, res, next) => {
         .select('-content')
         .exec();
 
-    // if (!section || !course) throw new NotFound('Not found!');
-    // if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
-    //     throw new Forbidden('You do not have permission to this course');
+    if (!section || !course) throw new NotFound('Not found!');
+    if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
+        throw new Forbidden('You do not have permission to this course');
 
-    await deleteSectionHelper(req.user_data._id, section_id);
+    await deleteSectionHelper(course.tutor, section_id);
 
     res.send("Success!");
 })
