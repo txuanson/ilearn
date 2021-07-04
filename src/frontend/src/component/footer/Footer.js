@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Footer.css";
-/*--style={{ backgroundColor: "#14254a" }}--*/
+import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 
 export default function Footer() {
   return (
@@ -15,7 +14,7 @@ export default function Footer() {
 
       <div class="footer-center">
         <div>
-          <i class="fa fa-map-marker"></i>
+            <i class="fa fa-map-marker"></i>
           <p><span>227 Nguyen Van Cu, District 5</span>
               <span>University of Science, </span>
               <span>Ho Chi Minh City </span></p>
@@ -33,9 +32,9 @@ export default function Footer() {
 
       <div class="footer-right">
         <div class="footer-icons">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
+          <p><a href="#"><i class="fa fa-facebook"></i></a>Facebook</p>
+          <p><a href="#"><i class="fa fa-twitter"></i></a>Twitter</p>
+          <p><a href="#"><i class="fa fa-instagram"></i></a>Instagram</p>
         </div>
       </div>
     </footer>

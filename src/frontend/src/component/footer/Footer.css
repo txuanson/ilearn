@@ -27,26 +27,20 @@
 
 #logo img {
   background-color: white;
-  height: 80px;
-  margin: auto;
-  margin-top: 10px;
-  margin-bottom: -50px;
+  height: 100px;
   z-index: 1;
   padding: 20px;
-  max-width: 15%;
+  margin-left: 100px;
+  margin-top:40px;
+  max-width: 20%;
 }
 
-.footer-component .footer-links{
-  color:  #ffffff;
-  margin: 20px 0 12px;
-  padding: 0;
-}
-
-.footer-component .footer-copyright{
-  color:  #222;
+.footer-component .footer-left .footer-copyright{
+  color:  #ffff;
   font-size: 14px;
   font-weight: normal;
-  margin: 0;
+  margin-left: 100px;
+  margin-top: 10px;
 }
 
 .footer-component .footer-center{
@@ -54,7 +48,6 @@
 }
 
 .footer-component .footer-center i{
-  background-color:  #33383b;
   color: #ffffff;
   font-size: 25px;
   width: 38px;
@@ -112,6 +105,14 @@
   text-align: center;
   line-height: 35px;
 
+  margin-right: 3px;
+  margin-bottom: 5px;
+}
+
+.footer-component .footer-icons p{
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 3px;
   margin-right: 3px;
   margin-bottom: 5px;
 }
