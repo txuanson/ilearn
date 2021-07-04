@@ -27,15 +27,15 @@ export default function Footer() {
 
         <div>
           <i class="fa fa-envelope"></i>
-          <p><a href="mailto:lkhanh4401@gmail.com">iLearn@gmail.com</a></p>
+              <p><a href="mailto:lkhanh4401@gmail.com"></a>iLearn@gmail.com</p>
         </div>
       </div>
 
       <div class="footer-right">
         <div class="footer-icons">
-          <a href="#"><i class="fa fa-facebook"></i></a>
-          <a href="#"><i class="fa fa-twitter"></i></a>
-          <a href="#"><i class="fa fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
     </footer>

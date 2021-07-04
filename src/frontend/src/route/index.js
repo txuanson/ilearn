@@ -6,7 +6,7 @@ import Login from "../page/Login";
 import DashBoard from "../page/DashBoard";
 import AuthenZoom from "../page/AuthZoom";
 import Register from "../page/Register";
-import Footer from "../footer/Footer";
+import Footer from "../component/footer/Footer";
 
 export default function MyRoute() {
     return(
