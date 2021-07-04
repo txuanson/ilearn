@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="footer-component">
       <div class="footer-left">
-        <div id="logo" className="row">
+        <div className="logo">
           <img src="/logo-iLearn.svg" alt="iLearn logo" />
         </div>
         <p class="footer-copyright">© 2021 iLearn</p>

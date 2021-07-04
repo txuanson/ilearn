@@ -25,12 +25,11 @@
   width: 40%;
 }
 
-#logo img {
+.footer-component .footer-left img {
   background-color: white;
   height: 100px;
   z-index: 1;
-  padding: 20px;
-  margin-left: 100px;
+  margin-left: 90px;
   margin-top:40px;
   max-width: 20%;
 }
@@ -39,7 +38,7 @@
   color:  #ffff;
   font-size: 14px;
   font-weight: normal;
-  margin-left: 100px;
+  margin-left: 95px;
   margin-top: 10px;
 }
 
@@ -117,7 +116,7 @@
   margin-bottom: 5px;
 }
 
-@media (max-width: 880px) {
+@media (max-width: 780px) {
 
   .footer-component{
     font: bold 14px sans-serif;
@@ -135,5 +134,4 @@
   .footer-component .footer-center i{
     margin-left: 0;
   }
-
 }
