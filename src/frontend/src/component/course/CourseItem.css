@@ -25,9 +25,6 @@ hr {
 .course__item__img{
     align-items: center;
     border-radius: 2px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     text-align: left;
     width: 90px;
     box-sizing: border-box;
@@ -37,7 +34,7 @@ hr {
 .course__item__type {
     box-sizing: border-box;
     border-radius: 2px;
-    padding: 1px 3px;
+    padding: 2px 8px;
     background-color: #A23419;
     color: #fff;
 }
@@ -55,4 +52,8 @@ hr {
 }
 .course__item__img:hover{
     transform: scale(1.1);
+}
+
+.course__item__text {
+    margin-bottom: 1rem;
 }

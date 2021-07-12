@@ -1,10 +1,13 @@
 .title {
     background-color: var(--main-color);
+    margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
     color: #fff;
     font-weight: bold;
     padding: 20px;
+    font-size: 1rem;
+
 }
 
 .breadcrumb {
@@ -48,7 +51,7 @@
     text-align: center;
 }
 /* Small Screen */
-@media only screen and (max-device-width: 768px){
+@media only screen and (max-device-width: 1080px){
     .course-list-item {
         flex-direction: column;
         width: 90vw;

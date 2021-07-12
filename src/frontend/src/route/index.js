@@ -6,7 +6,7 @@ import Login from "../page/Login";
 import DashBoard from "../page/DashBoard";
 import AuthenZoom from "../page/AuthZoom";
 import Register from "../page/Register";
-import Footer from "../component/footer/Footer";
+import CourseDescription from "../page/CourseDescription";
 
 export default function MyRoute() {
     return(
@@ -29,19 +29,30 @@ export default function MyRoute() {
                      <Register/>
                     </SplashRoute>
                 </Route>
-
-                <Route exact path="/footer">
-                    <SplashRoute key="/footer">
-                     <Footer/>
-                    </SplashRoute>
-                </Route>
-            </AnimatePresence>
-
                 <Route exact path="/connect-zoom">
                     <SplashRoute key="/connect-zoom">
                      <AuthenZoom/>
                     </SplashRoute>
                 </Route>
+
+                <Route exact path="/description">
+                    <SplashRoute key="/description">
+                        <CourseDescription
+                        cover = "/img/default-class-cover.png"
+                        name ="Welcome to AI"
+                        text = "First approach - brief introduction"
+                        category = "Programming"
+                        type = "Public"
+                        content = "## ***This is markdown content***"
+                        />
+                    </SplashRoute>
+                </Route>
+                <Route exact path="/dashboard">
+                    <SplashRoute key="/dashboard">
+                     <DashBoard />
+                    </SplashRoute>
+                </Route>
+            </AnimatePresence>  
         </Router>
     )
 }

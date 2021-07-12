@@ -75,7 +75,7 @@
 
 
 /* Small Screen */
-@media only screen and (max-device-width: 767px){
+@media only screen and (max-device-width: 1080px){
     .sidebar{
         bottom: 0;
         width: 100vw;
