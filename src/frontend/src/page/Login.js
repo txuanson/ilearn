@@ -3,6 +3,7 @@ import { postLogin } from "../api/auth";
 import { login } from "../util/auth";
 import handleErrorApi from "../util/handleErrorApi";
 import "./Login.css";
+import Header from "../component/header/Header";
 
 const Login = () => {
   const [username, setEnterUsername] = useState("");
@@ -26,6 +27,7 @@ const Login = () => {
   };
   return (
 <div>
+  <Header></Header>
   <div className="container">
       <div id="img" className="row">
         <img src= "/logo-iLearn.svg" alt=""/>
