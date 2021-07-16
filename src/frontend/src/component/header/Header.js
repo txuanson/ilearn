@@ -25,22 +25,28 @@ const Header = (props) => {
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <nav class="navbar navbar-expand-md navbar-light">
         <div class = "container">
             <NavbarBrand href="/">
-            ILEARN
+              <div id="logo_brand">
+                <img src="/logo-iLearn.svg" style = {{height: "40px"}} alt="iLearn logo" />
+              </div>
             </NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
-                <div><NavLink href="#">Home</NavLink></div>
-                <div><NavLink href="#">Categories</NavLink></div>
-                <div><NavLink href="#">Contact</NavLink></div>
-                <div><Input type="Search" name="Search" id="Search" placeholder="SEARCH" /></div>
-                <div><Button color="success">Login</Button>{' '}</div>
-                <div><Button color="success">Register</Button>{' '}</div>
+                <div class = "Left">
+                  <div><NavLink href="#">Home</NavLink></div>
+                  <div><NavLink href="#">Categories</NavLink></div>
+                  <div><NavLink href="#">Contact</NavLink></div>
+                </div>
+                <div class = "Right">
+                  <div><button type="button" className="btn btn-outline-info">Login</button></div>
+                  <div><button type="button" className="btn btn-outline-info">Register</button></div>
+                </div>
+              
             </Collapse>
         </div> 
-      </Navbar>
+      </nav>
     </div>
   );
 }

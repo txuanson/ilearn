@@ -26,7 +26,7 @@ const Login = () => {
     }
   };
   return (
-<div>
+<div style = {{background: "#0a9fbb"}}>
   <Header></Header>
   <div className="container">
       <div id="img" className="row">

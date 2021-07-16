@@ -1,9 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap');
 
-.mr-auto li{
+
+.container {
+    font-family: Noto Sans JP;
+    padding: 0;
+    margin: 0;
+    font-weight: bolder;
+}
+
+#logo_brand{
+    background-color: white;
+    border-radius: 15px;
+    padding: 5px;
 
 }
 
-#Search {
-    width: 20rem;
-    margin: auto;
+.container .collapse{
+    justify-content: space-between;
+}
+
+.container .collapse .Left {
+    display: flex;
+}
+
+.container .collapse .Left .nav-link{
+    color: white;
+}
+
+
+.container .collapse .Right {
+    display: flex;
+    justify-content: center;
+}
+
+.container .collapse .Right Button{
+    display: flex;
+    margin:0 10px;
+    border-radius: 800px;
+    color: white;
+    border-color: white;
+    background-color: #0A9EBB;
+    outline-width: 2px;
+    font-weight: bolder;
+}
+
+.container .collapse .Right Button:hover {
+    background-color: #85B8CB;
+    border-color: #85B8CB
+}
+
+@media (max-width: 767.98px) {
+    .container .collapse .Left {
+        display: block;
+    }
 }
