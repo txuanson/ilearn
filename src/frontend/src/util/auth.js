@@ -8,7 +8,6 @@ export const login = ({ token }) => {
 
 export const auth = () => {
     const token = cookie.get("userToken");
-  
     return token;
   };
   
