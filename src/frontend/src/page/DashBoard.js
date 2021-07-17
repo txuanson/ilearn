@@ -31,7 +31,7 @@ function DashBoard() {
 
     return (
         <Container fluid className="p-0 d-flex flex-row min-vh-100">
-            <aside className="bg-dark flex-col position-relative" style={{ width: showSideBar ? "200px" : "50px", transition: ".2s" }}>
+            <aside className="bg-dark flex-col position-relative" style={{ width: showSideBar ? "180px" : "50px", transition: ".2s" }}>
                 <Nav vertical>
                     {SidebarItem.map((item) => (
                         <Link to={item.path} className="sidebar-item">
@@ -42,11 +42,11 @@ function DashBoard() {
                         </Link>
                     ))}
                 </Nav>
-                <div className="bg-primary sidebar-item position-fixed bottom-0" onClick={toggleSideBar} style={{width: showSideBar ? "200px" : "50px", transition: ".2s"}}>
-                    <FaIcons.FaBook />
+                <div className={"bg-primary sidebar-item position-fixed bottom-0 d-flex align-items-center justify-content-center"} onClick={toggleSideBar} style={{ width: showSideBar ? "180px" : "50px", transition: ".2s" }}>
+                    <TiIcons.TiArrowRight style={{ transform: showSideBar ? "rotate(0deg)" : "rotate(-180deg)", fontSize:"30px"}} />
                 </div>
             </aside>
-            <Col className="bg-secondary p-0 m-0 overflow-auto">
+            <Col className="bg-secondary p-0 m-0">
                 <Switch>
                     <Route path="/dashboard/create-course">
                         <NewCourse />
@@ -55,7 +55,7 @@ function DashBoard() {
                         <ListCourse />
                     </Route>
                 </Switch>
-                <DashBoardFooter/>
+                <DashBoardFooter />
             </Col>
 
         </Container>
