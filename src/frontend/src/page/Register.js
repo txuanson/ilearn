@@ -3,6 +3,7 @@ import { postRegister } from "../api/auth";
 import { login } from "../util/auth";
 import handleErrorApi from "../util/handleErrorApi";
 import "./Register.css";
+import Header from "../component/header/Header";
 
 const Register = () => {
     const [email, setEnterEmail] = useState('');
@@ -24,7 +25,7 @@ const Register = () => {
         };
     }
     return (
-  <div>
+  <div style = {{background: "#0a9fbb"}}>
     <div className="container">
         <div id="img" className="row">
           <img src= "/logo-iLearn.svg" alt=""/>

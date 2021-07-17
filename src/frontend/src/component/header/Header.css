@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap');
 
 
+
+
 .container {
     font-family: Noto Sans JP;
-    padding: 0;
-    margin: 0;
-    font-weight: bolder;
+}
+
+.navbar{
+    background-color: #0a9fbb;
 }
 
 #logo_brand{
@@ -23,8 +26,11 @@
     display: flex;
 }
 
-.container .collapse .Left .nav-link{
+.container .collapse .Left .active{
     color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bolder;
 }
 
 
@@ -42,6 +48,11 @@
     background-color: #0A9EBB;
     outline-width: 2px;
     font-weight: bolder;
+    font-weight: bolder;
+}
+
+.container .collapse .Right Button .active {
+    text-decoration: none;
 }
 
 .container .collapse .Right Button:hover {

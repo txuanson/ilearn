@@ -7,7 +7,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -17,6 +16,10 @@ import {
   Button,
   Input
 } from 'reactstrap';
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom"
+import HomePage from '../../page/HomePage';
+import Register from '../../page/Register';
+import Login from '../../page/Login';
 
 const Header = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,28 +28,33 @@ const Header = (props) => {
 
   return (
     <div>
+      <Router>
       <nav class="navbar navbar-expand-md navbar-light">
         <div class = "container">
-            <NavbarBrand href="/">
+            <NavLink to="/">
               <div id="logo_brand">
                 <img src="/logo-iLearn.svg" style = {{height: "40px"}} alt="iLearn logo" />
               </div>
-            </NavbarBrand>
+            </NavLink>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <div class = "Left">
-                  <div><NavLink href="#">Home</NavLink></div>
-                  <div><NavLink href="#">Categories</NavLink></div>
-                  <div><NavLink href="#">Contact</NavLink></div>
+                  <div><NavLink to="/">Home</NavLink></div>
+                  <div><NavLink to="#">Categories</NavLink></div>
+                  <div><NavLink to="#">Contact</NavLink></div>
                 </div>
                 <div class = "Right">
-                  <div><button type="button" className="btn btn-outline-info">Login</button></div>
-                  <div><button type="button" className="btn btn-outline-info">Register</button></div>
+                  <div><NavLink to="/login"><button type="button" className="btn btn-outline-info">Login</button></NavLink></div>
+                  <div><NavLink to="/register"><button type="button" className="btn btn-outline-info">Register</button></NavLink></div>
                 </div>
               
             </Collapse>
         </div> 
       </nav>
+      <Route path = "/" exact component = {HomePage}/>
+      <Route path = "/login" component = {Login}/>
+      <Route path = "/register" component = {Register}/>
+      </Router>
     </div>
   );
 }

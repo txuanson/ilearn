@@ -3,6 +3,8 @@ import { getCourseByCategory } from '../api/course';
 import CourseCard from '../component/course/CourseCard';
 import handleErrorApi from '../util/handleErrorApi';
 import { Row } from 'reactstrap';
+//import { Header } from 'antd/lib/layout/layout';
+import Header from '../component/header/Header';
 
 export default function HomePage() {
     const [data, setData] = useState([]);
@@ -23,6 +25,7 @@ export default function HomePage() {
         <div
         className="container p-3 mx-auto"
         >
+
 
             <Row>
                 {data.map((item) => (

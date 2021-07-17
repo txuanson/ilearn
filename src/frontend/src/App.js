@@ -2,6 +2,8 @@ import './App.css';
 import { connect, Provider } from "react-redux";
 import Router from "./route";
 import store from "./redux/store";
+//import { Header } from 'antd/lib/layout/layout';
+import Header from './component/header/Header';
 
 
 function App() {
@@ -25,6 +27,7 @@ const MyApp = connect(
 )(({ isLoading }) => {
   return (
     <div className="App">
+      <Header></Header>
       {isLoading && (
         <div
           style={{ zIndex: 1000 }}
@@ -33,7 +36,6 @@ const MyApp = connect(
           <div class="lds-dual-ring"></div>
         </div>
       )}
-      <Router />
     </div>
   );
 });
