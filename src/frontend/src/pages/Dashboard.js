@@ -35,22 +35,35 @@ function Dashboard() {
             <Link to="/dashboard">My class</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            <Link to="/dashboard/create">Create class</Link>
+            <Link to="/dashboard/create-course">Create class</Link>
           </Menu.Item>
         </Menu>
       </Sider>
-      <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }} />
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-            Bill is a cat.
+      <Layout>
+        <Header
+          className="site-layout-sub-header-background"
+          style={{ padding: 0 }}
+        >
+
+        </Header>
+        <Content style={{ margin: "24px 16px 0" }}>
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, minHeight: 360 }}
+          >
+            <Switch>
+              <Route path="/dashboard/create-course">
+               1
+              </Route>
+              <Route path="/dashboard">
+                2
+              </Route>
+            </Switch>
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer className="text-center">
+          404 Not Found © 2021
+        </Footer>
       </Layout>
     </Layout>
   );
