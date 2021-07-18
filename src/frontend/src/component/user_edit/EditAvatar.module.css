@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #f1f1f1;
+}
+
+.container h1 {
+    font-weight: bold;
+}
+
+.container img {
+    margin: 1em;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    margin-top: 1rem;
+    object-fit: cover;
+} 
+
+.container input[type="file"] {
+    margin: 1em;
+}
