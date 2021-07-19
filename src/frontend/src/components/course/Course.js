@@ -13,7 +13,7 @@ function handleMenuClick(e) {
 const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="1">
-        <Link to={"/course/edit"}>Edit</Link>
+        <Link to="/course/edit">Edit</Link>
       </Menu.Item>
       <Menu.Item key="2">
       <Link to="/course/sections">Sections</Link>
@@ -29,7 +29,7 @@ export default function Course(data){
     return (
         <div class="p-4 mb-2 bg-white shadow-xl rounded-xl flex  flex-col md:flex-row justify-start dark:bg-gray-800 gap-4">
             <div class="relative">
-                <img src={data.cover} class="rounded-xl w-full h-40 md:w-auto md:max-h-20"/>
+                <img src={data.cover} alt={data.name} class="rounded-xl w-full h-40 md:w-auto md:max-h-20"/>
                 <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
                     {data.public ? 'Public' : 'Private'}
                 </span>
