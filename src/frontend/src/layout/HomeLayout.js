@@ -1,14 +1,12 @@
-
+import Header from "../components/header/Header";
 function HomeLayout({ children }) {
-
-
     return (
-
-        //Headers
-        <div className="relative">
-            {children}
+        <div>
+            <Header user = {false}></Header>
+            <div className="relative">
+                {children}
+            </div>
         </div>
-        //Footers
     );
 }
 
