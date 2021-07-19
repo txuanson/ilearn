@@ -1,7 +1,9 @@
-import { Breadcrumb, Dropdown, Layout, Menu } from "antd";
+import {Layout, Menu } from "antd";
 import React from "react";
+import SplashRoute from "../components/animation/SplashRoute";
 import { Route } from "react-router";
 import { Link, Switch } from "react-router-dom";
+import ListCourse from "./ListCourse";
 import {
   UploadOutlined,
   UserOutlined,
@@ -46,17 +48,19 @@ function Dashboard() {
         >
 
         </Header>
-        <Content style={{ margin: "24px 16px 0" }}>
+        <Content style={{ margin: "10px 16px 0" }}>
           <div
             className="site-layout-background"
-            style={{ padding: 24, minHeight: 360 }}
+            style={{ padding: 10, minHeight: 360 }}
           >
             <Switch>
               <Route path="/dashboard/create-course">
                1
               </Route>
               <Route path="/dashboard">
-                2
+                  <SplashRoute key="/listcourse">
+                     <ListCourse />
+                  </SplashRoute>
               </Route>
             </Switch>
           </div>
