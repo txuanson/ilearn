@@ -1,13 +1,32 @@
-import React from 'react';
+import React, {useState}from 'react';
 import ReactMarkdown from 'react-markdown'
 import 'antd/dist/antd.css';
 import { Link} from "react-router-dom";
 import gfm from "remark-gfm";
-import {Button,Layout, Breadcrumb} from 'antd';
+import {Button,Layout, Breadcrumb, Affix} from 'antd';
+import CommentQA from '../components/comment/CommentQA';
 
 const { Header, Content, Footer } = Layout;
 
+function Markdown() {
+    const md = `
+    #Header 1
+    ##Header 2
+  
+    _italic_
+  
+    **bold**
+  
+    <b> bold Html </b>
+    `;
+  
+    return (
+        <ReactMarkdown >{md}
+        </ReactMarkdown >
+    );
+  }
 export default function CourseDescription(data) {
+    const [top, setTop] = useState(0);
     let markdown = `
     ## 📖 About this class
 
@@ -71,7 +90,7 @@ export default function CourseDescription(data) {
         <Header
           className="site-layout-sub-header-background" style={{ padding: 0}}
         />
-        <Content style={{ margin: "10px 10px 0" }}>
+        <Content style={{ margin: "10px 10px 0"}} className="p-0 md:px-70">
             <div className="site-layout-background container mx-auto my-2" style={{ padding: 10, minHeight: 360 }}>
                 <Breadcrumb style={{ margin: "10px 0" }}>
                     <Breadcrumb.Item>  
@@ -83,7 +102,7 @@ export default function CourseDescription(data) {
                     <Breadcrumb.Item>{data.name}</Breadcrumb.Item>
                 </Breadcrumb>
               
-                <div class="w-full mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="w-full mx-auto bg-white shadow-md overflow-hidden">
                     <div class="md:flex">
                         <div class="md:flex-shrink-0">
                             <div class="relative m-2">
@@ -93,20 +112,29 @@ export default function CourseDescription(data) {
                                 </span>
                             </div>
                         </div>
-                        <div class="p-5 justify-center flex flex-col">
+                        <div class="text-center p-5 justify-center flex flex-col md:text-left">
                             <div class="uppercase block mt-1 text-lg leading-tight font-medium text-black">{data.name}</div>
                             <div class="tracking-wide text-sm text-indigo-500 font-semibold">{data.category}</div>
-                            <p class="mt-2 text-gray-500">{data.text}</p>
-                            <Button className="rounded-xl w-full md:w-40 mt-5" type="primary">
-                                <Link to="/course/subscribe">Subscribe</Link>
-                            </Button>
+                            <p class="text-gray-500">{data.text}</p>
+                            
                         </div>
+                        
                     </div>
                 </div>
-                <ReactMarkdown remarkPlugins={[gfm]} children={markdown} />
+                <Affix offsetTop={top}>
+                    <Button className="w-full" type="primary">
+                        <Link to="/course/subscribe">Subscribe</Link>
+                    </Button>
+                </Affix>
+                
+                <ReactMarkdown> 
+                    {markdown}
+                </ReactMarkdown>
+                <CommentQA/>
 
                 
             </div>
+            
         </Content>
         <Footer className="text-center">404 Not Found © 2021</Footer>
     </Layout>

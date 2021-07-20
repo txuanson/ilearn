@@ -24,19 +24,19 @@ export default function ListCourse(data){
             <Course
             name = "Software Engineering"
             public = {true}
-            cover = "/logo192.png"
+            cover = "/default-class-cover.png"
             category = "Programming"
             />
             <Course
             name = "Software Engineering"
             public = {true}
-            cover = "/logo192.png"
+            cover = "/default-class-cover.png"
             category = "Programming"
             />
             <Course
             name = "Welcome to our website"
             public = {false}
-            cover = "/logo192.png"
+            cover = "/default-class-cover.png"
             category = "Programming"
             />
         </Layout>
