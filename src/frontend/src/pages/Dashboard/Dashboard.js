@@ -1,9 +1,11 @@
 import {Layout, Menu } from "antd";
 import React from "react";
-import SplashRoute from "../components/animation/SplashRoute";
+import SplashRoute from "../../components/animation/SplashRoute";
 import { Route } from "react-router";
 import { Link, Switch } from "react-router-dom";
 import ListCourse from "./ListCourse";
+import CreateCourse from "./CreateCourse";
+
 import {
   UploadOutlined,
   UserOutlined,
@@ -54,7 +56,9 @@ function Dashboard() {
           >
             <Switch>
               <Route path="/dashboard/create-course">
-               1
+                  <SplashRoute key="/dashboard/create-course">
+                     <CreateCourse />
+                  </SplashRoute>   
               </Route>
               <Route path="/dashboard">
                   <SplashRoute key="/listcourse">

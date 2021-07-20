@@ -1,7 +1,7 @@
 import { Breadcrumb, Layout} from "antd";
 import React from "react";
 import { Link} from "react-router-dom";
-import Course from "../components/course/Course";
+import Course from "../../components/course/Course";
 import {SearchOutlined } from "@ant-design/icons";
 
 export default function ListCourse(data){
