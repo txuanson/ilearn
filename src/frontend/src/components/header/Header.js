@@ -1,9 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react'
-import { Disclosure, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Fragment } from 'react';
+import { Disclosure, Transition } from '@headlessui/react';
+import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Menu, Dropdown, Button } from 'antd';
-import ReactImageFallback from 'react-image-fallback'
+import ReactImageFallback from 'react-image-fallback';
 import { Route } from "react-router";
 import { Link, Switch } from "react-router-dom";
 

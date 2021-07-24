@@ -7,7 +7,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 
 import CourseDescription from "../pages/CourseDescription";
-
+import CreateNewCourse from "../pages/CreateNewCourse";
+import Profile from "../pages/Profile";
 
 export default function MyRoute() {
     return(
@@ -31,7 +32,7 @@ export default function MyRoute() {
                     <SplashRoute key="/register">
                      <Register></Register>
                     </SplashRoute>
-                </Route>
+                </Route> 
 
                 <Route path="/coursedescription">
                     <SplashRoute key="/coursedescription">
@@ -46,6 +47,19 @@ export default function MyRoute() {
 
                     </SplashRoute>
                 </Route> 
+
+                <Route exact path="/CreateNewCourse">
+                    <SplashRoute key="/CreateNewCourse">
+                     <CreateNewCourse/>
+                    </SplashRoute>
+                </Route>
+
+                <Route exact path="/profile">
+                    <SplashRoute key="/profile">
+                     <Profile/>
+                    </SplashRoute>
+                </Route>
+
         </Router>
     )
 }
