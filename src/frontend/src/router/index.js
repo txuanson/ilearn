@@ -7,12 +7,21 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 
 import CourseDescription from "../pages/CourseDescription";
+import HomePage from "../pages/HomePage";
+import Header from "../components/header/Header";
 
 
 export default function MyRoute() {
     return(
         <Router>
-            <Route path="/dashboard">
+            <Header></Header>
+            <Route exact path="/">
+                <SplashRoute key="/">
+                    <HomePage />
+                </SplashRoute>
+            </Route>
+
+            <Route exact path="/dashboard">
                 <SplashRoute key="/dashboard">
                     <Dashboard />
                 </SplashRoute>
@@ -31,7 +40,7 @@ export default function MyRoute() {
                 </SplashRoute>
             </Route>
 
-            <Route path="/coursedescription">
+            <Route exact  path="/coursedescription">
                 <SplashRoute key="/coursedescription">
                     <CourseDescription
                     name = "Welcome to our website"

@@ -1,9 +1,8 @@
-import HomeLayout from "../layout/HomeLayout";
+import { Link } from "react-router-dom";
 
 
 export function Login() {
   return (
-    <HomeLayout>
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div class="flex flex-col w-full max-w-md px-4 pt-10 pb-12 bg-white rounded-xl shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
@@ -26,8 +25,8 @@ export function Login() {
                         </div>
                             <div className="flex items-center justify-between mb-4 ">
                                 <div className="text-sm">
-                                    <a href="#" class="inline-flex text-xs font-thin text-gray-500 sm:text-sm dark:text-gray-100 hover:text-gray-700 dark:hover:text-white">
-                                    Forgot Your Password?
+                                    <a href = "\register" class="inline-flex text-xs font-thin text-gray-500 sm:text-sm dark:text-gray-100 hover:text-gray-700 dark:hover:text-white">
+                                    Haven't got an account yet?
                                     </a>
                                 </div>
 
@@ -48,7 +47,6 @@ export function Login() {
                 </div>
       </div>
     </div>
-    </HomeLayout> 
   );
 }
 

@@ -6,6 +6,7 @@ function HomeLayout({ children }) {
             <div className="relative">
                 {children}
             </div>
+            
         </div>
     );
 }
