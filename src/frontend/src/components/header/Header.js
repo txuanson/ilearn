@@ -102,6 +102,7 @@ export default function Header({user,...props}) {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center rounded-lg bg-gray-200">
+                  <Link to = "/">
                   <img
                     className="block lg:hidden h-8 w-auto"
                     src="/logo-iLearn.svg"
@@ -112,6 +113,7 @@ export default function Header({user,...props}) {
                     src="/logo-iLearn.svg"
                     alt="Workflow"
                   />
+                  </Link>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">

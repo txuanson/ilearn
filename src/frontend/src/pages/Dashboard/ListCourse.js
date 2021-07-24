@@ -1,7 +1,7 @@
 import { Breadcrumb, Layout} from "antd";
 import React from "react";
 import { Link} from "react-router-dom";
-import Course from "../components/course/Course";
+import Course from "../../components/course/Course";
 import {SearchOutlined } from "@ant-design/icons";
 
 export default function ListCourse(data){
@@ -24,19 +24,19 @@ export default function ListCourse(data){
             <Course
             name = "Software Engineering"
             public = {true}
-            cover = "/logo192.png"
+            cover = "/default-class-cover.png"
             category = "Programming"
             />
             <Course
             name = "Software Engineering"
             public = {true}
-            cover = "/logo192.png"
+            cover = "/default-class-cover.png"
             category = "Programming"
             />
             <Course
             name = "Welcome to our website"
             public = {false}
-            cover = "/logo192.png"
+            cover = "/default-class-cover.png"
             category = "Programming"
             />
         </Layout>

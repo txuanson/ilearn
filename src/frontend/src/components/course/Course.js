@@ -35,7 +35,7 @@ export default function Course(data){
                 </span>
             </div>
             <div class="relative flex flex-col space-between w-full md:flex-row">
-                <div class="flex-col items-start justify-between text-gray-700 dark:text-white my-2 md:m-0">
+                <div class="text-center flex-col items-start justify-between text-gray-700 dark:text-white my-2 md:m-0">
                     <p class="text-xl leading-5 pb-2">
                         {data.name}
                     </p>
