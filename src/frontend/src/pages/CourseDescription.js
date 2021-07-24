@@ -3,12 +3,9 @@ import ReactMarkdown from 'react-markdown'
 import 'antd/dist/antd.css';
 import {Link} from "react-router-dom";
 import gfm from "remark-gfm";
-<<<<<<< HEAD
-import {Button,Layout, Breadcrumb, Description} from 'antd';
-=======
+
 import {Button,Layout, Breadcrumb, Affix} from 'antd';
 import CommentQA from '../components/comment/CommentQA';
->>>>>>> 403a261a96f0de552a89b1fa0ed636a128750be7
 
 const { Header, Content, Footer } = Layout;
 
