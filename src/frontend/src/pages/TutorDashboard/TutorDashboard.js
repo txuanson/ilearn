@@ -15,7 +15,7 @@ import {
 
 const { Header, Content, Footer, Sider } = Layout;
 
-function Dashboard() {
+function TutorDashBoard() {
   return (
     <Layout className="min-h-screen">
       <Sider
@@ -36,10 +36,10 @@ function Dashboard() {
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
           <Menu.Item key="1" icon={<ContactsOutlined />}>
-            <Link to="/dashboard">My class</Link>
+            <Link to="/tutor">My Course</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            <Link to="/dashboard/create-course">Create class</Link>
+            <Link to="/tutor/create-course">Create Course</Link>
           </Menu.Item>
         </Menu>
       </Sider>
@@ -55,12 +55,12 @@ function Dashboard() {
             style={{ padding: 10, minHeight: 360 }}
           >
             <Switch>
-              <Route path="/dashboard/create-course">
-                  <SplashRoute key="/dashboard/create-course">
+              <Route path="/tutor/create-course">
+                  <SplashRoute key="/tutor/create-course">
                      <CreateCourse />
                   </SplashRoute>   
               </Route>
-              <Route path="/dashboard">
+              <Route path="/tutor">
                   <SplashRoute key="/listcourse">
                      <ListCourse />
                   </SplashRoute>
@@ -76,4 +76,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default TutorDashBoard;

@@ -11,7 +11,7 @@ export default function ListCourse(data){
                 <Breadcrumb.Item>  
                     <Link to="/homepage">iLearn</Link>
                 </Breadcrumb.Item>
-                <Breadcrumb.Item>My class</Breadcrumb.Item>
+                <Breadcrumb.Item>My Course</Breadcrumb.Item>
             </Breadcrumb>
             <div className="text-end"> 
                 <form class="flex my-2 md:w-full justify-center">

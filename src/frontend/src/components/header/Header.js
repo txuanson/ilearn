@@ -8,7 +8,7 @@ import { Link, Switch } from "react-router-dom";
 
 
 const navigation = [
-  { name: 'Dashboard', to: '/dashboard', current: true },
+  { name: 'Tutor', to: '/tutor', current: true },
   { name: 'Team', to: '#', current: false },
   { name: 'Projects', to: '#', current: false },
   { name: 'Calendar', to: '#', current: false },
