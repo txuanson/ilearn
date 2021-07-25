@@ -34,7 +34,7 @@ function TutorDashBoard() {
             </h2>
           </Link>
         </div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1" icon={<ContactsOutlined />}>
             <Link to="/tutor">My Course</Link>
           </Menu.Item>
@@ -61,7 +61,7 @@ function TutorDashBoard() {
                   </SplashRoute>   
               </Route>
               <Route path="/tutor">
-                  <SplashRoute key="/listcourse">
+                  <SplashRoute key="/tutor">
                      <ListCourse />
                   </SplashRoute>
               </Route>

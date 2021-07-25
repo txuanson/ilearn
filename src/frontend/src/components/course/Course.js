@@ -6,22 +6,30 @@ import { DownOutlined} from '@ant-design/icons';
 
 
 function handleMenuClick(e) {
-    message.info('Click on menu item.');
+    // message.info('Click on menu item.');
     console.log('click', e);
   }
   
-const menu = (
+const menu = (data =>
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="1">
-        <Link to="/course/edit">Edit</Link>
+        <Link to={`tutors/course/${data._id}/edit`}>Edit</Link>
       </Menu.Item>
       <Menu.Item key="2">
-      <Link to="/course/sections">Sections</Link>
+      <Link to={`tutors/course/${data._id}/section`}>Sections</Link>
       </Menu.Item>
-      <Menu.Item key="3">Subscribers</Menu.Item>
-      <Menu.Item key="4">Pending</Menu.Item>
-      <Menu.Item key="5">Banned</Menu.Item>
-      <Menu.Item key="6">Delete</Menu.Item>
+      <Menu.Item key="3">
+      <Link to={`tutors/course/${data._id}/subscriber`}>Subscribers</Link>
+      </Menu.Item>
+      <Menu.Item key="4">
+      <Link to={`tutors/course/${data._id}/pending`}>Pending</Link>
+          </Menu.Item>
+      <Menu.Item key="5">
+      <Link to={`tutors/course/${data._id}/banned`}>Banned</Link>
+          </Menu.Item>
+      <Menu.Item key="6">
+      <Link to={`tutors/course/${data._id}/delete`}> Delete</Link>
+         </Menu.Item>
     </Menu>
   );
 
@@ -46,7 +54,7 @@ export default function Course(data){
                 
                 <div class="absolute right-0 bottom-0 flex items-start my-2 md:m-1">   
                     <Space wrap>
-                        <Dropdown overlay={menu}>
+                        <Dropdown overlay={() => menu(data)}>
                         <Button>
                             Action <DownOutlined />
                         </Button>

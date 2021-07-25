@@ -6,7 +6,8 @@ import Register from "../pages/Register";
 import CourseDescription from "../pages/CourseDescription";
 import HomePage from "../pages/HomePage";
 import HomeLayout from "../layout/HomeLayout";
-
+import ListSection from "../pages/ListSection";
+import CreateNewSection from "../pages/CreateNewSection";
 
 export default function RegularRoute() {
     return (
@@ -28,8 +29,8 @@ export default function RegularRoute() {
                     <SplashRoute key="/course">
                         <CourseDescription
                             name="Welcome to our website"
-                            category="Category"
-                            cover="/logo512.png"
+                            category="Test"
+                            cover="/default-class-cover.png"
                             public={false}
                             text="Brief description about the course. Brief description about the course."
                             content="## 📖 About this class"
@@ -43,9 +44,19 @@ export default function RegularRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route path="/">
-                    <SplashRoute key="/">
+                <Route path="/homepage">
+                    <SplashRoute key="/homepage">
                         <HomePage />
+                    </SplashRoute>
+                </Route>
+                <Route exact path="/tutors/section">
+                    <SplashRoute key="/tutors/section">
+                        <CreateNewSection/>
+                    </SplashRoute>
+                </Route>
+                <Route exact path="/tutors/course/001/section">
+                    <SplashRoute key="/tutors/course/001/section">
+                        <ListSection/>
                     </SplashRoute>
                 </Route>
             </Switch>

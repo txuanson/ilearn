@@ -87,10 +87,7 @@ export default function CourseDescription(data) {
     For production environments...`  
 
   return (
-    <Layout>
-        <Header
-          className="site-layout-sub-header-background" style={{ padding: 0}}
-        />
+    <Layout className="container mx-auto xl:px-40">
         <Content style={{ margin: "10px 10px 0"}} className="p-0 md:px-70">
             <div className="site-layout-background container mx-auto my-2" style={{ padding: 10, minHeight: 360 }}>
                 <Breadcrumb style={{ margin: "10px 0" }}>
