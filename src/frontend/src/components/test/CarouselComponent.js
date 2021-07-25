@@ -28,7 +28,7 @@ export default class CarouselComponent extends Component{
     };
     return (
       <div className = "bg-gray-100 py-5 my-3">
-        <div className = "text-xl text-center text-blue-700 py-3 mt-3 pb-0 font-bold">{this.props.name}</div>
+        <div className = "text-xl text-center text-blue-700 py-3 mt-3 font-bold">{this.props.name}</div>
         <div className = "grid grid-cols-12 mb-3">
             <ArrowLeftIcon className=" block h-10 w-6" onClick={this.previous} style = {{alignSelf:'center', justifySelf: 'center'}}></ArrowLeftIcon>
             <div className="col-span-10" >

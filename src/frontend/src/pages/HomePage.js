@@ -9,9 +9,9 @@ export default function HomePage() {
                     <div class="flex items-center justify-center w-full h-full" style={{position: 'relative'}}>
                         <div class="text-center bg-white rounded-xl px-8 py-6 bg-gray-300 " style={{position: 'absolute', left: '5rem'}}>
                             <div className= "text-3xl font-bold m-1 text-white">Learn to day</div>
-                            <div className= "text-3xl font-bold m-1 text-white">Earn tomorrow</div>
+                            <div className= "text-3xl font-bold m-1 mb-2 text-white">Earn tomorrow</div>
                             <div class="bg-white flex items-center rounded-full shadow-xl">
-                                <input class="rounded-full w-full py-4 px-10 text-gray-700 leading-tight focus:outline-none m-1" style={{width: '300px'}} id="search" type="text" placeholder="Search"/>
+                                <input class="rounded-full w-full py-2  px-6 text-gray-700 leading-tight focus:outline-none m-1" style={{width: '300px'}} id="search" type="text" placeholder="Search"/>
                             </div>
 
                 </div>

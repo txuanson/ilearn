@@ -83,10 +83,10 @@ const menu = (
 
 export default function Header({user,...props}) {
   return (
-    <Disclosure as="nav" className="bg-blue-700 animate-none">
+    <Disclosure as="nav" className="bg-blue-700 animate-none shadow-xl">
       {({ open }) => (
         <>
-          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 ">
+          <div className="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8 ">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -148,13 +148,13 @@ export default function Header({user,...props}) {
                 </div>
             </Dropdown>
               ):(
-                <div className = "flex space-x-4 hidden md:block">
+                <div className = "flex space-x-4 ">
                     <Link to="/login"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium">
+                className="text-gray-300 hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium hidden sm:block">
                 Login
                 </Link>
                 <Link to="/register"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium">
+                className="text-gray-300 hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium hidden md:block">
                 Register
                 </Link>
                 </div>
@@ -170,7 +170,7 @@ export default function Header({user,...props}) {
               {navigation.map((item) => (
                 <Link
                   key={item.name}
-                  href={item.href}
+                  to={item.to}
                   className={classNames(
                     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium'
@@ -181,12 +181,20 @@ export default function Header({user,...props}) {
                 </Link>
               ))}
               {user? (<></>):(
-                <Link
+                <div>
+                  <Link
                 to="/login"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Login
               </Link>
+              <Link
+                to="/register"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Register
+              </Link>
+                </div>
               )}
             </div>
           </Disclosure.Panel>

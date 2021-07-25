@@ -4,13 +4,13 @@ import {Link} from "react-router-dom";
 export default function Footer() {
 
     return (
-    <div class="container">
+    <div class="relative">
         <footer class="bg-blue-700 dark:bg-gray-800 pt-4 pb-8 xl:pt-8">
             <div class="max-w-screen-lg xl:max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 text-gray-400 dark:text-gray-300">
-                <ul class="text-lg font-light pb-8 flex flex-wrap justify-center">
+                <ul class="text-lg font-light pb-4 flex flex-wrap justify-center">
                     <div class="text-left mb-4 md:w-1/3 lg:w-1/3">
                             <div class="flex-1 flex sm:items-stretch sm:justify-center">
-                                <div class="flex-shrink-0 flex items-center rounded-lg bg-gray-200">
+                                <div class="flex-shrink-0 flex items-center rounded-lg bg-gray-200 shadow-xl">
                                     <Link to = "/">
                                     <img
                                         class="block lg:hidden h-14 w-auto"
@@ -27,9 +27,9 @@ export default function Footer() {
                             </div>
                     </div>
                     
-                    <li class="w-screen md:w-1/3 lg:w-1/3">
-                        <div class="text-left">
-                            <h2 class="text-gray-300 text-md uppercase mb-2 font-bold">
+                    <li class="w-screen md:w-1/3 lg:w-1/3 ">
+                        <div class="text-center sm:text-left">
+                            <h2 class="text-gray-300 text-md uppercase mb-2 font-bold text-center">
                                 Contacts
                             </h2>
                             <ul>
@@ -48,24 +48,20 @@ export default function Footer() {
 
                     <li class="w-screen md:w-1/3 lg:w-1/3">
                         <div class="text-left">
-                            <h2 class="text-gray-300 dark:text-gray-200 text-md uppercase mb-2 font-bold">
+                            <h2 class="text-gray-300 dark:text-gray-200 text-md uppercase mb-2 font-bold text-center">
                                 Share us on
                             </h2>
                             <ul>
-                                <li class="mb-4 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
+                                <li class="mb-4 hover:text-gray-800 dark:hover:text-white transition-colors duration-200 flex" style={{justifyContent:"space-evenly"}}>
                                     <a href="#"><FaFacebookSquare></FaFacebookSquare></a>
-                                </li>
-                                <li class="mb-4 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
                                     <a href="#"><FaGithub></FaGithub></a>
-                                </li>
-                                <li class="hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
                                     <a href="#"><FaInstagram></FaInstagram></a>
                                 </li>
-                                <li><div class="mt-6">© 2021 iLearn, 404 Not Found</div></li>
                             </ul>
                         </div>
                     </li>
                 </ul>
+                <div class="text-center text-xs">© 2021 iLearn, 404 Not Found</div>
             </div>
         </footer>
     </div>
