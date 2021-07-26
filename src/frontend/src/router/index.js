@@ -83,6 +83,13 @@ export default function MyRoute() {
                     />
                 </SplashRoute>
             </Route>
+
+            <Route exact path="/profile">
+                    <SplashRoute key="/profile">
+                     <Profile></Profile>
+                    </SplashRoute>
+                </Route>
+
         </Router>
     )
 }

@@ -1,77 +1,74 @@
 import React from 'react';
-import {Breadcrumb, Layout} from "antd";
+import {Breadcrumb, Layout, Button} from "antd";
 import ReactMarkdown from 'react-markdown'
 import 'antd/dist/antd.css';
 import {Link} from "react-router-dom";
 import gfm from "remark-gfm";
-import { Image } from 'antd';
-import EditModal from '../layout/EditModal';
+
+import { CameraOutlined } from '@ant-design/icons';
+
+import EditModal from '../components/ui/EditModal';
 import UploadAvatar from '../components/editprofile/UploadAvatar'
 import UploadProfile from '../components/editprofile/UploadProfile'
 
-function Profile() {
-    let markdown = `
-    ## 📖 About this class
+const { Header, Content, Footer } = Layout;
 
+function Profile() {
+    let name = 'user name here'
+    let markdown = `
+    📖 About this class
     - 🖥 Wellcome and prepair
     - 💼 About Javascript
     - 🎓 Javascript Fundamentals
     - 🌐 Callback function
     - 🔭 Arrow function
 
-    ## 🌟 Content`  
+    🌟 Content`  
 
     return (
-        <Layout>
-            <Breadcrumb style={{ margin: '10px 0' }}>
-                <Breadcrumb.Item>  
-                    <Link to="/homepage">iLearn</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>My profile</Breadcrumb.Item>
-            </Breadcrumb>
+        <Layout className = "m-2 p-10">
+            <Content style={{ margin: "10px 10px 0"}} className="p-0 md:px-70">
+                <Breadcrumb style={{ margin: '10px 0' }}>
+                    <Breadcrumb.Item>  
+                        <Link to="/homepage">iLearn</Link>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>My profile</Breadcrumb.Item>
+                </Breadcrumb>
 
-            <div>
-                <div className="bg-gray-600 h-screen flex justify-center items-center">
-                    <div className="container-fluid p-3 md:p-32">
-                        <figure className="md:flex bg-white rounded-xl p-8 md:p-0 overflow-hidden"> 
-                            <Image
-                                className="w-32 h-32 md:w-48 md:h-auto md:rounded-none rounded-full mx-none"
-                                width={350}
-                                // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvf9wn1WvKWCp2eCV0atTl56ONzL6TyTPh702UMXqeHag2ZUG0YPch6-XWd2o4S_dK1J4&usqp=CAU"
-                            />
-
-                            <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
-                                <figcaption className="font-lg">
-                                    <div className="text-lg font-bold"> Timona Siyali </div>
-                                </figcaption>
-
-                                <blockquote>
-                                    <ReactMarkdown 
-                                        className="text-lg font-light"
-                                        remarkPlugins={[gfm]} 
-                                        children={markdown} />
-                                </blockquote>
-                            </div>
-
-                        </figure>
-                        <div>
+                {/* Profile - main content */}
+                <div className = "max-w-7xl mx-auto shadow-lg bg-white-500 rounded-md "> {/*px-2 sm:px-6 lg:px-8 */} 
+                    <div className = "relative h-60 rounded-t-md bg-gradient-to-r from-blue-400 to-green-500">
+                        <div className = "absolute top-0 right-0 p-2">
                             <EditModal>
-                                <UploadProfile>
-
-                                </UploadProfile>
+                                <UploadProfile />
                             </EditModal>
-                            <EditModal>
-                                <UploadAvatar>
-
-                                </UploadAvatar>
-                            </EditModal>
-                
                         </div>
                     </div>
+                    
+                    <div className = "transform -translate-y-1/4">
+                        <img className = "rounded-full w-40 h-40 border-4 border-white mx-auto"
+                            src = "https://www.researchgate.net/profile/Michel-Steuwer/publication/235673010/figure/fig1/AS:393555295129606@1470842302271/The-famous-Lena-image-often-used-as-an-example-in-image-processing.png" />
+                        
+                        <div className = "font-bold text-xl text-center p-5"
+                            children={name}/>
+                        <div className = "font-light text-md text-center ">
+                            <ReactMarkdown 
+                                remarkPlugins={[gfm]} 
+                                children={markdown} />
+                        </div>
+                    </div>
+                    
+                    <div className = "top-0 right-0 p-2">
+                        <EditModal>
+                            <UploadAvatar />
+                        </EditModal>
+                    </div>
                 </div>
-            </div>
+            </Content>
         </Layout>
     )
 }
 
 export default Profile
+
+

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Upload, Modal } from 'antd';
-
 export class UploadAvatar extends Component { 
     render() {
         function getBase64(file) {
