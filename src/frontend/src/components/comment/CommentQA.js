@@ -81,21 +81,19 @@ export default function CommentQA() {
         if (!value) {
         return;
         }
-        console.log(value)
-        setSubmitting(true); 
-        const setTimeout = (() => {
-            setSubmitting(false);
-            setValue('');
-            setComments([
-                ...comments,
-                {
-                author: 'Khanh',
-                avatar: '/avata-default.jpg',
-                content: <p>{value}</p>,
-                datetime: moment().fromNow(),
-                },
-            ])
-        }, 1000);
+        setSubmitting(false);
+        setValue('');
+        setComments([
+            ...comments,
+            {
+            author: 'Khanh',
+            avatar: '/avata-default.jpg',
+            content: <p>{value}</p>,
+            datetime: moment().fromNow(),
+            },
+        ])
+        console.log(comments);
+
     };
 
     const handleChange = e => {
@@ -104,7 +102,6 @@ export default function CommentQA() {
 
     return (
         <>
-            {comments.length > 0 && <CommentList comments={comments} />}
             <Comment
             avatar={
                 <Avatar
@@ -121,7 +118,7 @@ export default function CommentQA() {
                 />
             }
             />
-            <CommentList comments={data}/>
+            {comments.length >= 0 && <CommentList comments={comments} />}
         </>
         );
     

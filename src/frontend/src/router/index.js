@@ -1,32 +1,25 @@
-import { BrowserRouter as Router, Route } from "react-router-dom"
-import { AnimatePresence } from "framer-motion";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import SplashRoute from "../components/animation/SplashRoute";
-import Dashboard from "../pages/Dashboard/Dashboard";
-
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import CourseDescription from "../pages/CourseDescription";
-import CreateNewCourse from "../pages/CreateNewCourse";
-import Profile from "../pages/Profile";
-import HomePage from "../pages/HomePage";
-import Header from "../components/header/Header";
+import TutorDashBoard from "../pages/TutorDashboard/TutorDashboard";
+import RegularRoute from "./regular";
 
 
 export default function MyRoute() {
-    return(
+    return (
         <Router>
-            <Header></Header>
-                <Route path="/dashboard">
-                    <SplashRoute key="/dashboard">
-                     <Dashboard />
+            <Switch>
+                <Route path="/tutor">
+                    <SplashRoute key="/tutor">
+                        <TutorDashBoard />
                     </SplashRoute>
                 </Route>
 
-                <Route exact path="/login">
-                    <SplashRoute key="/login">
-                     <Login></Login>
+                <Route path="/">
+                    <SplashRoute key="/">
+                        <RegularRoute />
                     </SplashRoute>
                 </Route>
+<<<<<<< HEAD
 
                 <Route exact path="/register">
                     <SplashRoute key="/register">
@@ -90,6 +83,9 @@ export default function MyRoute() {
                     </SplashRoute>
                 </Route>
 
+=======
+            </Switch>
+>>>>>>> 104f3f19ab878cdb1282839f5320904469089ef1
         </Router>
     )
 }

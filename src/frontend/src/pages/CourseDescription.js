@@ -4,11 +4,16 @@ import 'antd/dist/antd.css';
 import {Link} from "react-router-dom";
 import gfm from "remark-gfm";
 
+<<<<<<< HEAD
 // import {Button,Layout, Breadcrumb, Description} from 'antd';
 
 import {Button,Layout, Breadcrumb, Affix} from 'antd';
 import CommentQA from '../components/comment/CommentQA';
 
+=======
+import {Button,Layout, Breadcrumb, Affix} from 'antd';
+import CommentQA from '../components/comment/CommentQA';
+>>>>>>> 104f3f19ab878cdb1282839f5320904469089ef1
 
 const { Header, Content, Footer } = Layout;
 
@@ -90,10 +95,7 @@ export default function CourseDescription(data) {
     For production environments...`  
 
   return (
-    <Layout>
-        <Header
-          className="site-layout-sub-header-background" style={{ padding: 0}}
-        />
+    <Layout className="container mx-auto xl:px-40">
         <Content style={{ margin: "10px 10px 0"}} className="p-0 md:px-70">
             <div className="site-layout-background container mx-auto my-2" style={{ padding: 10, minHeight: 360 }}>
                 <Breadcrumb style={{ margin: "10px 0" }}>

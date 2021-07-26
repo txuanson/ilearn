@@ -41,11 +41,6 @@ export default function CreateCourse(data){
             <Form name="validate_other"
                 {...formItemLayout}
                 onFinish={onFinish}
-                initialValues={{
-                    'input-number': 3,
-                    'checkbox-group': ['A', 'B'],
-                    rate: 3.5,
-                }}
                 scrollToFirstError
             >
                 <Form.Item name="Name" label="Course name"
@@ -120,7 +115,7 @@ export default function CreateCourse(data){
                 >
                     <Button type="primary" htmlType="submit" onClick={onFinish}
                     class="text-white py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-lg">
-                    Submit
+                    Create
                     </Button>
                 </Form.Item>
             </Form>
