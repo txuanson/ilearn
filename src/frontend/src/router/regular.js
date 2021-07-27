@@ -8,6 +8,7 @@ import HomePage from "../pages/HomePage";
 import HomeLayout from "../layout/HomeLayout";
 import ListSection from "../pages/ListSection";
 import CreateNewSection from "../pages/CreateNewSection";
+import Profile from "../pages/Profile";
 
 export default function RegularRoute() {
     return (
