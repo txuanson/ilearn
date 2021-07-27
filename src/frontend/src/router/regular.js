@@ -59,6 +59,12 @@ export default function RegularRoute() {
                         <ListSection/>
                     </SplashRoute>
                 </Route>
+
+                <Route exact path="/profile">
+                    <SplashRoute key="/profile">
+                     <Profile></Profile>
+                    </SplashRoute>
+                </Route>
             </Switch>
         </HomeLayout>
     )

@@ -19,7 +19,6 @@ export default function MyRoute() {
                         <RegularRoute />
                     </SplashRoute>
                 </Route>
-<<<<<<< HEAD
 
                 <Route exact path="/register">
                     <SplashRoute key="/register">
@@ -77,15 +76,7 @@ export default function MyRoute() {
                 </SplashRoute>
             </Route>
 
-            <Route exact path="/profile">
-                    <SplashRoute key="/profile">
-                     <Profile></Profile>
-                    </SplashRoute>
-                </Route>
-
-=======
             </Switch>
->>>>>>> 104f3f19ab878cdb1282839f5320904469089ef1
         </Router>
     )
 }

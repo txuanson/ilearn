@@ -4,16 +4,10 @@ import 'antd/dist/antd.css';
 import {Link} from "react-router-dom";
 import gfm from "remark-gfm";
 
-<<<<<<< HEAD
-// import {Button,Layout, Breadcrumb, Description} from 'antd';
 
 import {Button,Layout, Breadcrumb, Affix} from 'antd';
 import CommentQA from '../components/comment/CommentQA';
 
-=======
-import {Button,Layout, Breadcrumb, Affix} from 'antd';
-import CommentQA from '../components/comment/CommentQA';
->>>>>>> 104f3f19ab878cdb1282839f5320904469089ef1
 
 const { Header, Content, Footer } = Layout;
 
