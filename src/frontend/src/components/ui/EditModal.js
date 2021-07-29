@@ -17,14 +17,16 @@ function EditModal(props) {
     return (
         <div>
             <Button type="primary" onClick={showModal}>
-                Edit
+                {props.title}
             </Button>
 
             <Modal 
-                title="Basic Modal" 
+                title={props.title}
                 visible={isModalVisible} 
                 onCancel={handleCancel}
                 footer={null}
+                width={1000}
+                height={700}
             >
                 {props.children}
             </Modal>

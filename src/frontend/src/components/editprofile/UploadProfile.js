@@ -2,9 +2,10 @@ import { Form, Input, Button } from 'antd';
 import React, {Component} from 'react'
 
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
 
 const layout = {
   labelCol: {
@@ -24,13 +25,12 @@ const tailLayout = {
 export class UploadProfile extends Component {
 
   state = {
-    name: "",
-    bio: EditorState.createEmpty(),
+    editorState: EditorState.createEmpty(),
   };
 
   onEditorStateChange = (editorState) => {
     this.setState({
-      bio: editorState,
+      editorState,
     });
   };
 
@@ -45,7 +45,8 @@ export class UploadProfile extends Component {
     };
 
     render() {
-      const { editorState } = this.state.bio;
+      const { editorState } = this.state;
+
       return (
       <Form {...layout} ref={this.formRef} name="control-ref" onFinish={this.onFinish}>
           <Form.Item
@@ -55,21 +56,30 @@ export class UploadProfile extends Component {
               <Input />
           </Form.Item>
 
-          <Form.Item
+          <Form.Item 
             name="Bio"
             label="Bio: "
           >
-              <Editor
+              <Editor 
                 editorState={editorState}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
                 onEditorStateChange={this.onEditorStateChange}
+                toolbar={{
+                  options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
               />
+          
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" onClick={this.onFinish}>
                   Submit
               </Button>
 

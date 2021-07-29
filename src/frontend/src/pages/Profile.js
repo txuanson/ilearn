@@ -38,19 +38,20 @@ function Profile() {
                 {/* Profile - main content */}
                 <div className = "max-w-7xl mx-auto shadow-lg bg-white-500 rounded-md "> {/*px-2 sm:px-6 lg:px-8 */} 
                     <div className = "relative h-60 rounded-t-md bg-gradient-to-r from-blue-400 to-green-500">
-                        <div className = "absolute top-0 right-0 p-2">
-                            <EditModal>
-                                <UploadProfile />
-                            </EditModal>
-                        </div>
                     </div>
                     
                     <div className = "transform -translate-y-1/4">
-                        <img className = "rounded-full w-40 h-40 border-4 border-white mx-auto"
-                            src = "https://www.researchgate.net/profile/Michel-Steuwer/publication/235673010/figure/fig1/AS:393555295129606@1470842302271/The-famous-Lena-image-often-used-as-an-example-in-image-processing.png" />
-                        
+                        <span>
+                            <img className = "rounded-full w-40 h-40 border-4 border-white mx-auto"
+                                src = "https://www.researchgate.net/profile/Michel-Steuwer/publication/235673010/figure/fig1/AS:393555295129606@1470842302271/The-famous-Lena-image-often-used-as-an-example-in-image-processing.png" />
+                            <Button shape="circle" size="small">
+                                <CameraOutlined />
+                            </Button>
+                        </span>
+
                         <div className = "font-bold text-xl text-center p-5"
                             children={name}/>
+
                         <div className = "font-light text-md text-center ">
                             <ReactMarkdown 
                                 remarkPlugins={[gfm]} 
@@ -58,9 +59,9 @@ function Profile() {
                         </div>
                     </div>
                     
-                    <div className = "top-0 right-0 p-2">
-                        <EditModal>
-                            <UploadAvatar />
+                    <div className = "p-2">
+                        <EditModal title = "Update Profile">
+                            <UploadProfile />
                         </EditModal>
                     </div>
                 </div>
