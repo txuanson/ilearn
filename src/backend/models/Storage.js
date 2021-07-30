@@ -8,8 +8,9 @@ const storageSchema = new mongoose.Schema({
     },
     create_at: {
         type: Date,
-        default: Date.now + TEMP_DURATION*24*60*60*1000 // in milisecond
+        // expires in 3 days
+        default: Date.now() + TEMP_DURATION*24*60*60*1000 // in milisecond
     }
-}, { _id: false });
+});
 
 module.exports = mongoose.model('Storage', storageSchema);

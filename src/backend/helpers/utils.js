@@ -21,13 +21,14 @@ const getModelByName = (name) => require(`../models/${name}`);
 
 
 const pagination = (page, pageSize = PAGE_SIZE) => {
+    pageSize = parseInt(pageSize, 10);
     return {
         skip: ((page >= 1 ? page : 1) - 1) * pageSize,
         limit: pageSize
     }
 }
 
-const filterImg = /^courses\/\d+\/[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}.jpeg$/g;
+const filterImg = /^storage\/\d+\/[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}.jpeg$/g;
 const filterImageUrl = (content) => content.match(filterImg) ?? [];
 
 const removeTempFlag = async (path = []) => {
