@@ -4,6 +4,7 @@ const cateCreateValidator = require("../../validators/cateCreate.validator");
 const Category = require('../../models/Category');
 const Course = require("../../models/Course");
 const { PAGE_SIZE } = require("../../configs/env");
+const getOwnedCourseValidator = require("../../validators/getOwnedCourse.validator");
 
 const createCategory = asyncCatch(async (req, res, next) => {
     const { error, value } = cateCreateValidator.validate(req.body);
@@ -15,12 +16,19 @@ const createCategory = asyncCatch(async (req, res, next) => {
 })
 
 const findCategory = asyncCatch(async (req, res, next) => {
-    const pagi = pagination(req.query.page, parseInt(req.query.page_size, 10));
-    const name = req.query.name ?? "";
+    // same schema as get owned course -> same validator
+    const { error, value } = getOwnedCourseValidator.validate(req.query);
+
+    if (error) {
+        throw new BadReqest(error.message);
+    }
+
+    const { query, page, page_size } = value;
+    const pagi = pagination(page, page_size);
 
     const category = await Category.find({
         name: {
-            $regex: name, $options: "i"
+            $regex: query, $options: "i"
         }
     })
         .select("_id name")
@@ -30,11 +38,11 @@ const findCategory = asyncCatch(async (req, res, next) => {
 
     const itemsCount = await Category.countDocuments({
         name: {
-            $regex: name, $options: "i"
+            $regex: query, $options: "i"
         }
     })
         .exec();
-        
+
     res.send({
         items: category,
         items_count: itemsCount

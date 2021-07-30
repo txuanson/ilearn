@@ -9,6 +9,7 @@ const { STATIC_PATH, HOST } = require("../../configs/env");
 const compress = require("../../helpers/compress");
 const { Admin } = require("../../configs/role");
 const { deleteCourseHelper } = require("../../helpers/query");
+const getOwnedCourseValidator = require("../../validators/getOwnedCourse.validator");
 
 
 const getCourseBy = asyncCatch(async (req, res, next) => {
@@ -26,6 +27,8 @@ const getCourseBy = asyncCatch(async (req, res, next) => {
     const items = await Course.aggregate()
         .match(filter)
         .lookup({ from: 'accounts', localField: 'tutor', foreignField: '_id', as: 'tutor' })
+        .lookup({ from: 'categories', localField: 'category', foreignField: '_id', as: 'category' })
+        .unwind('category')
         .unwind('tutor')
         .project({
             _id: 1,
@@ -36,8 +39,8 @@ const getCourseBy = asyncCatch(async (req, res, next) => {
                 _id: 1,
                 name: 1
             },
-            subscriber_count: { $size: "$subscriber" },
-            section_count: { $size: "$section" }
+            category: 1,
+            subscriber_count: { $size: "$subscriber" }
         })
         .limit(pagi.limit)
         .skip(pagi.skip)
@@ -71,14 +74,50 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
             },
             cover: { $concat: [HOST, '/', '$cover'] },
             category: 1,
-            subscriber_count: { $size: "$subscriber" },
-            section_count: { $size: "$section" }
+            subscriber_count: { $size: "$subscriber" }
         })
         .exec();
 
     if (courseInfo.length == 0) throw new NotFound('Course not found!');
 
     res.send(courseInfo[0]);
+})
+
+const getOwnedCourse = asyncCatch(async (req, res, next) => {
+    const { error, value } = getOwnedCourseValidator.validate(req.query);
+    if (error) {
+        throw new BadReqest(error.message);
+    }
+
+    const { query, page, page_size } = value;
+    const user_id = req.user_data._id;
+    const pagi = pagination(page, page_size);
+
+    const items = await Course.aggregate()
+        .match({ "tutor": user_id ,"name": { $regex: query, $options: "i" } })
+        .project({
+            _id: 1,
+            name: 1,
+            cover: { $concat: [HOST, '/', '$cover'] },
+            public: 1,
+            subscriber_count: { $size: "$subscriber" }
+        })
+        .limit(pagi.limit)
+        .skip(pagi.skip)
+        .exec()
+
+    const items_count = await Course.countDocuments({
+        tutor: user_id,
+        name: {
+            $regex: query, $options: "i"
+        }
+    })
+    .exec();
+
+    res.send({
+        items,
+        items_count
+    });
 })
 
 const createCourse = asyncCatch(async (req, res, next) => {
@@ -215,6 +254,7 @@ const listSection = asyncCatch(async (req, res, next) => {
 
 module.exports = {
     getCourseBy: getCourseBy,
+    getOwnedCourse,
     info: getCourseInfo,
     create: createCourse,
     delete: deleteCourse,

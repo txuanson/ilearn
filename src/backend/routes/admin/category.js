@@ -12,16 +12,20 @@ const router = express.Router();
  *         - admin
  *     parameters:
  *       - in: query
- *         name: name
+ *         name: query
  *         schema:
  *           type: string
- *         required: true
- *         description: A part of category's name. Leave blank to list all users.
+ *         description: Use to search for course with the course name
  *       - in: query
  *         name: page
  *         schema:
- *           type: string
- *         description: Page you want to find 
+ *           type: integer
+ *         description: Page number use in pagination
+ *       - in: query
+ *         name: page_size
+ *         schema:
+ *           type: integer
+ *         description: Use in pagination
  * 
  *     post:
  *       summary: Add a new category

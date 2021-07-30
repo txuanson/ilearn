@@ -29,6 +29,26 @@ const courseUploadFileMiddleware = upload.fields([{ name: 'cover', maxCount: 1 }
  * 
  * paths:
  *   /tutor/course/:
+ *     get:
+ *       summary: Get owned course (my course)
+ *       tags:
+ *         - tutor
+ *     parameters:
+ *       - in: query
+ *         name: query
+ *         schema:
+ *           type: string
+ *         description: Use to search for course with the course name
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number use in pagination
+ *       - in: query
+ *         name: page_size
+ *         schema:
+ *           type: integer
+ *         description: Use in pagination
  *     post:
  *       summary: Create a new course
  *       tags:
@@ -115,6 +135,9 @@ const courseUploadFileMiddleware = upload.fields([{ name: 'cover', maxCount: 1 }
  *           type: string
  *         required: true
  */
+
+router.get('/', course.getOwnedCourse);
+
 router.post('/',
     courseUploadFileMiddleware,
     course.create);
