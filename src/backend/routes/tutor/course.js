@@ -19,7 +19,8 @@ const courseUploadFileMiddleware = upload.fields([{ name: 'cover', maxCount: 1 }
  *         public:
  *           type: boolean
  *         cover:
- *           type: jpeg/jpg/png
+ *           type: string
+ *           format: binary
  *       required: 
  *         - name
  *         - content
