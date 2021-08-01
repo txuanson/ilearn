@@ -1,7 +1,8 @@
 const { PAGE_SIZE, STATIC_PATH } = require("../configs/env");
-const { HttpError, STATUS_CODE } = require("./response");
+const { HttpError, STATUS_CODE, InteralServerError } = require("./response");
 const Storage = require('../models/Storage');
 const fs = require('fs-extra');
+const { Admin, Tutor } = require("../configs/role");
 
 const asyncCatch = (fn) => (req, res, next) => fn(req, res, next).catch(next);
 
@@ -49,6 +50,19 @@ const removeUnusedFile = (path = []) => Promise.all(
             }
         })));
 
+const translateRole = role =>{
+    switch (role) {
+        case Admin:
+            return "Admin";
+        case Tutor:
+            return "Tutor";
+        case User:
+            return "User";
+        default:
+            throw new InteralServerError("Something's wrong... Please try again!");
+    }
+}
+
 module.exports = {
     asyncCatch,
     errorHandler,
@@ -56,5 +70,6 @@ module.exports = {
     pagination,
     filterImageUrl,
     removeTempFlag,
-    removeUnusedFile
+    removeUnusedFile,
+    translateRole
 }

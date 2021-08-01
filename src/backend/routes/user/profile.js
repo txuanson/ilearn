@@ -7,6 +7,11 @@ const avatarUploadMiddleware = upload.single('avatar');
 /**
  * @openapi
  * 
+ * /user/profile/min:
+ *   get:
+ *     summary: Get heaeder min profile
+ *     tags:
+ *       - user
  * /user/profile:
  *   patch:
  *     summary: Edit user profile
@@ -41,6 +46,7 @@ const avatarUploadMiddleware = upload.single('avatar');
  *                 - avatar
  */
 
+router.get('/min', account.getMinProfile);
 router.patch('/', account.editProfile);
 router.put('/avatar', avatarUploadMiddleware, account.updateAvatar);
 module.exports = router;

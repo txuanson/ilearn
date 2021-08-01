@@ -1,5 +1,5 @@
 const { BadReqest } = require("../../helpers/response");
-const { asyncCatch, removeUnusedFile, removeTempFlag, filterImageUrl } = require("../../helpers/utils");
+const { asyncCatch, removeUnusedFile, removeTempFlag, filterImageUrl, translateRole } = require("../../helpers/utils");
 const { zoomInitialize } = require("../../services/zoom.service");
 const accountUpgradeValidator = require("../../validators/accountUpgrade.validator");
 const Zoom = require('../../models/Zoom');
@@ -24,9 +24,19 @@ const upgradeAccount = asyncCatch(async (req, res, next) => {
     res.send("Success!");
 });
 
+const getMinProfile = asyncCatch(async(req, res, next) =>{
+    const profile = await Account.findById(req.user_data._id)
+    .select("name username role avatar")
+    .lean()
+    profile.role = translateRole(profile.role);
+    profile.avatar = HOST + '/' + profile.avatar;
+    res.send(profile)
+})
+
 const getProfile = asyncCatch(async (req, res, next) => {
     const profile = await Account.findOne({ _id: req.params.user_id },
         "_id name role username bio avatar").lean();
+    profile.role = translateRole(profile.role);
     profile.avatar = HOST + '/' + profile.avatar;
     if (req.user_data && req.user_data._id.equals(profile._id)) {
         const user_data = {};
@@ -82,6 +92,7 @@ const updateAvatar = asyncCatch(async (req, res, next) => {
 module.exports = {
     upgrade: upgradeAccount,
     getProfile,
+    getMinProfile,
     editProfile,
     updateAvatar
 }
