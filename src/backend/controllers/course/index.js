@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { BadReqest, Forbidden, NotFound } = require("../../helpers/response");
 const { asyncCatch, pagination, filterImageUrl, removeTempFlag, removeUnusedFile } = require("../../helpers/utils");
 const Course = require('../../models/Course');
+const Category = require('../../models/Category');
 const courseCreateValidator = require("../../validators/courseCreate.validator");
 const getCourseValidator = require("../../validators/getCourseByFilter.validator");
 const { v4: uuidv4 } = require('uuid');
@@ -39,7 +40,10 @@ const getCourseBy = asyncCatch(async (req, res, next) => {
                 _id: 1,
                 name: 1
             },
-            category: 1,
+            category: {
+                _id: 1,
+                name: 1
+            },
             subscriber_count: { $size: "$subscriber" }
         })
         .limit(pagi.limit)
@@ -94,7 +98,7 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
     const pagi = pagination(page, page_size);
 
     const items = await Course.aggregate()
-        .match({ "tutor": user_id ,"name": { $regex: query, $options: "i" } })
+        .match({ "tutor": user_id, "name": { $regex: query, $options: "i" } })
         .project({
             _id: 1,
             name: 1,
@@ -112,7 +116,7 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
             $regex: query, $options: "i"
         }
     })
-    .exec();
+        .exec();
 
     res.send({
         items,
@@ -129,6 +133,11 @@ const createCourse = asyncCatch(async (req, res, next) => {
     if (error)
         throw new BadReqest(error.message);
 
+    const category = await Category.exists({_id: value.category});
+    if (category == false){
+        throw new BadReqest("Category does not exists!")
+    }
+    
     // course cover img process
     const filename = `storage/${uuidv4()}.jpeg`;
     const filepath = `${STATIC_PATH}/${filename}`;
