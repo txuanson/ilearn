@@ -165,7 +165,7 @@ export default function CourseDescription(data) {
                     <div class="md:flex">
                         <div class="md:flex-shrink-0">
                             <div class="relative m-2">
-                                <img src={data.cover} alt={data.name} class="h-30 w-full object-cover md:w-40"/>
+                                <img src={data.cover} alt={data.name} class="h-60 w-full object-cover md:w-70"/>
                                 <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
                                     {data.public ? 'Public' : 'Private'}
                                 </span>

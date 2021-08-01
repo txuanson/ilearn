@@ -224,41 +224,26 @@ export default function ListSection() {
         )
     },
     {
-        title: 'Action',
-        key: 'action',
-        render: (_, record) => {
-          const editable = isEditing(record);
-          return editable ? (
-            <span>
-              <Button onClick={() => save(record.key)}
-                type="link"> Save 
-              </Button>
-              {/* <a
-                href=""
-                onClick={() => save(record.key)}
-                style={{
-                  marginRight: 8,
-                }}
-              >
-                Save
-              </a> */}
-              <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                <Button type="link">Cancel</Button>
-              </Popconfirm>
-            </span>
-          ) : (
-            <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-              Edit
-            </Typography.Link>
-          );
-        },
-        // render: () => (
-        //     <Space size="middle">
-        //         <Link to={`tutors/course/section/edit`}>Edit</Link>
-        //         <Link to={`tutors/course/section/delete`}>Delete</Link>
-        //     </Space>
-        // ),
-    }
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Button onClick={() => save(record.key)}
+              type="link"> Save 
+            </Button>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              <Button type="link">Cancel</Button>
+            </Popconfirm>
+          </span>
+        ) : (
+          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+            Edit
+          </Typography.Link>
+        );
+      },
+    },
   ];
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
