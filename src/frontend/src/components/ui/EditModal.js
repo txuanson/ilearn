@@ -16,8 +16,8 @@ function EditModal(props) {
 
     return (
         <div>
-            <Button type="primary" onClick={showModal}>
-                {props.title}
+            <Button shape="circle" type="text" onClick={showModal}>
+                {props.name}
             </Button>
 
             <Modal 

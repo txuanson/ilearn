@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Upload, message } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Upload, message, Button } from 'antd';
+import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 
 function getBase64(img, callback) {
     const reader = new FileReader();
@@ -52,19 +52,29 @@ export class UploadAvatar extends Component {
             }
         };
 
+        this.onUpload = () => {
+
+        }
+
         return (
-            <div>
-                <Upload
-                    name="avatar"
-                    listType="picture-card"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    beforeUpload={beforeUpload}
-                    onChange={this.handleChange}
-                >
-                    {imageUrl ? <img src={this.image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                </Upload>
+            <div className="flex flex-col items-center">
+                <div>
+                    <Upload
+                        name="avatar"
+                        listType="picture-card"
+                        className="avatar-uploader"
+                        showUploadList={false}
+                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        beforeUpload={beforeUpload}
+                        onChange={this.handleChange}
+                    >
+                        {imageUrl ? <img src={this.image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                    </Upload>
+                </div>
+
+                <Button type="link" onUpload = {this.onUpload}> 
+                    <UploadOutlined /> Upload Image
+                </Button>
             </div>
         )
     }

@@ -1,4 +1,4 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Space } from 'antd';
 import React, {Component} from 'react'
 
 import { Editor } from "react-draft-wysiwyg";
@@ -9,15 +9,15 @@ import draftToHtml from "draftjs-to-html";
 
 const layout = {
   labelCol: {
-    span: 8,
+    span: 2,
   },
   wrapperCol: {
-    span: 16,
+    span: 0,
   },
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
+    offset: 9,
     span: 16,
   },
 };
@@ -37,7 +37,7 @@ export class UploadProfile extends Component {
 
     formRef = React.createRef();
     
-    onFinish = (values) => {
+    onUpload = (values) => {
         console.log(values);
     };
     onReset = () => {
@@ -79,13 +79,15 @@ export class UploadProfile extends Component {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit" onClick={this.onFinish}>
-                  Submit
-              </Button>
+              <Space>
+                <Button type="link" htmlType="submit" onClick={this.onUpload}>
+                    Upload
+                </Button>
 
-              <Button htmlType="button" onClick={this.onReset}>
-                  Reset
-              </Button>
+                <Button htmlType="button" onClick={this.onReset}>
+                    Reset
+                </Button>
+              </Space>
           </Form.Item>
       </Form>
       );
