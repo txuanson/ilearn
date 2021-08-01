@@ -6,7 +6,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { listCourse } from "../../api/tutorDashboard";
 import handleErrorApi from "../../utils/handleErrorApi";
 
-export default function ListCourse(data) {
+export default function ListCourse() {
     const [value, setValue] = useState('');
     const [courses, setCourses] = useState([]);
     const [itemsCount, setItemsCount] = useState(0);
