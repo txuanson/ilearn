@@ -76,7 +76,7 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
                 _id: 1,
                 name: 1
             },
-            cover: { $concat: [HOST, '/', '$cover'] },
+            cover: 1,
             category: 1,
             subscriber_count: { $size: "$subscriber" }
         })
@@ -102,7 +102,7 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
         .project({
             _id: 1,
             name: 1,
-            cover: { $concat: [HOST, '/', '$cover'] },
+            cover: 1,
             public: 1,
             subscriber_count: { $size: "$subscriber" }
         })

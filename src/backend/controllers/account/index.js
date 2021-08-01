@@ -28,16 +28,12 @@ const getMinProfile = asyncCatch(async(req, res, next) =>{
     const profile = await Account.findById(req.user_data._id)
     .select("name username role avatar")
     .lean()
-    profile.role = translateRole(profile.role);
-    profile.avatar = HOST + '/' + profile.avatar;
     res.send(profile)
 })
 
 const getProfile = asyncCatch(async (req, res, next) => {
-    const profile = await Account.findOne({ _id: req.params.user_id },
+    const profile = await Account.findById(req.params.user_id,
         "_id name role username bio avatar").lean();
-    profile.role = translateRole(profile.role);
-    profile.avatar = HOST + '/' + profile.avatar;
     if (req.user_data && req.user_data._id.equals(profile._id)) {
         const user_data = {};
         user_data.zoom = await Zoom.exists({ user_id: profile._id })
