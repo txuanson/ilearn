@@ -15,40 +15,6 @@ const createCategory = asyncCatch(async (req, res, next) => {
     res.send("Success");
 })
 
-const findCategory = asyncCatch(async (req, res, next) => {
-    // same schema as get owned course -> same validator
-    const { error, value } = getOwnedCourseValidator.validate(req.query);
-
-    if (error) {
-        throw new BadReqest(error.message);
-    }
-
-    const { query, page, page_size } = value;
-    const pagi = pagination(page, page_size);
-
-    const category = await Category.find({
-        name: {
-            $regex: query, $options: "i"
-        }
-    })
-        .select("_id name")
-        .limit(pagi.limit)
-        .skip(pagi.skip)
-        .exec();
-
-    const itemsCount = await Category.countDocuments({
-        name: {
-            $regex: query, $options: "i"
-        }
-    })
-        .exec();
-
-    res.send({
-        items: category,
-        items_count: itemsCount
-    });
-});
-
 const editCategory = asyncCatch(async (req, res, next) => {
     if (!req.params.category_id) throw new NotFound('Category not found!');
 
@@ -71,7 +37,6 @@ const removeCategory = asyncCatch(async (req, res, next) => {
 
 module.exports = {
     create: createCategory,
-    find: findCategory,
     remove: removeCategory,
     edit: editCategory
 }

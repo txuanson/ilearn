@@ -20,19 +20,22 @@ const authRoute = require('./auth');
 const adminRoute = require('./admin');
 const tutorRoute = require('./tutor');
 const userRoute = require('./user');
-const profileRoute = require('./profile');
 
+const profileRoute = require('./profile');
 const courseRoute = require('./course');
+const categoryRoute = require('./category');
+
 const authMiddleware = require('../middlewares/auth.middleware');
 const userMiddleware = require('../middlewares/user.middleware');
 const tutorMiddleware = require('../middlewares/tutor.middleware');
 
 router.use('/auth', authRoute);
 router.use('/admin', adminRoute);
-router.use('/tutor', authMiddleware, tutorMiddleware, tutorRoute);
-router.use('/user', authMiddleware, userMiddleware, userRoute);
+router.use('/tutor', tutorMiddleware, tutorRoute);
+router.use('/user', userMiddleware, userRoute);
 
-router.use('/course', authMiddleware, courseRoute);
+router.use('/course', courseRoute);
+router.use('/category', categoryRoute);
 router.use('/profile', profileRoute);
 
 //test

@@ -12,6 +12,7 @@ const indexRouter = require('./routes/index');
 const mongoose = require('mongoose');
 const { MONGO_URI, STATIC_PATH } = require('./configs/env');
 const fs = require('fs-extra');
+const authMiddleware = require('./middlewares/auth.middleware');
 
 fs.ensureDirSync(`${STATIC_PATH}/storage`);
 
@@ -110,7 +111,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', authMiddleware, indexRouter);
 
 // catch 404 - no route found!
 app.use((req, res, next) => {
