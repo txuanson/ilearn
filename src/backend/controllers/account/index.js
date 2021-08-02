@@ -1,5 +1,5 @@
 const { BadReqest } = require("../../helpers/response");
-const { asyncCatch, removeUnusedFile, removeTempFlag, filterImageUrl, translateRole } = require("../../helpers/utils");
+const { asyncCatch, removeUnusedFile, removeTempFlag, filterImageUrl } = require("../../helpers/utils");
 const { zoomInitialize } = require("../../services/zoom.service");
 const accountUpgradeValidator = require("../../validators/accountUpgrade.validator");
 const Zoom = require('../../models/Zoom');

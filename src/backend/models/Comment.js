@@ -8,7 +8,7 @@ const replySchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        required: true,
+        required: true
     },
     create_at: {
         type: Date,
@@ -29,7 +29,7 @@ const commentSchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        required: true,
+        required: true
     },
     reply: [
         replySchema
