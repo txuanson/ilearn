@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { HOST } = require("../../configs/env");
 const { BadReqest, NotFound } = require("../../helpers/response");
-const { asyncCatch, translateRole, pagination } = require("../../helpers/utils");
+const { asyncCatch, pagination } = require("../../helpers/utils");
 const Comment = require("../../models/Comment");
 const Section = require("../../models/Section");
 const commentGetValidator = require("../../validators/commentGet.validator");
