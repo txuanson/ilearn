@@ -13,28 +13,28 @@ export default function ListSection(props) {
     console.log(course_id);
     const [value, setValue] = useState('');
     const [sections, setSection] = useState([]);
-    
-    const onEditSection = (section_id) =>{
+
+    const onEditSection = (section_id) => {
 
     }
 
-    const onDeleteSection = (section_id) =>{
+    const onDeleteSection = (section_id) => {
 
+    }
+
+    const fetchListCourse = async () => {
+        try {
+            const response = await listSection(course_id);
+            const { sections } = response;
+            setSection(sections);
+        }
+
+        catch (err) {
+            handleErrorApi(err);
+        }
     }
 
     useEffect(() => {
-        const fetchListCourse = async () => {
-            try {
-                const response = await listSection(course_id);
-                const { items } = response;
-                setSection(items);
-                console.log(items);
-            }
-
-            catch (err) {
-                handleErrorApi(err);
-            }
-        }
         fetchListCourse()
     }, [])
 
@@ -47,17 +47,17 @@ export default function ListSection(props) {
                 <Breadcrumb.Item></Breadcrumb.Item>
                 <Breadcrumb.Item>My Course</Breadcrumb.Item>
             </Breadcrumb>
-            
+
             <Table dataSource={sections} pagination={false}>
-                <Column title="Topic" dataIndex={["section", "topic"]} key="topic"/>
+                <Column title="Topic" dataIndex={["section", "topic"]} key="topic" />
                 <Column title="Type" dataIndex="section_type" key="type" />
-                <Column title="Visible" dataIndex={["section", "visible"]} key="visible" render={(visible => (
-                    <Switch checkedChildren="Show" unCheckedChildren="Hide" />
+                <Column title="Visible" dataIndex={["section", "visible"]} key="visible" render={((visible) => (
+                    <Switch checkedChildren="Show" unCheckedChildren="Hide" checked={visible}/>
                 ))} />
                 <Column title="Action" key="action" render={((text, record) => (
                     <Space size="small">
                         <a href="/" target="_blank">Start</a>
-                        <Link >Edit</Link>
+                        <Link to={`/tutor/section/${record.section._id}/edit`}>Edit</Link>
                         <a >Delete</a>
                     </Space>
                 ))}></Column>
