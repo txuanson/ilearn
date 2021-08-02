@@ -14,8 +14,8 @@ export default function MyRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route path="/view-section/1">
-                    <SplashRoute key="/view-section/1">
+                <Route path="/view-section">
+                    <SplashRoute key="/view-section">
                         <ViewSection />
                     </SplashRoute>
                 </Route>
