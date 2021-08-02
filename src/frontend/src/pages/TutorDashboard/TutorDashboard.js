@@ -4,6 +4,7 @@ import SplashRoute from "../../components/animation/SplashRoute";
 import { Route } from "react-router";
 import { Link, Switch } from "react-router-dom";
 import ListCourse from "./ListCourse";
+import ListSection from "./ListSection";
 import CreateCourse from "./CreateCourse";
 
 import {
@@ -55,6 +56,11 @@ function TutorDashBoard() {
             style={{ padding: 10, minHeight: 360 }}
           >
             <Switch>
+              <Route path="/tutor/course/:course_id/section">
+                  <SplashRoute key="/tutor/course/:course_id/section">
+                     <ListSection />
+                  </SplashRoute>   
+              </Route>
               <Route path="/tutor/create-course">
                   <SplashRoute key="/tutor/create-course">
                      <CreateCourse />

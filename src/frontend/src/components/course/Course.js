@@ -13,22 +13,22 @@ function handleMenuClick(e) {
 const menu = (data =>
     <Menu onClick={handleMenuClick}>
         <Menu.Item key="1">
-            <Link to={`tutors/course/${data._id}/edit`}>Edit</Link>
+            <Link to={`tutor/course/${data._id}/edit`}>Edit</Link>
         </Menu.Item>
         <Menu.Item key="2">
-            <Link to={`tutors/course/${data._id}/section`}>Sections</Link>
+            <Link to={`tutor/course/${data._id}/section`}>Sections</Link>
         </Menu.Item>
         <Menu.Item key="3">
-            <Link to={`tutors/course/${data._id}/subscriber`}>Subscribers</Link>
+            <Link to={`tutor/course/${data._id}/subscriber`}>Subscribers</Link>
         </Menu.Item>
         <Menu.Item key="4">
-            <Link to={`tutors/course/${data._id}/pending`}>Pending</Link>
+            <Link to={`tutor/course/${data._id}/pending`}>Pending</Link>
         </Menu.Item>
         <Menu.Item key="5">
-            <Link to={`tutors/course/${data._id}/banned`}>Banned</Link>
+            <Link to={`tutor/course/${data._id}/banned`}>Banned</Link>
         </Menu.Item>
         <Menu.Item key="6">
-            <Link to={`tutors/course/${data._id}/delete`}> Delete</Link>
+            <Link to={`tutor/course/${data._id}/delete`}> Delete</Link>
         </Menu.Item>
     </Menu>
 );
