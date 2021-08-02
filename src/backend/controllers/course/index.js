@@ -133,11 +133,11 @@ const createCourse = asyncCatch(async (req, res, next) => {
     if (error)
         throw new BadReqest(error.message);
 
-    const category = await Category.exists({_id: value.category});
-    if (category == false){
+    const category = await Category.exists({ _id: value.category });
+    if (category == false) {
         throw new BadReqest("Category does not exists!")
     }
-    
+
     // course cover img process
     const filename = `storage/${uuidv4()}.jpeg`;
     const filepath = `${STATIC_PATH}/${filename}`;
@@ -248,17 +248,21 @@ const listBanned = asyncCatch(async (req, res, next) => {
     })
 })
 
-const listSection = asyncCatch(async (req, res, next) => {
+const listSectionTutor = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
-    const items = await Course.findById(course_id)
-        .select('-_id section')
-        .populate('section.section_id', '_id, topic')
+    const course = await Course.findById(course_id)
+        .populate('sections.section', '_id topic visible start_url')
+        .select({
+            _id: 1,
+            name: 1,
+            sections: {
+                section: 1,
+                section_type: 1
+            }
+        })
         .lean()
         .exec();
-    console.log(items)
-    res.send({
-        items: items?.section ?? []
-    });
+    res.send(course);
 })
 
 module.exports = {
@@ -271,5 +275,5 @@ module.exports = {
     listSubscriber,
     listQueue,
     listBanned,
-    listSection
+    listSectionTutor
 }

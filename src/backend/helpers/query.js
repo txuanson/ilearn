@@ -17,13 +17,13 @@ const deleteCourseHelper = async (user_id, course_id) => {
 const deleteSectionHelper = async (user_id, section_id) => {
     await deleteSectionContent(user_id, section_id);
     await Course.updateOne({
-        "section.section_id": section_id
+        "sections.section": section_id
     }
         ,
         {
             $pull: {
-                section: {
-                    section_id: section_id
+                sections: {
+                    section: section_id
                 }
             }
         }

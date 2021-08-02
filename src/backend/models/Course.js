@@ -37,10 +37,10 @@ const courseSchema = mongoose.Schema({
             reason: String
         }
     ],
-    section: [{
-        section_id: {
+    sections: [{
+        section: {
             type: mongoose.Schema.Types.ObjectId,
-            refPath: 'section.section_type'
+            refPath: 'sections.section_type'
         },
         section_type: {
             type: String,

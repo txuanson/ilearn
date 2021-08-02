@@ -24,7 +24,7 @@ const createSection = asyncCatch(async (req, res, next) => {
         throw new BadReqest(error.message);
 
     const course = await Course.findById(value.course_id).exec();
-    if (!course) throw NotFound('Course not found!');
+    if (!course) throw new NotFound('Course not found!');
     if (req.user_data.role !== Admin && !course.tutor.equals(req.user_data._id))
         throw new Forbidden('You do not have permission to this course');
 
@@ -51,8 +51,8 @@ const createSection = asyncCatch(async (req, res, next) => {
 
     await Course.updateOne({ _id: value.course_id }, {
         "$push": {
-            section: {
-                section_id: newSection._id,
+            sections: {
+                section: newSection._id,
                 section_type: 'Section'
             }
         }
@@ -110,7 +110,7 @@ const deleteSection = asyncCatch(async (req, res, next) => {
         .findById(section_id)
         .select('-content').exec();
     const course = await Course
-        .findOne({ "section.section_id": section_id })
+        .findOne({ "sections.section": section_id })
         .select('-content')
         .exec();
 
