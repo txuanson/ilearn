@@ -38,9 +38,9 @@ export default function ListCourse() {
             </Breadcrumb>
             <div className="text-end">
                 <form class="flex my-2 md:w-full justify-center">
-                    <input type="text" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-2 bg-white text-gray-700 text-base"
+                    <input type="text" className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-2 bg-white text-gray-700 text-base"
                         onChange={event => setValue(event.target.value)} />
-                    <button class="ml-2 px-4 py-2 text-base font-semibold text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-700" type="submit"
+                    <button className="ml-2 px-4 py-2 text-base font-semibold text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-700" type="submit"
                         onClick={onSubmit}>
                         <SearchOutlined />
                     </button>

@@ -161,20 +161,20 @@ export default function CourseDescription(data) {
                     <Breadcrumb.Item>{data.name}</Breadcrumb.Item>
                 </Breadcrumb>
               
-                <div class="w-full mx-auto bg-white shadow-md overflow-hidden">
-                    <div class="md:flex">
-                        <div class="md:flex-shrink-0">
-                            <div class="relative m-2">
+                <div className="w-full mx-auto bg-white shadow-md overflow-hidden">
+                    <div className="md:flex">
+                        <div className="md:flex-shrink-0">
+                            <div className="relative m-2">
                                 <img src={data.cover} alt={data.name} class="h-60 w-full object-cover md:w-70"/>
                                 <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
                                     {data.public ? 'Public' : 'Private'}
                                 </span>
                             </div>
                         </div>
-                        <div class="text-center p-5 justify-center flex flex-col md:text-left">
-                            <div class="uppercase block mt-1 text-lg leading-tight font-medium text-black">{data.name}</div>
-                            <div class="tracking-wide text-sm text-indigo-500 font-semibold">{data.category}</div>
-                            <p class="text-gray-500">{data.text}</p>
+                        <div className="text-center p-5 justify-center flex flex-col md:text-left">
+                            <div className="uppercase block mt-1 text-lg leading-tight font-medium text-black">{data.name}</div>
+                            <div className="tracking-wide text-sm text-indigo-500 font-semibold">{data.category}</div>
+                            <p className="text-gray-500">{data.text}</p>
                             
                         </div>
                         
