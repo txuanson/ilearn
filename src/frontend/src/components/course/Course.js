@@ -34,11 +34,13 @@ const menu = (data =>
 );
 
 export default function Course({ data }) {
-    console.log(data);
+    const handleDeleteCourse = (course_id) =>{
+        
+    }
     return (
-        <div class="p-4 mb-2 bg-white shadow-xl rounded-xl flex  flex-col md:flex-row justify-start dark:bg-gray-800 gap-4">
-            <div class="relative">
-                <img src={data.cover} alt={data.name} class="rounded-xl w-full h-40 md:w-auto md:max-h-20" />
+        <div class="p-2 mb-2 bg-white shadow-xl flex  flex-col md:flex-row justify-start dark:bg-gray-800 gap-4">
+            <div class="relative justify-center items-center flex">
+                <img src={`${process.env.REACT_APP_BASE_HOST}/${data.cover}`} alt={data.name} class="h-52 w-auto md:max-h-24" />
                 <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
                     {data.public ? 'Public' : 'Private'}
                 </span>
@@ -53,7 +55,7 @@ export default function Course({ data }) {
                     </div>
                 </div>
 
-                <div class="absolute right-0 bottom-0 flex items-start my-2 md:m-1">
+                <div class="absolute right-0 bottom-0 flex items-start my-1 md:m-1">
                     <Space wrap>
                         <Dropdown overlay={() => menu(data)}>
                             <Button>
