@@ -97,8 +97,8 @@ const getComment = asyncCatch(async (req, res, next) => {
                 }
             }
         })
-        .limit(pagi.limit)
         .skip(pagi.skip)
+        .limit(pagi.limit)
         .exec();
 
     const items_count = await Comment.countDocuments({

@@ -5,7 +5,10 @@ const Account = require('../../models/Account');
 const listAccount = asyncCatch(async (req, res, next) => {
     const pagi = pagination(req.query.page);
 
-    const items = await Account.find({}, "_id name username email").limit(pagi.limit).skip(pagi.skip).exec();
+    const items = await Account.find({}, "_id name username email")
+        .skip(pagi.skip)
+        .limit(pagi.limit)
+        .exec();
     const itemsCount = await Account.estimatedDocumentCount().exec();
 
     res.send({
@@ -17,15 +20,15 @@ const listAccount = asyncCatch(async (req, res, next) => {
 const findAccount = asyncCatch(async (req, res, next) => {
     const pagi = pagination(req.query.page);
     const username = req.query.username ? req.query.username : "";
-    
+
     const items = await Account.find({
         username: {
             $regex: username, $options: "i"
         }
     },
         "_id name username email")
-        .limit(pagi.limit)
         .skip(pagi.skip)
+        .limit(pagi.limit)
         .exec();
 
     const itemsCount = await Account.countDocuments({

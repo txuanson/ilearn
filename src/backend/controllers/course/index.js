@@ -46,8 +46,8 @@ const getCourseBy = asyncCatch(async (req, res, next) => {
             },
             subscriber_count: { $size: "$subscriber" }
         })
-        .limit(pagi.limit)
         .skip(pagi.skip)
+        .limit(pagi.limit)
         .exec()
 
     const itemsCount = await Course.countDocuments(filter)
@@ -106,8 +106,8 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
             public: 1,
             subscriber_count: { $size: "$subscriber" }
         })
-        .limit(pagi.limit)
         .skip(pagi.skip)
+        .limit(pagi.limit)
         .exec()
 
     const items_count = await Course.countDocuments({
