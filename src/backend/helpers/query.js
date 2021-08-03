@@ -6,11 +6,11 @@ const { removeUnusedFile, filterImageUrl } = require("./utils");
 const deleteCourseHelper = async (user_id, course_id) => {
     const course = await Course.findByIdAndDelete(course_id).exec();
     await removeUnusedFile([...filterImageUrl(course.content), course.cover]);
-    await Promise.all(course.section.map(async e => {
+    await Promise.all(course.sections.map(async e => {
         if (e.section_type == "Section")
-            await deleteSectionContent(user_id, e.section_id);
+            await deleteSectionContent(user_id, e.section);
         else
-            await deleteQuizContent(e.section_id);
+            await deleteQuizContent(e.section);
     }))
 }
 
