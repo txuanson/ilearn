@@ -21,7 +21,7 @@ export default function handleErrorApi(err) {
       message.warning("Too fast, try again.");
     } else {
       console.log(err);
-      //   message.error(err.response.data.message ?? "Có lỗi xảy ra");
+      message.error(err.response.data.message ?? "There was an error!");
     }
   }
 }

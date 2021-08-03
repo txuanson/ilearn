@@ -49,22 +49,11 @@ export default function CreateCourse(data) {
         }
     };
 
-    const beforeUpload = (file) => {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
-        if (!isJpgOrPng) {
-            message.error('Only accept JPG/PNG file!')
-        }
-        const isLt7M = file.size / 1024 / 1024 < 7
-        if (!isLt7M) {
-            message.error('Image file size must be < 7MB')
-        }
-        return isJpgOrPng && isLt7M
-    }
-
     const handleAddImage = (file) => {
         setCover(file);
         return new Promise(async (res, rej) => {
             let src = file.url
+            console.log(file);
             if (!src) {
                 src = await new Promise((resolve) => {
                     const reader = new FileReader()
@@ -76,6 +65,18 @@ export default function CreateCourse(data) {
                 setImage(src)
             }
         })
+    }
+
+    const beforeUpload = (file) => {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+        if (!isJpgOrPng) {
+            message.error('Only accept JPG/PNG file!')
+        }
+        const isLt7M = file.size / 1024 / 1024 < 7
+        if (!isLt7M) {
+            message.error('Image file size must be < 7MB')
+        }
+        return isJpgOrPng && isLt7M
     }
 
     const fetchCategory = async () => {

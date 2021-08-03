@@ -1,31 +1,66 @@
-import { Breadcrumb, Layout } from "antd";
+import { Breadcrumb, Layout, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Course from "../../components/course/Course";
 import { SearchOutlined } from "@ant-design/icons";
-import { listCourse } from "../../api/tutorDashboard";
+import { deleteCourse, listCourse } from "../../api/tutorDashboard";
 import handleErrorApi from "../../utils/handleErrorApi";
+import confirm from "antd/lib/modal/confirm";
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import Form from "antd/lib/form/Form";
+import Search from "antd/lib/input/Search";
 
 export default function ListCourse() {
-    const [value, setValue] = useState('');
     const [courses, setCourses] = useState([]);
-    const [itemsCount, setItemsCount] = useState(0);
-    const onSubmit = (event) => {
-        event.preventDefault();
-        console.log(value);
-    }
-    const onChange = (checked) => {
-        console.log(`switch to ${checked}`);
-    };
+    const [currentQuery, setCurrentQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemCount, setItemCount] = useState(10);
 
-    useEffect(async () => {
+    const onSearch = (query) => {
+        fetchCourse({query});
+    }
+
+    const fetchCourse = async ({page = currentPage, query = currentQuery} = {}) => {
         try {
-            const response = await listCourse();
-            const { items } = response;
+            setCurrentQuery(query);
+            setCurrentPage(page);
+            const response = await listCourse(page, query);
+            const { items, items_count } = response;
             setCourses(items);
+            setItemCount(items_count);
         } catch (err) {
             handleErrorApi(err);
         }
+    }
+
+    const showConfirmDeleteCourse = (course_id) => {
+        confirm({
+            title: "Confirm delete",
+            icon: <ExclamationCircleOutlined />,
+            content: "Are you sure you want to delete this course? This process cannot be undone.",
+            okText: "OK, Delete",
+            cancelText: "Cancel",
+            onOk() {
+                handleDeleteCourse(course_id);
+            }
+        });
+    }
+
+    const handleDeleteCourse = async (course_id) => {
+        try {
+            await deleteCourse(course_id);
+            fetchCourse();
+        } catch (err) {
+            handleErrorApi(err);
+        }
+    }
+
+    const handleChangePage = (page) => {
+        fetchCourse({page});
+    }
+
+    useEffect(() => {
+        fetchCourse();
     }, [])
 
     return (
@@ -36,19 +71,15 @@ export default function ListCourse() {
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>My Course</Breadcrumb.Item>
             </Breadcrumb>
-            <div className="text-end">
-                <form class="flex my-2 md:w-full justify-center">
-                    <input type="text" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-2 bg-white text-gray-700 text-base"
-                        onChange={event => setValue(event.target.value)} />
-                    <button class="ml-2 px-4 py-2 text-base font-semibold text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-700" type="submit"
-                        onClick={onSubmit}>
-                        <SearchOutlined />
-                    </button>
-                </form>
-            </div>
-            {courses.map(element =>(
-                <Course data={element}/>
+            <Search className="py-2 md:w-1/5 w-full" placeholder="Search for course" onSearch={onSearch} enterButton="Search" allowClear/>
+            
+            {courses.map(element => (
+                <Course
+                    data={element}
+                    showConfirmDeleteCourse={showConfirmDeleteCourse}
+                />
             ))}
+            <Pagination className="ml-auto" defaultCurrent={currentPage} pageSize={1} total={itemCount} onChange={handleChangePage} />
         </Layout>
     );
 }
