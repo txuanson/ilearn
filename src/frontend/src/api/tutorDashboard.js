@@ -1,7 +1,7 @@
 import callApi from "./callApi";
 
 export const listCourse = (page, query) =>
-    callApi({ url: `/tutor/course?query=${query}&page=${page}`, method: 'GET' });
+    callApi({ url: `/tutor/course?query=${query}&page=${page}&page_size=10`, method: 'GET' });
 
 export const listSection = (course_id) =>
     callApi({ url: `/tutor/course/${course_id}/section`, method: 'GET' });

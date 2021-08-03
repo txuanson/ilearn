@@ -79,7 +79,7 @@ export default function ListCourse() {
                     showConfirmDeleteCourse={showConfirmDeleteCourse}
                 />
             ))}
-            <Pagination className="ml-auto" defaultCurrent={currentPage} pageSize={1} total={itemCount} onChange={handleChangePage} />
+            <Pagination className="ml-auto" defaultCurrent={currentPage} pageSize={10} total={itemCount} onChange={handleChangePage} />
         </Layout>
     );
 }
