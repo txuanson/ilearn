@@ -84,7 +84,7 @@ export default function ViewSection() {
               Nhập môn lập trình
             </h2>
         </Link>
-        <Button htmlType="submit" type="primary" className="hidden md:block" style={{marginLeft: 880}}>
+        <Button htmlType="submit" type="primary" className="hidden md:block" style={{marginLeft: 760}}>
           <Link to="/zoom-connection">Join Zoom Meeting</Link>
         </Button>
         <Link to="/zoom-connection">
