@@ -2,25 +2,34 @@ import { Breadcrumb, Layout, message, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Course from "../../components/course/Course";
-import { SearchOutlined } from "@ant-design/icons";
-import { deleteCourse, listCourse } from "../../api/tutorDashboard";
+import { deleteCourse, listCourse, listUser } from "../../api/tutorDashboard";
 import handleErrorApi from "../../utils/handleErrorApi";
 import confirm from "antd/lib/modal/confirm";
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import Form from "antd/lib/form/Form";
 import Search from "antd/lib/input/Search";
+import Modal from "antd/lib/modal/Modal";
+import ListUserTable from "../../components/table/ListUserTable";
+import useWindowSize from "../../hooks/useWindowSize";
 
 export default function ListCourse() {
+    const { width } = useWindowSize();
+
     const [courses, setCourses] = useState([]);
     const [currentQuery, setCurrentQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemCount, setItemCount] = useState(10);
 
+    // Modal
+    const [tableData, setTableData] = useState([]);
+    const [titleModal, setTitleModal] = useState("");
+    const [visibleModal, setVisibleModal] = useState(false);
+    const [listUserAction, setListUserAction] = useState("");
+
     const onSearch = (query) => {
-        fetchCourse({query});
+        fetchCourse({ query });
     }
 
-    const fetchCourse = async ({page = currentPage, query = currentQuery} = {}) => {
+    const fetchCourse = async ({ page = currentPage, query = currentQuery } = {}) => {
         try {
             setCurrentQuery(query);
             setCurrentPage(page);
@@ -28,6 +37,15 @@ export default function ListCourse() {
             const { items, items_count } = response;
             setCourses(items);
             setItemCount(items_count);
+        } catch (err) {
+            handleErrorApi(err);
+        }
+    }
+
+    const fetchListUserWithType = async (course_id, type) => {
+        try {
+            const response = await listUser(course_id, type);
+            setTableData(response);
         } catch (err) {
             handleErrorApi(err);
         }
@@ -57,7 +75,18 @@ export default function ListCourse() {
     }
 
     const handleChangePage = (page) => {
-        fetchCourse({page});
+        fetchCourse({ page });
+    }
+
+    const onOpenModal = (course_id, title, type, action) => {
+        setVisibleModal(true);
+        setTitleModal(title);
+        fetchListUserWithType(course_id, type);
+        setListUserAction(action);
+    }
+
+    const onCancelModal = () => {
+        setVisibleModal(false);
     }
 
     useEffect(() => {
@@ -72,15 +101,25 @@ export default function ListCourse() {
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>My Course</Breadcrumb.Item>
             </Breadcrumb>
-            <Search className="py-2 md:w-1/5 w-full" placeholder="Search for course" onSearch={onSearch} enterButton="Search" allowClear/>
-            
+            <Search className="py-2 md:w-1/5 w-full" placeholder="Search for course" onSearch={onSearch} enterButton="Search" allowClear />
+
             {courses.map(element => (
                 <Course
                     data={element}
                     showConfirmDeleteCourse={showConfirmDeleteCourse}
+                    onOpenModal={onOpenModal}
                 />
             ))}
             <Pagination className="ml-auto" defaultCurrent={currentPage} pageSize={10} total={itemCount} onChange={handleChangePage} />
+            <Modal
+                title={titleModal}
+                visible={visibleModal}
+                footer={null}
+                onCancel={onCancelModal}
+                width={1204 < width * 1 ? 1204 : width}
+            >
+                <ListUserTable data={tableData} action={listUserAction} />
+            </Modal>
         </Layout>
     );
 }

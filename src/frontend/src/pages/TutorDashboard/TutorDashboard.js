@@ -8,8 +8,6 @@ import ListSection from "./ListSection";
 import CreateCourse from "./CreateCourse";
 
 import {
-  UploadOutlined,
-  UserOutlined,
   VideoCameraOutlined,
   ContactsOutlined,
 } from "@ant-design/icons";

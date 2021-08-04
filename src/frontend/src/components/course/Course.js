@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 import { Card, Menu, Dropdown, Button, message, Space, Row, Col } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
-
-
 export default function Course({
     data,
-    showConfirmDeleteCourse
+    showConfirmDeleteCourse,
+    onOpenModal
 }) {
     const menu = (data =>
         <Menu>
@@ -19,16 +18,16 @@ export default function Course({
                 <Link to={`tutor/course/${data._id}/section`}>Sections</Link>
             </Menu.Item>
             <Menu.Item key="3">
-                <a>Subscribers</a>
+                <a onClick={() => onOpenModal(data._id,"Subscribers", "subscriber", "Ban")}>Subscribers</a>
             </Menu.Item>
             <Menu.Item key="4">
-                <a>Pending</a>
+                <a onClick={() => onOpenModal(data._id,"Pending For Accept", "queue", "Accept")}>Pending</a>
             </Menu.Item>
             <Menu.Item key="5">
-                <a>Banned</a>
+                <a onClick={() => onOpenModal(data._id,"Banned Users", "subscriber", "Unban")}>Banned</a>
             </Menu.Item>
             <Menu.Item key="6">
-                <a onClick={() => showConfirmDeleteCourse(data._id)}> Delete</a>
+                <a onClick={() => showConfirmDeleteCourse(data._id)}>Delete</a>
             </Menu.Item>
         </Menu>
     );

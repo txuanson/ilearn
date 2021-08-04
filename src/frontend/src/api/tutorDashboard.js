@@ -6,6 +6,9 @@ export const listCourse = (page, query) =>
 export const listSection = (course_id) =>
     callApi({ url: `/tutor/course/${course_id}/section`, method: 'GET' });
 
+export const listUser = (course_id, type) =>
+    callApi({ url: `/tutor/course/${course_id}/${type.toLowerCase()}`, method: 'GET' });
+
 export const uploadContentImage = (data) =>
     callApi({ url: `/tutor/storage`, method: 'PUT', data: data, option: { headers: { 'Content-Type': 'multipart/form-data' } } });
 
