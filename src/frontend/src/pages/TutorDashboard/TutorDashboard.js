@@ -61,6 +61,11 @@ function TutorDashBoard() {
                      <ListSection />
                   </SplashRoute>   
               </Route>
+              <Route path="/tutor/course/:course_id/edit">
+                  <SplashRoute key="/tutor/course/:course_id/edit">
+                     <CreateCourse />
+                  </SplashRoute>   
+              </Route>
               <Route path="/tutor/create-course">
                   <SplashRoute key="/tutor/create-course">
                      <CreateCourse />

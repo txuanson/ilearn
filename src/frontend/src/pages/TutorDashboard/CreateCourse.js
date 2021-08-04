@@ -1,6 +1,6 @@
 import { Breadcrumb, Layout, message, notification } from "antd";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Form, Select, Switch, Button, Upload, Input } from 'antd';
 import ImgCrop from "antd-img-crop";
 import { UploadOutlined } from '@ant-design/icons';
@@ -10,8 +10,8 @@ import MDEditor from "@uiw/react-md-editor";
 import { Content } from "antd/lib/layout/layout";
 import { useForm } from 'antd/lib/form/Form';
 import { createCourse } from "../../api/tutorDashboard";
+import { getCourseInfo } from "../../api/course";
 
-const { Option } = Select;
 const formItemLayout = {
     labelCol: {
         span: 4,
@@ -21,7 +21,22 @@ const formItemLayout = {
     },
 };
 
-export default function CreateCourse(data) {
+const mapCategoryToOption = (category) =>
+    category.map(e => ({
+        label: e.name,
+        value: e._id
+    }))
+
+
+const mapCourseInfoToForm = (course) =>
+    ({
+        name: course.name,
+        content: course.content,
+        public: course.public,
+        category: course.category.name
+    })
+export default function CreateCourse() {
+    const { course_id } = useParams();
     const [form] = useForm();
     const [category, setCategory] = useState([]);
     const [cover, setCover] = useState('');
@@ -53,7 +68,6 @@ export default function CreateCourse(data) {
         setCover(file);
         return new Promise(async (res, rej) => {
             let src = file.url
-            console.log(file);
             if (!src) {
                 src = await new Promise((resolve) => {
                     const reader = new FileReader()
@@ -89,8 +103,24 @@ export default function CreateCourse(data) {
         }
     }
 
+    const appendEditData = async (course_id) => {
+        try {
+            await fetchCategory();
+            const res = await getCourseInfo(course_id);
+            setImage(`${process.env.REACT_APP_BASE_HOST}/${res.cover}`);
+            setContent(res.content);
+            form.setFieldsValue(mapCourseInfoToForm(res));
+        } catch (err) {
+            handleErrorApi(err);
+        }
+    }
+
     useEffect(() => {
-        fetchCategory();
+        if (course_id) {
+            appendEditData(course_id);
+        }
+        else 
+            fetchCategory();
     }, [])
 
     return (
@@ -99,7 +129,7 @@ export default function CreateCourse(data) {
                 <Breadcrumb.Item>
                     <Link to="/homepage">iLearn</Link>
                 </Breadcrumb.Item>
-                <Breadcrumb.Item>Create class</Breadcrumb.Item>
+                <Breadcrumb.Item>{course_id ? "Edit Course" : "Create Course"}</Breadcrumb.Item>
             </Breadcrumb>
             <Content >
                 <Form name="validate_other"
@@ -129,10 +159,7 @@ export default function CreateCourse(data) {
                             },
                         ]}
                     >
-                        <Select placeholder="Please select course category">\
-                            {category.map(e =>
-                                <Option value={e._id}>{e.name}</Option>
-                            )}
+                        <Select placeholder="Please select course category" options={mapCategoryToOption(category)}>
                         </Select>
                     </Form.Item>
 
@@ -178,17 +205,17 @@ export default function CreateCourse(data) {
                                 message: 'Please enter course content!',
                             },
                         ]}>
-                        <MDEditor value={content} onChange={setContent} preview="edit"></MDEditor>
+                        <MDEditor value={content} onChange={setContent} preview="live"></MDEditor>
                     </Form.Item>
                     <Form.Item
                         wrapperCol={{
-                            span: 12,
-                            offset: 6,
+                            span: 16,
+                            offset: 4
                         }}
                     >
                         <Button type="primary" htmlType="submit"
                             class="text-white py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-lg">
-                            Create
+                            {course_id ? "Edit" : "Create"}
                         </Button>
                     </Form.Item>
                 </Form >

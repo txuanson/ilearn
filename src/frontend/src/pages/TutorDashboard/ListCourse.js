@@ -1,4 +1,4 @@
-import { Breadcrumb, Layout, Pagination } from "antd";
+import { Breadcrumb, Layout, message, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Course from "../../components/course/Course";
@@ -49,6 +49,7 @@ export default function ListCourse() {
     const handleDeleteCourse = async (course_id) => {
         try {
             await deleteCourse(course_id);
+            message.success("Course deleted successfully!");
             fetchCourse();
         } catch (err) {
             handleErrorApi(err);
