@@ -12,5 +12,8 @@ export const uploadContentImage = (data) =>
 export const createCourse = (data) =>
     callApi({ url: '/tutor/course', method: 'POST', data: data, option: { headers: { 'Content-Type': 'multipart/form-data' } } });
 
+export const editCourse = (course_id, data) =>
+    callApi({ url: `/tutor/course/${course_id}`, method: 'PATCH', data: data, option: { headers: { 'Content-Type': 'multipart/form-data' } } });
+
 export const deleteCourse = (course_id) =>
     callApi({ url: `/tutor/course/${course_id}`, method: 'DELETE' });

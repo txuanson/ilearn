@@ -9,7 +9,7 @@ import { getAllCategory } from "../../api/category";
 import MDEditor from "@uiw/react-md-editor";
 import { Content } from "antd/lib/layout/layout";
 import { useForm } from 'antd/lib/form/Form';
-import { createCourse } from "../../api/tutorDashboard";
+import { createCourse, editCourse } from "../../api/tutorDashboard";
 import { getCourseInfo } from "../../api/course";
 
 const formItemLayout = {
@@ -29,12 +29,12 @@ const mapCategoryToOption = (category) =>
 
 
 const mapCourseInfoToForm = (course) =>
-    ({
-        name: course.name,
-        content: course.content,
-        public: course.public,
-        category: course.category.name
-    })
+({
+    name: course.name,
+    content: course.content,
+    public: course.public,
+    category: course.category.name
+})
 export default function CreateCourse() {
     const { course_id } = useParams();
     const [form] = useForm();
@@ -49,14 +49,23 @@ export default function CreateCourse() {
             formData.append('name', values.name);
             formData.append('public', values.public ?? true);
             formData.append('category', values.category);
-            formData.append('cover', cover);
             formData.append('content', content);
-            await createCourse(formData);
+            if (course_id) {
+                if (cover) {
+                    formData.append('cover', cover);
+                }
+                await editCourse(course_id, formData);
+                message.success("Course patched successfully!");
+            }
+            else {
+                formData.append('cover', cover);
+                await createCourse(formData);
+                message.success("Course created successfully!");
+            }
             form.resetFields();
             setCover('');
             setImage('');
             setContent('');
-            message.success("Course created successfully!");
             window.location.href = '/tutor';
         }
         catch (err) {
@@ -119,7 +128,7 @@ export default function CreateCourse() {
         if (course_id) {
             appendEditData(course_id);
         }
-        else 
+        else
             fetchCategory();
     }, [])
 
@@ -127,7 +136,7 @@ export default function CreateCourse() {
         <Layout>
             <Breadcrumb style={{ margin: '10px 0' }}>
                 <Breadcrumb.Item>
-                    <Link to="/homepage">iLearn</Link>
+                    <Link to="/">iLearn</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>{course_id ? "Edit Course" : "Create Course"}</Breadcrumb.Item>
             </Breadcrumb>
@@ -167,7 +176,7 @@ export default function CreateCourse() {
                         <Switch defaultChecked={true} />
                     </Form.Item>
 
-                    <Form.Item name="cover" label="Cover" rules={[
+                    <Form.Item name="cover" label="Cover" rules={!course_id ?? [
                         {
                             required: true,
                             message: 'Cover required!',
