@@ -2,20 +2,23 @@ import React, { useState } from 'react';
 import { Drawer, Button } from 'antd';
 import {MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from 'react-router-dom';
-const navigation = [
-  { name: "Tutor", to: "/tutor", current: true },
-  { name: "Team", to: "#", current: false },
-  { name: "Projects", to: "#", current: false },
-  { name: "Calendar", to: "#", current: false },
-];
+
 
 export default function DrawerMenu({category, user}) {
   const [visible, setVisible] = useState(false);
+  const [childrenDrawer, setChildrenDrawer] = useState(false);
   const showDrawer = () => {
     setVisible(true);
   };
   const onClose = () => {
     setVisible(false);
+  };
+  const showChildrenDrawer = () => {
+    setChildrenDrawer(true);
+  };
+
+  const onChildrenDrawerClose = () => {
+    setChildrenDrawer(false);
   };
   return (
     <>
@@ -34,10 +37,25 @@ export default function DrawerMenu({category, user}) {
         onClose={onClose}
         visible={visible}
       >
-      <div className = "pb-2 pt-0 pl-1 font-bold">Category</div>
-      {category.map((item)=>(
+      <a className = "p-2 pt-0 pl-1 font-bold" onClick={showChildrenDrawer}>
+      Category
+          </a>
+          <Drawer
+            title="Category"
+            width={320}
+            closable={false}
+            placement="left"
+            onClose={onChildrenDrawerClose}
+            visible={childrenDrawer}
+          >
+            {category.map((item)=>(
         <div className = "pb-2 pl-1">{item.name}</div>
       ))}
+          </Drawer>
+      {/* <div className = "pb-2 pt-0 pl-1 font-bold">Category</div>
+      {category.map((item)=>(
+        <div className = "pb-2 pl-1">{item.name}</div>
+      ))} */}
       <hr></hr>
       <Link to = "/tutor"><div className = "p-2 pl-1 font-bold">Tutor</div></Link>
       <hr></hr>
