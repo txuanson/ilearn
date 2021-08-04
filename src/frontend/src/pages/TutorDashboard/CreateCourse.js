@@ -114,7 +114,6 @@ export default function CreateCourse() {
 
     const appendEditData = async (course_id) => {
         try {
-            await fetchCategory();
             const res = await getCourseInfo(course_id);
             setImage(`${process.env.REACT_APP_BASE_HOST}/${res.cover}`);
             setContent(res.content);
@@ -125,11 +124,11 @@ export default function CreateCourse() {
     }
 
     useEffect(() => {
+        console.log(course_id);
         if (course_id) {
             appendEditData(course_id);
         }
-        else
-            fetchCategory();
+        fetchCategory();
     }, [])
 
     return (
@@ -176,12 +175,12 @@ export default function CreateCourse() {
                         <Switch defaultChecked={true} />
                     </Form.Item>
 
-                    <Form.Item name="cover" label="Cover" rules={!course_id ?? [
+                    <Form.Item name="cover" label="Cover" rules={!course_id ? [
                         {
                             required: true,
                             message: 'Cover required!',
                         },
-                    ]}>
+                    ] : []}>
                         <div className="flex flex-col overflow-hidden">
                             <ImgCrop aspect={1.6} quality={1}>
                                 <Upload
