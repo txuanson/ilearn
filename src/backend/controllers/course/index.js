@@ -64,7 +64,6 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
         .match({ _id: new mongoose.Types.ObjectId(course_id) })
         .lookup({ from: 'categories', localField: 'category', foreignField: '_id', as: 'category' })
         .lookup({ from: 'accounts', localField: 'tutor', foreignField: '_id', as: 'tutor' })
-        .lookup({ from: 'sections', localField: 'sections.section_id', foreignField: '_id', as: 'tutor' })
         .unwind('category')
         .unwind('tutor')
         .project({
@@ -77,11 +76,13 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
                 name: 1
             },
             cover: 1,
-            category: 1,
+            category: {
+                _id: 1,
+                name: 1
+            },
             subscriber_count: { $size: "$subscriber" }
         })
         .exec();
-
     if (courseInfo.length == 0) throw new NotFound('Course not found!');
 
     res.send(courseInfo[0]);
