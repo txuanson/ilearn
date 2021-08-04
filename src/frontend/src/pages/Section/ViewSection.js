@@ -69,6 +69,7 @@ export default function ViewSection() {
     <>
      <Header
         className="site-layout-sub-header-background flex items-center md:px-10 px-0"
+        style={{position:'fixed', width:'100vw', top:0, zIndex:20}}
       >
         <Link to="/homepage">
           <h2 className="hidden md:block text-white font-semibold text-3xl md:mx-2">
@@ -91,7 +92,7 @@ export default function ViewSection() {
         <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden ml-10 text-xl"/>
         </Link>
       </Header>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]} className="block md:hidden"
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]} className="block md:hidden mt-16"
       onClick={handleClick}
       onOpenChange={onOpenChange}
       openKeys={activeKeys}>
@@ -104,7 +105,7 @@ export default function ViewSection() {
           </SubMenu>
       </Menu>
     <Layout className="min-h-screen">
-      <Sider theme="light" style={{overflow: 'auto', height: '540px', marginTop: 10}} className="hidden md:block">
+      <Sider theme="light" style={{overflow: 'auto', height: '100vh', position:'fixed', zIndex:10, top:64, left: 0}} className="hidden md:block">
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
           {data.map(item => (
             <Menu.Item item={item.title} key={item.section_id}>
@@ -113,11 +114,11 @@ export default function ViewSection() {
           ))}
         </Menu>
       </Sider>
-      <Layout>
+      <Layout className="md:mt-16 md:ml-20">
         <Content>
           <div
             className="site-layout-background"
-            style={{ padding: 10, minHeight: 360 }}
+            style={{minHeight: 360, paddingLeft:10, paddingRight:10}}
           >
             <Switch>
               <Route path="/view-section/1">
