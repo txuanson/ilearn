@@ -93,7 +93,7 @@ export default function HomePage() {
         {/* {console.log(data[0]._id)} */}
 
         <CarouselComponent idCategory = "60d339d6089c6c40a4a6ecb1" nameCategory = "Javascript"></CarouselComponent> {/*"Javascript"*/}
-        <CarouselComponent idCategory = "60d33a0d089c6c40a4a6ecb9" nameCategory = "ReactJs"></CarouselComponent> {/*"ReactJs"*/}
+        <CarouselComponent idCategory = "60d339db089c6c40a4a6ecb2" nameCategory = "C++"></CarouselComponent> {/*"ReactJs"*/}
         <CarouselComponent idCategory = "60d339e8089c6c40a4a6ecb5" nameCategory = "Ruby"></CarouselComponent> {/*"Ruby"*/}
       </div>
     </div>
