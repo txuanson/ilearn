@@ -21,7 +21,7 @@ const sampleData = [
 export default function ListUserTable({
     data,
     action,
-    handleAction = () => { }
+    handleAction = (user_id) => {console.log(user_id)}
 }) {
 
     return (
@@ -34,7 +34,7 @@ export default function ListUserTable({
             ))} />
             <Column title="Action" key="action" render={((text, record) => (
                 <Space size="small">
-                    <a onClick={handleAction}>{action}</a>
+                    <a onClick={() => handleAction(record._id)}>{action}</a>
                 </Space>
             ))} />
         </Table>

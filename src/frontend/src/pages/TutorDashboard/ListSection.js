@@ -8,8 +8,10 @@ import handleErrorApi from "../../utils/handleErrorApi";
 import Column from "antd/lib/table/Column";
 
 
-export default function ListSection() {
+export default function ListSection(props) {
     const { course_id } = useParams();
+    console.log(course_id);
+    const [value, setValue] = useState('');
     const [sections, setSection] = useState([]);
 
     const onEditSection = (section_id) => {
