@@ -18,9 +18,12 @@ function ReadMore({ children, maxCharCount = 500 }) {
     }
     return (
         <div>
-            <ReactMarkdown 
+            <article className="prose lg:prose-md max-w-none px-2 my-10">
+                    <ReactMarkdown children={res} remarkPlugins={[gfm]}/>
+            </article>
+            {/* <ReactMarkdown 
                     remarkPlugins={[gfm]} 
-                    children={res} />
+                    children={res} /> */}
             {/* <p> {res} </p> */}
 
             <Button type = "text" onClick = {toggleIsTruncated}>

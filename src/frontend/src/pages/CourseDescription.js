@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import 'antd/dist/antd.css';
 import {Link} from "react-router-dom";
 import gfm from "remark-gfm";
+import ReadMore from '../components/ui/ReadMore';
 
 import {Button,Layout, Breadcrumb, Affix} from 'antd';
 import CommentQA from '../components/comment/CommentQA';
@@ -148,48 +149,55 @@ You can reach me and feedback about this
 export default function CourseDescription(data) {
 
     return (
+    <>
+    <Breadcrumb className="mx-10 xl:px-40">
+        <Breadcrumb.Item>  
+            <Link to="/homepage">iLearn</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+            <Link to={`/${data.category}`} >{data.category}</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>{data.name}</Breadcrumb.Item>
+        </Breadcrumb>
+    <div style={{backgroundColor: '#001529'}} className="w-full mx-auto shadow-md overflow-hidden">
+        <div className="container md:flex md:mx-10 xl:px-40">
+            <div className="md:flex-shrink-0">
+                <div className="relative m-2">
+                    <img src={data.cover} alt={data.name} class="h-60 w-full object-cover md:w-70"/>
+                    <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
+                        {data.public ? 'Public' : 'Private'}
+                    </span>
+                </div>
+            </div>
+            <div className="text-center p-5 justify-center flex flex-col md:text-left">
+                <div className="uppercase block leading-tight text-3xl text-white font-bold">{data.name}</div>
+                <p className="text-white mt-1">{data.text}</p>
+                <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {data.tutor}</div>
+                <p className="text-white">Start on {data.start}</p>
+                <div>
+                <Link to="/course/subscribe" style={{width:'100px'}} className="flex bg-blue-500 font-bold text-white px-4 py-3 hover:bg-blue-600 my-2">
+                Subscribe
+                </Link>
+                </div>
+                <div className="text-center md:text-left text-white flex" style={{alignItems:'flex-end'}}>
+                    <p className="font-bold text-4xl pr-1">{data.subscriber}</p>
+                    <p className="pr-4">subscribers</p>
+                    <p className="font-bold text-4xl pr-1">{data.view}</p>
+                    <p>views</p>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
     <Layout className="container mx-auto xl:px-40">
         <Content className="p-0 md:px-70">
             <div className="site-layout-background container mx-auto my-2" style={{ padding: 10, minHeight: 360 }}>
-                <Breadcrumb style={{ margin: "10px 0" }}>
-                    <Breadcrumb.Item>  
-                        <Link to="/homepage">iLearn</Link>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        <Link to={`/${data.category}`}>{data.category}</Link>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>{data.name}</Breadcrumb.Item>
-                </Breadcrumb>
-              
-                <div className="w-full mx-auto bg-white shadow-md overflow-hidden">
-                    <div className="md:flex">
-                        <div className="md:flex-shrink-0">
-                            <div className="relative m-2">
-                                <img src={data.cover} alt={data.name} class="h-60 w-full object-cover md:w-70"/>
-                                <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
-                                    {data.public ? 'Public' : 'Private'}
-                                </span>
-                            </div>
-                        </div>
-                        <div className="text-center p-5 justify-center flex flex-col md:text-left">
-                            <div className="uppercase block mt-1 text-lg leading-tight font-medium text-black">{data.name}</div>
-                            <div className="tracking-wide text-sm text-indigo-500 font-semibold">{data.category}</div>
-                            <p className="text-gray-500">{data.text}</p>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-                <Affix offsetTop={0}>
-                    <Button className="w-full" type="primary">
-                        <Link to="/course/subscribe">Subscribe</Link>
-                    </Button>
-                </Affix>
-                
-                <article className="prose lg:prose-md max-w-none px-2 my-10">
+                <ReadMore children = {markdown}/>
+                {/* <article className="prose lg:prose-md max-w-none px-2 my-10">
                     <ReactMarkdown children={markdown} remarkPlugins={[gfm]}/>
-                </article>
-                <div className="text-center text-md bg-blue-600 py-5 font-bold text-white">COMMENT</div>
+                </article> */}
+                <div className="text-center text-md bg-blue-600 py-5 font-bold text-white mt-5">COMMENT</div>
                 <CommentQA/>
 
                 
@@ -197,6 +205,6 @@ export default function CourseDescription(data) {
             
         </Content>
     </Layout>
-
+    </>
   );
 };

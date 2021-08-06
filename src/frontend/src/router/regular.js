@@ -29,12 +29,16 @@ export default function RegularRoute() {
                 <Route path="/course">
                     <SplashRoute key="/course">
                         <CourseDescription
-                            name="Welcome to our website"
+                            name="Introduction to Programming"
                             category="Test"
+                            tutor="Tutor-name"
                             cover="/default-class-cover.png"
                             public={false}
-                            text="Brief description about the course. Brief description about the course."
+                            text="C++ is a cross-platform language that can be used to create high-performance applications. C++ is fun and easy to learn!"
                             content="## 📖 About this class"
+                            start="Saturday, 7/8/2021"
+                            subscriber='100'
+                            view='123456'
                         />
                     </SplashRoute>
                 </Route>
