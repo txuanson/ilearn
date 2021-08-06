@@ -11,6 +11,11 @@ export const login = ({ token }) => {
   window.location.href = "/";
 };
 
+export const logout = () => {
+  cookie.remove("token");
+  window.location.href = "/";
+};
+
 export const register = ({ token }) => {
   cookie.set("token", token, { expires: 7 });
   window.location.href = "/";
