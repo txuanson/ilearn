@@ -3,6 +3,7 @@ import CardComponent from "../Card/CardComponent";
 import { useState, useEffect } from "react";
 import { getCategoryID } from "../../api/homePage";
 
+
 export default function Category({ idCategory, nameCategory }) {
   const [data, setData] = useState([]);
   useEffect(async () => {
@@ -20,9 +21,9 @@ export default function Category({ idCategory, nameCategory }) {
         <Row>
           {data.map((item) => (
             <Col xl={6} md={6}>
-              <div className="p-3">
+              <div className="p-2">
                 <CardComponent
-                  dataCard={data[0]}
+                  dataCard={item}
                   bordered={false}
                 ></CardComponent>
               </div>

@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Drawer, Button } from "antd";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
+import ReactImageFallback from "react-image-fallback";
+import { logout } from "../../utils/auth";
 
-export default function DrawerMenu({ category, user }) {
+export default function DrawerMenu({ category, user, profileUser }) {
   const [visible, setVisible] = useState(false);
   const [childrenDrawer, setChildrenDrawer] = useState(false);
   const showDrawer = () => {
@@ -21,10 +23,7 @@ export default function DrawerMenu({ category, user }) {
   };
   return (
     <>
-      {/* <Button type="primary" onClick={showDrawer}>
-        Open
-      </Button> */}
-      <div className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+      <div className="hover:bg-gray-700 hover:text-white p-2 rounded-xl">
         <MenuIcon
           className="block md:hidden h-6 w-6"
           aria-hidden="true"
@@ -38,21 +37,56 @@ export default function DrawerMenu({ category, user }) {
         onClose={onClose}
         visible={visible}
       >
-        <a className="p-2 pt-0 pl-1 font-bold" onClick={showChildrenDrawer}>
-          Category
-        </a>
+        {user ? (
+          <div>
+            <Link to="/profile">
+              <ReactImageFallback
+                className="min-w-full min-h-full block flex-shrink-0 rounded-full"
+                src={"https://ilearn-19clc3.herokuapp.com/" + profileUser.avata}
+                alt="logo"
+                fallbackImage="/avata-default.jpg"
+              />
+              <div>
+                <p className="font-bold text-xl text-center">
+                  {profileUser.name}
+                </p>
+                <p className=" text-center">{"@" + profileUser.username}</p>
+              </div>
+            </Link>
+            <hr></hr>
+            <Link to="/profile">
+              <div className="p-2 pl-1 font-bold">My profile</div>
+            </Link>
+            <hr></hr>
+            <Link to="/mylearn">
+              <div className="p-2 pl-1 font-bold">My learn</div>
+            </Link>
+          </div>
+        ) : (
+          <></>
+        )}
+        <hr></hr>
+        <div className="p-2 pl-1 font-bold">
+          <a onClick={showChildrenDrawer}>Category</a>
+        </div>
         <Drawer
           title="Category"
-          width={320}
+          width={240}
           closable={false}
           placement="left"
           onClose={onChildrenDrawerClose}
           visible={childrenDrawer}
+          bodyStyle={{
+            padding: 0,
+          }}
         >
           {category.map((item) => (
-            <div className="pb-2 pl-1">
-              <Link to={"/category/" + item._id}>{item.name}</Link>
-            </div>
+            <>
+              <div className="p-6 font-medium">
+                <Link to={"/category/" + item._id}>{item.name}</Link>
+              </div>
+              <hr></hr>
+            </>
           ))}
         </Drawer>
         {/* <div className = "pb-2 pt-0 pl-1 font-bold">Category</div>
@@ -63,20 +97,15 @@ export default function DrawerMenu({ category, user }) {
         <Link to="/tutor">
           <div className="p-2 pl-1 font-bold">Tutor</div>
         </Link>
-        <hr></hr>
-        <Link to="#">
-          <div className="p-2 pl-1 font-bold">Team</div>
-        </Link>
-        <hr></hr>
-        <Link to="#">
-          <div className="p-2 pl-1 font-bold">Project</div>
-        </Link>
-        <hr></hr>
-        <Link to="#">
-          <div className="p-2 pl-1 font-bold">Calendar</div>
-        </Link>
         {user ? (
-          <></>
+          <>
+            <hr></hr>
+            <Link to="/login">
+              <div className="p-2 pl-1 font-bold">
+                <a onClick={logout}>Sign out</a>
+              </div>
+            </Link>
+          </>
         ) : (
           <>
             <hr></hr>

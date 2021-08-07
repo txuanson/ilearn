@@ -1,3 +1,4 @@
+import ReactImageFallback from "react-image-fallback";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 const { Meta } = Card;
@@ -10,17 +11,19 @@ export default function CardComponent({ dataCard }) {
           <Card
             className="m-auto"
             hoverable
-            style={{ width: "auto" }}
             cover={
-              <img
+              <ReactImageFallback
+                style={{ height: 120 }}
                 alt=""
-                //   src={dataCard.cover}
-                src="https://img-c.udemycdn.com/course/480x270/1409142_1879_8.jpg"
-                fallbackImage="https://img-c.udemycdn.com/course/480x270/1409142_1879_8.jpg"
+                src={dataCard.cover}
+                fallbackImage="/default-class-cover.png"
               />
             }
           >
-            <Meta className="text-center" title={dataCard.name} />
+            <Meta title={dataCard.name} />
+            <h>{dataCard.tutor.name}</h>
+            <br></br>
+            <h>{dataCard.subscriber_count} subscriber</h>
           </Card>
         </Link>
       ) : (
