@@ -1,4 +1,4 @@
-import CarouselComponent from "../components/test/CarouselComponent";
+import CarouselComponent from "../components/Card/CarouselComponent";
 import React from "react";
 
 export default function HomePage() {

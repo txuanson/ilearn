@@ -9,8 +9,22 @@ import HomeLayout from "../layout/HomeLayout";
 import ListSection from "../pages/ListSection";
 import CreateNewSection from "../pages/CreateNewSection";
 import Profile from "../pages/Profile";
+import Category from "../components/Category/Category";
+import { useEffect, useState } from "react";
+import { getAllCategory } from "../api/homePage";
 
 export default function RegularRoute() {
+    const [category, setCategory] = useState([]);
+
+  useEffect(async () => {
+    try {
+      const res = await getAllCategory()
+      setCategory(res);
+      console.log(res)
+    } catch (err) {
+      console.log("fail");
+    }
+  }, []);
     return (
         <HomeLayout>
             <Switch>
@@ -54,6 +68,14 @@ export default function RegularRoute() {
                         <HomePage />
                     </SplashRoute>
                 </Route>
+                {category.map((item) => (
+                    <Route path={"/category/" + item._id}>
+                    <SplashRoute key={"/category/" + item._id}>
+                        <Category idCategory = {item._id} nameCategory = {item.name}></Category>
+                    </SplashRoute>
+                    </Route>
+            ))}
+                
                 <Route exact path="/tutors/section">
                     <SplashRoute key="/tutors/section">
                         <CreateNewSection/>

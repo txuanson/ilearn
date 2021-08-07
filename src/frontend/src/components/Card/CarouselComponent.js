@@ -2,6 +2,7 @@ import { Carousel, Col, Row } from "antd";
 import CardComponent from "./CardComponent";
 import { useState, useEffect } from "react";
 import { getCategoryID } from "../../api/homePage";
+import { Link } from "react-router-dom";
 
 const contentStyle = {
   height: "160px",
@@ -63,7 +64,9 @@ export default function CarouselComponent({ idCategory, nameCategory }) {
       {data[0] ? (
         <div className="bg-gray-100 py-5 my-3">
           <div className="text-xl text-center text-blue-700 py-3 mt-3 font-bold">
+            <Link to="#">
             {nameCategory}
+            </Link>
           </div>
           <div className="grid grid-cols-12 mb-3">
             <div></div>
