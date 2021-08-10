@@ -16,7 +16,7 @@ export default function SearchMoblie() {
 
   return (
     <>
-      <div className = "hover:bg-gray-700 hover:text-white p-2 rounded-xl">
+      <div className="hover:bg-gray-700 hover:text-white p-2 rounded-xl">
         <SearchIcon
           className="block md:hidden h-6 w-6"
           aria-hidden="true"
@@ -39,7 +39,7 @@ export default function SearchMoblie() {
       >
         <div className="w-full mb-2">
           <div className="relative flex z-top justify-center items-center mt-2 px-3">
-            <Input placeholder="Search" className="rounded-xl"/>
+            <Input placeholder="Search" className="rounded-xl" />
           </div>
         </div>
       </Drawer>

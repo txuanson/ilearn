@@ -23,9 +23,9 @@ export default function DrawerMenu({ category, user, profileUser }) {
   };
   return (
     <>
-      <div className="hover:bg-gray-700 hover:text-white p-2 rounded-xl">
+      <div className="hover:bg-gray-700 hover:text-white p-2 rounded-xl block md:hidden ">
         <MenuIcon
-          className="block md:hidden h-6 w-6"
+          className="h-6 w-6"
           aria-hidden="true"
           onClick={showDrawer}
         ></MenuIcon>
@@ -89,10 +89,6 @@ export default function DrawerMenu({ category, user, profileUser }) {
             </>
           ))}
         </Drawer>
-        {/* <div className = "pb-2 pt-0 pl-1 font-bold">Category</div>
-      {category.map((item)=>(
-        <div className = "pb-2 pl-1">{item.name}</div>
-      ))} */}
         <hr></hr>
         <Link to="/tutor">
           <div className="p-2 pl-1 font-bold">Tutor</div>

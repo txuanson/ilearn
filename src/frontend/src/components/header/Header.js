@@ -1,5 +1,5 @@
 import { Disclosure } from "@headlessui/react";
-import { Menu, Dropdown, Input } from "antd";
+import { Menu, Dropdown, Input, Button } from "antd";
 import ReactImageFallback from "react-image-fallback";
 import { Link } from "react-router-dom";
 import { logout } from "../../utils/auth";
@@ -82,7 +82,7 @@ export default function Header({ user, ...props }) {
     <Disclosure as="nav" className="bg-blue-700 animate-none shadow-xl">
       {({ open }) => (
         <>
-          <div className="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8 ">
+          <div className="container mx-auto xl:px-40">
             <div className="relative flex items-center justify-between h-16">
               <DrawerMenu
                 category={nameCategory}
@@ -116,26 +116,10 @@ export default function Header({ user, ...props }) {
                   </Link>
                 </div>
                 <div className="hidden md:block md:ml-6">
-                  <div className="flex space-x-4">
-                    <div className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  <div className="flex">
+                    <Button className="bg-blue-700 hover:bg-gray-700 rounded-md text-sm font-medium text-white border-none">
                       <DropDownMenu category={nameCategory}></DropDownMenu>
-                    </div>
-                    {/* {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        className={classNames(
-                          item.isCalendar
-                            ? "hidden lg:block"
-                            : "t",
-                          "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                        // className = "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                      >
-                        {item.name}
-                      </Link>
-                    ))} */}
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -185,7 +169,9 @@ export default function Header({ user, ...props }) {
                   </div>
                 )}
               </div>
-              <SearchMoblie></SearchMoblie>
+              <div className="block md:hidden">
+                <SearchMoblie></SearchMoblie>
+              </div>
             </div>
           </div>
           {/* <Disclosure.Panel className="sm:hidden">
