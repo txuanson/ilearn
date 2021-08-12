@@ -150,41 +150,39 @@ export default function CourseDescription(data) {
 
     return (
     <>
-    <Breadcrumb className="mx-10 xl:px-40">
-        <Breadcrumb.Item>  
-            <Link to="/homepage">iLearn</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>
-            <Link to={`/${data.category}`} >{data.category}</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>{data.name}</Breadcrumb.Item>
-        </Breadcrumb>
     <div style={{backgroundColor: '#001529'}} className="w-full mx-auto shadow-md overflow-hidden">
-        <div className="container md:flex md:mx-10 xl:px-40">
-            <div className="md:flex-shrink-0">
-                <div className="relative m-2">
-                    <img src={data.cover} alt={data.name} class="h-60 w-full object-cover md:w-70"/>
-                    <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
-                        {data.public ? 'Public' : 'Private'}
-                    </span>
-                </div>
+        <div className="md:hidden block">
+            <div className="relative m-2">
+                <img src={data.cover} alt={data.name} class="h-60 w-full object-cover"/>
+                <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
+                    {data.public ? 'Public' : 'Private'}
+                </span>
             </div>
+        </div>
+        <div className="container md:flex md:mx-10 xl:px-40">
             <div className="text-center p-5 justify-center flex flex-col md:text-left">
                 <div className="uppercase block leading-tight text-3xl text-white font-bold">{data.name}</div>
                 <p className="text-white mt-1">{data.text}</p>
                 <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {data.tutor}</div>
                 <p className="text-white">Start on {data.start}</p>
-                <div>
-                <Link to="/course/subscribe" style={{width:'100px'}} className="flex bg-blue-500 font-bold text-white px-4 py-3 hover:bg-blue-600 my-2">
+                <Link to="/course/subscribe" className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
                 Subscribe
                 </Link>
-                </div>
+         
                 <div className="text-center md:text-left text-white flex" style={{alignItems:'flex-end'}}>
                     <p className="font-bold text-4xl pr-1">{data.subscriber}</p>
                     <p className="pr-4">subscribers</p>
                     <p className="font-bold text-4xl pr-1">{data.view}</p>
                     <p>views</p>
 
+                </div>
+            </div>
+            <div className="md:flex-shrink-0 md:block hidden">
+                <div className="relative m-2">
+                    <img src={data.cover} alt={data.name} class="h-60 w-full object-cover md:w-70"/>
+                    <span class="px-1 py-1 text-white bg-blue-700 rounded absolute left-0 bottom-0 bg-opacity-50">
+                        {data.public ? 'Public' : 'Private'}
+                    </span>
                 </div>
             </div>
             
@@ -197,9 +195,6 @@ export default function CourseDescription(data) {
                 {/* <article className="prose lg:prose-md max-w-none px-2 my-10">
                     <ReactMarkdown children={markdown} remarkPlugins={[gfm]}/>
                 </article> */}
-                <div className="text-center text-md bg-blue-600 py-5 font-bold text-white mt-5">COMMENT</div>
-                <CommentQA/>
-
                 
             </div>
             
