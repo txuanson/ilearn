@@ -10,6 +10,7 @@ import { BookmarkAltOutline } from "heroicons-react";
 export default function CarouselComponent({ idCategory, nameCategory }) {
   var settings = {
     dots: false,
+    arrows: false,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
