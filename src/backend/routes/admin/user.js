@@ -20,8 +20,13 @@ const user = require('../../controllers/admin/account');
  *       - in: query
  *         name: page
  *         schema:
- *           type: string
+ *           type: integer
  *         description: Page you want to find 
+ *       - in: query
+ *         name: page_size
+ *         schema:
+ *           type: integer
+ *         description: Page Size 
  */
  router.get('/', user.find);
 

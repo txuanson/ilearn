@@ -10,7 +10,7 @@ const { STATIC_PATH, HOST } = require("../../configs/env");
 const compress = require("../../helpers/compress");
 const { Admin } = require("../../configs/role");
 const { deleteCourseHelper } = require("../../helpers/query");
-const getOwnedCourseValidator = require("../../validators/getOwnedCourse.validator");
+const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
 
 
 const getCourseBy = asyncCatch(async (req, res, next) => {
@@ -70,6 +70,7 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
             _id: 1,
             name: 1,
             public: 1,
+            description: 1,
             content: 1,
             tutor: {
                 _id: 1,
@@ -80,16 +81,18 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
                 _id: 1,
                 name: 1
             },
-            subscriber_count: { $size: "$subscriber" }
+            subscriber_count: { $size: "$subscriber" },
+            view: 1
         })
         .exec();
     if (courseInfo.length == 0) throw new NotFound('Course not found!');
 
     res.send(courseInfo[0]);
+    Course.updateOne({_id: course_id}, {$inc: {'view': 1}}).exec();
 })
 
 const getOwnedCourse = asyncCatch(async (req, res, next) => {
-    const { error, value } = getOwnedCourseValidator.validate(req.query);
+    const { error, value } = queryWithPagiValidator.validate(req.query);
     if (error) {
         throw new BadReqest(error.message);
     }
@@ -105,7 +108,8 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
             name: 1,
             cover: 1,
             public: 1,
-            subscriber_count: { $size: "$subscriber" }
+            subscriber_count: { $size: "$subscriber" },
+            view: 1
         })
         .skip(pagi.skip)
         .limit(pagi.limit)

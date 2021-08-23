@@ -16,6 +16,8 @@ const courseUploadFileMiddleware = upload.fields([{ name: 'cover', maxCount: 1 }
  *           type: string
  *         category:
  *           type: string
+ *         description:
+ *           type: string
  *         public:
  *           type: boolean
  *         cover:

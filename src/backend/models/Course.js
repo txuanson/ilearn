@@ -6,6 +6,10 @@ const courseSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    description: {
+        type: String,
+        default: ""
+    },
     content: String,
     cover: String,
     category: {
@@ -15,6 +19,10 @@ const courseSchema = mongoose.Schema({
     public: {
         type: Boolean,
         default: true
+    },
+    view: {
+        type: Number,
+        default: 0
     },
     subscriber: [
         {

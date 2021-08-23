@@ -6,6 +6,27 @@ const router = express.Router();
  * @openapi
  * paths:
  *   /admin/category:
+ *     get:
+ *       summary: Get all category with number of courses
+ *       tags:
+ *         - admin
+ *     parameters:
+ *       - in: query
+ *         name: query
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: A part of users's username. Leave blank to list all users.
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page you want to find 
+ *       - in: query
+ *         name: page_size
+ *         schema:
+ *           type: integer
+ *         description: Page size
  *     post:
  *       summary: Add a new category
  *       tags:
@@ -54,6 +75,7 @@ const router = express.Router();
  *           schema:
  *             type: string
  */
+router.get('/', category.get);
 router.post('/', category.create);
 router.patch('/:category_id', category.edit)
 router.delete('/:category_id', category.remove)

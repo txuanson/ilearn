@@ -40,9 +40,9 @@ const options = {
             description: "Online learning platform with Zoom intergrated",
         },
         servers: [{
-            url: "https://ilearn-19clc3.herokuapp.com"
+            url: "https://ilearn.yurineko.com"
         }, {
-            url: "http://localhost:3000",
+            url: "http://localhost:8081",
         }],
         components: {
             securitySchemes: {
