@@ -4,7 +4,7 @@ import {Button} from 'antd';
 import gfm from "remark-gfm";
 import ReactMarkdown from 'react-markdown'
 
-function ReadMore({ children, maxCharCount = 500 }) {
+function ReadMore({ children, maxCharCount = 200 }) {
     const text = children;
 
     const [isTruncated, setIsTruncated] = useState(true);

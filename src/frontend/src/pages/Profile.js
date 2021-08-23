@@ -1,9 +1,11 @@
 import React from 'react';
-import {Breadcrumb, Layout, Button, Divider} from "antd";
-import ReactMarkdown from 'react-markdown'
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import {Layout, Button, Divider} from "antd";
 import 'antd/dist/antd.css';
-import {Link} from "react-router-dom";
-import gfm from "remark-gfm";
+
+import { getUserProfile } from "../api/userProfile";
 
 import { CameraOutlined } from '@ant-design/icons';
 import { EditOutlined } from '@ant-design/icons';
@@ -16,10 +18,13 @@ import UploadProfile from '../components/editprofile/UploadProfile'
 const { Header, Content, Footer } = Layout;
 
 function Profile() {
-    let name = 'Import a HTML file and watch'
-    let markdown = `
-    ## 📖 About this class
 
+    const [name, setUserName] = useState();
+    const [bio, setUserBio] = useState();
+
+
+    // let name = 'Import a HTML file and watch'
+    let markdown = `    ## 📖 About this class
 - 🖥 Wellcome and prepair
 - 💼 About Javascript
 - 🎓 Javascript Fundamentals
@@ -82,6 +87,19 @@ For production environments...
 Dillinger is currently extended with the following plugins.
 Instructions on how to use them in your own application are linked below. 
 `
+
+const { user_id } = useParams();
+
+useEffect(async () => {
+    try {
+      const res = await getUserProfile(user_id)
+      setUserName(res.name);
+      setUserBio(res.bio);
+    } catch (err) {
+      console.log("fail");
+    }
+  }, []);
+
     return (
         <Layout className = "container mx-auto xl:px-40">
             <Content className = "p-10 container">
@@ -89,33 +107,41 @@ Instructions on how to use them in your own application are linked below.
                     <div className = "flex flex-col items-center">
                         <img className = "w-40 h-40 border-4 rounded-full border-white"
                             src = "https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar.png" />
-                        <EditModal icon = {<CameraOutlined style={{ fontSize: '16px'}} /> }
-                            name = "Edit Avatar"
-                            title = "Upload Avatar"
-                            className = "">
-                            <UploadAvatar />
-                        </EditModal>
-                    </div>
 
+                        <div className = " flex flex-row md:flex-col">
+                            <EditModal icon = {<CameraOutlined style={{ fontSize: '16px'}} /> }
+                                name = "Edit Avatar"
+                                title = "Upload Avatar"
+                                className = "">
+                                <UploadAvatar />
+                            </EditModal>
+                            <EditModal icon = {<EditOutlined style={{ fontSize: '16px'}} /> }
+                                name = "Edit Profile" 
+                                title = "Update Profile"
+                                className = "pt-5">
+                                <UploadProfile />
+                            </EditModal>
+                        </div>
+
+                        <div className = "p-2">
+                            <Button type = "primary"> Connect to Zoom </Button>
+                        </div>
+
+                    </div>
                     <div>
                         <div className = "px-0 md:px-10">
                             <div className = "flex flex-col max-w-lg">
-                                <p className = "pb-4 text-2xl md:text-4xl break-normal">
-                                    {name}
+                                <p className = "pb-4 text-2xl md:text-4xl text-center break-normal ">
+                                    {/* {name} */}
+                                    HOANG LE KHANH HOANG LE
                                 </p> 
-                                <p className="break-normal" >
-                                    <ReadMore children = {markdown}/>
-
-                                    {/* <ReactMarkdown 
-                                        remarkPlugins={[gfm]} 
-                                        children={markdown} /> */}
-                                </p>
-                                <EditModal icon = {<EditOutlined style={{ fontSize: '16px'}} /> }
-                                    name = "Edit Profile" 
-                                    title = "Update Profile"
-                                    className = "pt-5">
-                                    <UploadProfile />
-                                </EditModal>
+                                <div className="site-layout-background container mx-auto my-2">
+                                    <p className="break-normal" >
+                                        {/* <ReadMore children = {bio === "" ? " no profile " : bio}/> */}
+                                        <ReadMore children = {markdown}/>
+                                    </p>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
