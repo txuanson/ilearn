@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import SplashRoute from "../components/animation/SplashRoute";
 import TutorDashBoard from "../pages/TutorDashboard/TutorDashboard";
 import ViewSection from "../pages/Section/ViewSection";
+import Admin from "../pages/Admin/Admin";
 import RegularRoute from "./regular";
 
 export default function MyRoute() {
@@ -11,6 +12,12 @@ export default function MyRoute() {
                 <Route path="/tutor">
                     <SplashRoute key="/tutor">
                         <TutorDashBoard />
+                    </SplashRoute>
+                </Route>
+
+                <Route path="/admin">
+                    <SplashRoute key="/admin">
+                        <Admin />
                     </SplashRoute>
                 </Route>
 

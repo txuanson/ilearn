@@ -43,6 +43,7 @@ export default function RegularRoute() {
                 <Route path="/course">
                     <SplashRoute key="/course">
                         <CourseDescription
+                            _id ='001'
                             name="Introduction to Programming"
                             category="Test"
                             tutor="Tutor-name"

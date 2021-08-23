@@ -1,12 +1,9 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown'
 import 'antd/dist/antd.css';
 import {Link} from "react-router-dom";
-import gfm from "remark-gfm";
 import ReadMore from '../components/ui/ReadMore';
 
-import {Button,Layout, Breadcrumb, Affix} from 'antd';
-import CommentQA from '../components/comment/CommentQA';
+import {Layout} from 'antd';
 
 const {Content} = Layout;
 
