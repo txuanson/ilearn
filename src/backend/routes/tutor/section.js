@@ -23,6 +23,8 @@ const router = express.Router();
  *           type: date-time
  *         visible:
  *           type: boolean
+ *         video:
+ *           type: string
  *       required: 
  *         - topic
  *         - content
@@ -40,6 +42,8 @@ const router = express.Router();
  *           type: integer
  *         start_time:
  *           type: date-time
+ *         video:
+ *           type: string
  *       required: 
  *         - topic
  *         - content
