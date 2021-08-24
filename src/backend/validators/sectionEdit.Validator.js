@@ -11,6 +11,9 @@ module.exports = Joi.object({
         .integer()
         .positive()
         .default(45),
+    video: Joi.string()
+        .allow(null, "")
+        .required(),
     start_time: Joi
         .date()
         .iso()

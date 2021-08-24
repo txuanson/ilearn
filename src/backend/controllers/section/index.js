@@ -71,7 +71,7 @@ const getSectionInfo = asyncCatch(async (req, res, next) => {
                 section_id: section_id
             }
         }
-    });
+    }).exec();
 });
 
 const createSection = asyncCatch(async (req, res, next) => {
@@ -102,7 +102,8 @@ const createSection = asyncCatch(async (req, res, next) => {
         meeting_id: meeting.meeting_id,
         start_time: value.start_time,
         duration: value.duration,
-        visible: value.visible
+        visible: value.visible,
+        video: value.video
     })
 
     await Course.updateOne({ _id: value.course_id }, {
@@ -125,9 +126,10 @@ const editSection = asyncCatch(async (req, res, next) => {
     const section = await Section
         .findById(section_id)
         .exec();
+
     const course = await Course
-        .findOne({ "section.section_id": section_id })
-        .select('-content')
+        .findOne({ "sections.section": section_id })
+        .select('-content -description')
         .exec();
 
     if (!section || !course) throw new NotFound('Not found!');

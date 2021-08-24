@@ -28,6 +28,10 @@ const sectionSchema = mongoose.Schema({
     visible: {
         type: Boolean,
         default: false
+    },
+    video: {
+        type: String,
+        default: null
     }
 },
     { timestamps: true }
