@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const accountService = require('../../controllers/account');
+const account = require('../../controllers/account');
 
 /**
  * @openapi
@@ -20,7 +20,13 @@ const accountService = require('../../controllers/account');
  *                   type: string
  *               required:
  *                 - access_code
+ *   /user/account/history:
+ *     get:
+ *       summary: Get learning history.
+ *       tags:
+ *         - user
  */
-router.post('/attachZoom', accountService.upgrade);
+router.post('/attachZoom', account.upgrade);
+router.get('/history', account.getHistory);
 
 module.exports = router;

@@ -8,6 +8,7 @@ const { zoomCreateMeeting, zoomEditMeeting } = require("../../services/zoom.serv
 const sectionCreateValidator = require("../../validators/sectionCreate.Validator");
 const sectionEditValidator = require("../../validators/sectionEdit.Validator");
 const mongoose = require('mongoose');
+const Account = require("../../models/Account");
 
 const getSectionWithTutor = asyncCatch(async (req, res, next) => {
     const section_id = req.params.section_id;
@@ -56,6 +57,21 @@ const getSectionInfo = asyncCatch(async (req, res, next) => {
 
     res.send({ course, section });
 
+    await Account.updateOne({ _id: req.user_data._id }, {
+        $pull: {
+            history: {
+                course_id: course_id
+            }
+        }
+    }).exec();
+    await Account.updateOne({ _id: req.user_data._id }, {
+        $push: {
+            history: {
+                course_id: course_id,
+                section_id: section_id
+            }
+        }
+    });
 });
 
 const createSection = asyncCatch(async (req, res, next) => {

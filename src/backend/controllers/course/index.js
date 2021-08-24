@@ -138,27 +138,34 @@ const getCurrentSection = asyncCatch(async (req, res, next) => {
     }
 
     const { course_id } = value;
-    const current =await Account.findOne({
+    const current = await Account.findOne({
         "_id": req.user_data._id,
         "history.course_id": course_id
     }, { "history.$": 1 })
+        .select("-_id course_id section_id")
         .lean()
         .exec();
 
-    if (current) 
-        res.send(current);
-    else{
+    if (current && current.history.length === 1){
+        delete current.history[0]._id;
+        res.send(current.history[0]);
+    }
+    else {
         const newLearn = await Course.aggregate()
-        .match({_id: new mongoose.Types.ObjectId(course_id)})
-        .project({
-            course_id: "$_id",
-            _id: 0,
-            section_id: {$first: "$sections.section"}
-        })
-        .exec();
-        
-        if(newLearn.length === 0){
+            .match({ _id: new mongoose.Types.ObjectId(course_id) })
+            .project({
+                course_id: "$_id",
+                _id: 0,
+                section_id: { $first: "$sections.section" }
+            })
+            .exec();
+
+        if (newLearn.length === 0) {
             throw new NotFound("Course not found!");
+        }
+
+        if (!newLearn[0].section_id) {
+            throw new NotFound("No section Found!");
         }
         res.send(newLearn[0]);
     }

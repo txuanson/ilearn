@@ -6,6 +6,7 @@ const Zoom = require('../../models/Zoom');
 const Account = require('../../models/Account');
 const { v4: uuidv4 } = require('uuid');
 const { Tutor } = require("../../configs/role");
+const mongoose = require('mongoose');
 const profileEditValidator = require("../../validators/profileEdit.validator");
 const { STATIC_PATH, HOST, DEFAULT_AVA } = require("../../configs/env");
 const compress = require("../../helpers/compress");
@@ -86,31 +87,36 @@ const updateAvatar = asyncCatch(async (req, res, next) => {
     res.send("Success!");
 })
 
-// const getHistory = asyncCatch(async (req, res, next) => {
-//     const { error, value } = queryWithPagiValidator(req.query);
-//     if (error) {
-//         throw new BadReqest(error.message);
-//     }
+const getHistory = asyncCatch(async (req, res, next) => {
+    const { error, value } = queryWithPagiValidator.validate(req.query);
+    if (error) {
+        throw new BadReqest(error.message);
+    }
 
-//     const { page, page_size } = value;
-//     const pagi = pagination(page, page_size);
+    const { page, page_size } = value;
+    const pagi = pagination(page, page_size);
 
-//     const history = await Account.aggregate()
-//         .match({ _id: new mongoose.Types.ObjectId(req.user_data._id) })
-//         .lookup({from: "courses", localField: "history.course_id", foreignField: "_id", as: "course"}, "_id name cover")
-//         .populate("history.section_id", "_id topic")
-//         .skip(pagi.skip)
-//         .limit(pagi.limit)
-//         .lean()
-//         .exec();
-//     const itemsCount = Account.aggregate()
-//         .m
-//         .project
-//     res.send({ items, i }
-// });
+    const items = await Account.findById(req.user_data._id)
+        .select("-_id history.course_id history.section_id")
+        .populate("history.course_id", "_id name cover")
+        .populate("history.section_id", "_id topic")
+        .skip(pagi.skip)
+        .limit(pagi.limit)
+        .lean()
+        .exec();
+    const itemsCount = await Account.aggregate()
+        .match({ _id: mongoose.Types.ObjectId(req.user_data._id) })
+        .project({
+            history_count: { $size: "$history" }
+        })
+        .exec();
+
+    res.send({ items, items_count: itemsCount[0].history_count });
+});
 
 module.exports = {
     upgrade: upgradeAccount,
+    getHistory,
     getProfile,
     getMinProfile,
     editProfile,
