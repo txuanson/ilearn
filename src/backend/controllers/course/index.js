@@ -11,6 +11,8 @@ const compress = require("../../helpers/compress");
 const { Admin } = require("../../configs/role");
 const { deleteCourseHelper } = require("../../helpers/query");
 const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
+const getCurrentSectionValidator = require("../../validators/getCurrentSection.validator");
+const Account = require("../../models/Account");
 
 
 const getCourseBy = asyncCatch(async (req, res, next) => {
@@ -88,7 +90,7 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
     if (courseInfo.length == 0) throw new NotFound('Course not found!');
 
     res.send(courseInfo[0]);
-    Course.updateOne({_id: course_id}, {$inc: {'view': 1}}).exec();
+    Course.updateOne({ _id: course_id }, { $inc: { 'view': 1 } }).exec();
 })
 
 const getOwnedCourse = asyncCatch(async (req, res, next) => {
@@ -127,6 +129,39 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
         items,
         items_count
     });
+})
+
+const getCurrentSection = asyncCatch(async (req, res, next) => {
+    const { error, value } = getCurrentSectionValidator.validate(req.params);
+    if (error) {
+        throw new BadReqest(error.message);
+    }
+
+    const { course_id } = value;
+    const current =await Account.findOne({
+        "_id": req.user_data._id,
+        "history.course_id": course_id
+    }, { "history.$": 1 })
+        .lean()
+        .exec();
+
+    if (current) 
+        res.send(current);
+    else{
+        const newLearn = await Course.aggregate()
+        .match({_id: new mongoose.Types.ObjectId(course_id)})
+        .project({
+            course_id: "$_id",
+            _id: 0,
+            section_id: {$first: "$sections.section"}
+        })
+        .exec();
+        
+        if(newLearn.length === 0){
+            throw new NotFound("Course not found!");
+        }
+        res.send(newLearn[0]);
+    }
 })
 
 const createCourse = asyncCatch(async (req, res, next) => {
@@ -272,6 +307,7 @@ const listSectionTutor = asyncCatch(async (req, res, next) => {
 
 module.exports = {
     getCourseBy: getCourseBy,
+    getCurrentSection,
     getOwnedCourse,
     info: getCourseInfo,
     create: createCourse,

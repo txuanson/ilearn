@@ -1,5 +1,5 @@
 const { BadReqest } = require("../../helpers/response");
-const { asyncCatch, removeUnusedFile, removeTempFlag, filterImageUrl } = require("../../helpers/utils");
+const { asyncCatch, removeUnusedFile, removeTempFlag, filterImageUrl, pagination } = require("../../helpers/utils");
 const { zoomInitialize } = require("../../services/zoom.service");
 const accountUpgradeValidator = require("../../validators/accountUpgrade.validator");
 const Zoom = require('../../models/Zoom');
@@ -9,6 +9,7 @@ const { Tutor } = require("../../configs/role");
 const profileEditValidator = require("../../validators/profileEdit.validator");
 const { STATIC_PATH, HOST, DEFAULT_AVA } = require("../../configs/env");
 const compress = require("../../helpers/compress");
+const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
 
 const upgradeAccount = asyncCatch(async (req, res, next) => {
     const user_id = req.user_data._id;
@@ -24,10 +25,10 @@ const upgradeAccount = asyncCatch(async (req, res, next) => {
     res.send("Success!");
 });
 
-const getMinProfile = asyncCatch(async(req, res, next) =>{
+const getMinProfile = asyncCatch(async (req, res, next) => {
     const profile = await Account.findById(req.user_data._id)
-    .select("name username role avatar")
-    .lean()
+        .select("name username role avatar")
+        .lean()
     res.send(profile)
 })
 
@@ -84,6 +85,29 @@ const updateAvatar = asyncCatch(async (req, res, next) => {
 
     res.send("Success!");
 })
+
+// const getHistory = asyncCatch(async (req, res, next) => {
+//     const { error, value } = queryWithPagiValidator(req.query);
+//     if (error) {
+//         throw new BadReqest(error.message);
+//     }
+
+//     const { page, page_size } = value;
+//     const pagi = pagination(page, page_size);
+
+//     const history = await Account.aggregate()
+//         .match({ _id: new mongoose.Types.ObjectId(req.user_data._id) })
+//         .lookup({from: "courses", localField: "history.course_id", foreignField: "_id", as: "course"}, "_id name cover")
+//         .populate("history.section_id", "_id topic")
+//         .skip(pagi.skip)
+//         .limit(pagi.limit)
+//         .lean()
+//         .exec();
+//     const itemsCount = Account.aggregate()
+//         .m
+//         .project
+//     res.send({ items, i }
+// });
 
 module.exports = {
     upgrade: upgradeAccount,

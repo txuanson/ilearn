@@ -1,13 +1,13 @@
 const express = require('express');
+const section = require('../../controllers/section');
 const router = express.Router();
-const course = require("../../controllers/course");
 
 /**
  * @openapi
  * paths:
- *   /user/course/{course_id}:
+ *   /user/section/{course_id}/{section_id}:
  *     post:
- *       summary: Get Course Info
+ *       summary: Get Section Info
  *       tags:
  *         - user
  *       parameters:
@@ -16,19 +16,12 @@ const course = require("../../controllers/course");
  *           required: true
  *           schema:
  *             type: string
- *   /user/course/{course_id}/join:
- *     post:
- *       summary: Join the course with current learning (new) section
- *       tags:
- *         - user
- *       parameters:
  *         - in: path
- *           name: course_id
+ *           name: section_id
  *           required: true
  *           schema:
  *             type: string
  */
-router.get('/:course_id', course.info);
-router.get('/:course_id/join', course.getCurrentSection);
+router.get('/:course_id/:section_id', section.get)
 
 module.exports = router;

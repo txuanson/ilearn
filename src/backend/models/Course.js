@@ -30,7 +30,7 @@ const courseSchema = mongoose.Schema({
             ref: 'Account'
         }
     ],
-    queue: [
+    pending: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Account'

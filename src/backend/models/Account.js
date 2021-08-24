@@ -33,7 +33,17 @@ const accountSchema = new mongoose.Schema({
     avatar: {
         type: String,
         default: 'storage/default_avatar.svg'
-    }
+    },
+    history: [{
+        course_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course'
+        },
+        section_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Section'
+        }
+    }]
     // ,
     // courses: [
     //     {

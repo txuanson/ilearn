@@ -1,6 +1,6 @@
 const { Admin } = require("../../configs/role");
 const { deleteSectionHelper } = require("../../helpers/query");
-const { BadReqest, NotFound } = require("../../helpers/response");
+const { BadReqest, NotFound, Forbidden } = require("../../helpers/response");
 const { asyncCatch, filterImageUrl, removeTempFlag, removeUnusedFile } = require("../../helpers/utils");
 const Course = require("../../models/Course");
 const Section = require("../../models/Section");
@@ -17,6 +17,46 @@ const getSectionWithTutor = asyncCatch(async (req, res, next) => {
     if (!section) throw new NotFound('Section not found!');
     res.send(section);
 })
+
+const getSectionInfo = asyncCatch(async (req, res, next) => {
+    const { course_id, section_id } = req.params;
+    if (!course_id || !section_id)
+        throw new NotFound("Section not found!");
+
+    const course = await Course.findById(course_id)
+        .select("name tutor public subscriber banned sections.section sections.section_type")
+        .populate("sections.section", "_id topic")
+        .lean()
+        .exec();
+
+    if (!course)
+        throw new NotFound("Course not found!");
+
+    if (course.tutor != req.user_data._id &&
+        (course.banned.indexOf(req.user_data._id) != -1 ||
+            (course.public == false && course.subscriber.indexOf(req.user_data._id) == -1)))
+        throw new Forbidden("You have no rights to access this course!");
+
+    delete course.banned;
+    delete course.subscriber;
+
+    const section = await Section.findOne({ _id: section_id, visible: true })
+        .select("-visible -meeting_id")
+        .lean()
+        .exec();
+
+    if (!section)
+        throw new NotFound("Section not found!");
+
+    if (req.user_data._id == course.tutor)
+        delete section.join_url;
+    else
+        delete section.start_url;
+    delete course.tutor;
+
+    res.send({ course, section });
+
+});
 
 const createSection = asyncCatch(async (req, res, next) => {
     const { error, value } = sectionCreateValidator.validate(req.body);
@@ -125,6 +165,7 @@ const deleteSection = asyncCatch(async (req, res, next) => {
 
 module.exports = {
     getSectionWithTutor,
+    get: getSectionInfo,
     create: createSection,
     edit: editSection,
     delete: deleteSection
