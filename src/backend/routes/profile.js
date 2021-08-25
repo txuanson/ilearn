@@ -19,6 +19,6 @@ const authMiddleware = require('../middlewares/auth.middleware');
  *         required: true
  */
 
-router.get('/:user_id', authMiddleware, account.getProfile);
+router.get('/:user_id', account.getProfile);
 
 module.exports = router;
