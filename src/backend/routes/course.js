@@ -29,7 +29,7 @@ const router = express.Router();
  *           name: page_size
  *           schema:
  *             type: int
- *   /user/course/{course_id}:
+ *   /course/{course_id}:
  *     get:
  *       summary: Get Course Info
  *       tags:
