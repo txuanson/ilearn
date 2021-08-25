@@ -40,23 +40,14 @@ export default function RegularRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route path="/course">
-                    <SplashRoute key="/course">
+                <Route exact path="/course/61266b24f77d707b9db4af87">
+                    <SplashRoute key="/course/61266b24f77d707b9db4af87">
                         <CourseDescription
-                            _id ='001'
-                            name="Introduction to Programming"
-                            category="Test"
-                            tutor="Tutor-name"
-                            cover="/default-class-cover.png"
-                            public={false}
-                            text="C++ is a cross-platform language that can be used to create high-performance applications. C++ is fun and easy to learn!"
-                            content="## 📖 About this class"
-                            start="Saturday, 7/8/2021"
-                            subscriber='100'
-                            view='123456'
-                        />
+                            course_id="61266b24f77d707b9db4af87">
+                        </CourseDescription>
                     </SplashRoute>
                 </Route>
+            
 
                 <Route exact path="/register">
                     <SplashRoute key="/register">
@@ -64,8 +55,8 @@ export default function RegularRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route path="/homepage">
-                    <SplashRoute key="/homepage">
+                <Route exact path="/">
+                    <SplashRoute key="/">
                         <HomePage />
                     </SplashRoute>
                 </Route>

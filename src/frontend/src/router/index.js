@@ -21,9 +21,11 @@ export default function MyRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route path="/view-section">
-                    <SplashRoute key="/view-section">
-                        <ViewSection />
+                <Route path="/section/61266b24f77d707b9db4af87/6126705d99d0ff7e42a91e4d">
+                    <SplashRoute key="/section/61266b24f77d707b9db4af87/6126705d99d0ff7e42a91e4d">
+                        <ViewSection 
+                        course_id="61266b24f77d707b9db4af87"
+                        section_id="6126705d99d0ff7e42a91e4d"/>
                     </SplashRoute>
                 </Route>
 
