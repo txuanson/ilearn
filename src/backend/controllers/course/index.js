@@ -62,6 +62,15 @@ const getCourseBy = asyncCatch(async (req, res, next) => {
 
 const getCourseInfo = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
+    let extraPayload = {};
+
+    if (req.user_data) {
+        extraPayload = {
+            subscribed: { $in : [mongoose.Types.ObjectId(req.user_data._id), "$subscriber"] },
+            pending: { $in : [mongoose.Types.ObjectId(req.user_data._id), "$pending"] }
+        }
+    }
+
     const courseInfo = await Course.aggregate()
         .match({ _id: new mongoose.Types.ObjectId(course_id) })
         .lookup({ from: 'categories', localField: 'category', foreignField: '_id', as: 'category' })
@@ -84,9 +93,11 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
                 name: 1
             },
             subscriber_count: { $size: "$subscriber" },
-            view: 1
+            view: 1,
+            ...extraPayload
         })
         .exec();
+
     if (courseInfo.length == 0) throw new NotFound('Course not found!');
 
     res.send(courseInfo[0]);
@@ -146,7 +157,7 @@ const getCurrentSection = asyncCatch(async (req, res, next) => {
         .lean()
         .exec();
 
-    if (current && current.history.length === 1){
+    if (current && current.history.length === 1) {
         delete current.history[0]._id;
         res.send(current.history[0]);
     }
@@ -312,10 +323,46 @@ const listSectionTutor = asyncCatch(async (req, res, next) => {
     res.send(course);
 })
 
+const subscribeToCourse = asyncCatch(async (req, res, next) => {
+    const course_id = req.params.course_id;
+    const checkCourse = await Course.findById(course_id, "-_id public").exec();
+    if (!checkCourse)
+        throw new BadReqest("Course not found!");
+    const payload = checkCourse.public == true ?
+        {
+            subscriber: new mongoose.Types.ObjectId(req.user_data._id)
+        }
+        :
+        {
+            pending: new mongoose.Types.ObjectId(req.user_data._id)
+        }
+    await Course.updateOne({ _id: course_id }, {
+        $addToSet: payload
+    })
+        .exec();
+    res.send("Success!");
+})
+
+const unsubscribeFromCourse = asyncCatch(async (req, res, next) => {
+    const course_id = req.params.course_id;
+    const course = await Course.findByIdAndUpdate(course_id, {
+        $pull: {
+            subscriber: new mongoose.Types.ObjectId(req.user_data._id),
+            pending: new mongoose.Types.ObjectId(req.user_data._id)
+        }
+    })
+        .exec();
+    if (!course)
+        throw new BadReqest("Course not found!");
+    res.send("Success!");
+})
+
 module.exports = {
     getCourseBy: getCourseBy,
     getCurrentSection,
     getOwnedCourse,
+    subscribeToCourse,
+    unsubscribeFromCourse,
     info: getCourseInfo,
     create: createCourse,
     delete: deleteCourse,

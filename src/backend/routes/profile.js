@@ -15,7 +15,7 @@ const authMiddleware = require('../middlewares/auth.middleware');
  *       - in: path
  *         name: user_id
  *         schema:
- *           type: ObjectId
+ *           type: string
  *         required: true
  */
 

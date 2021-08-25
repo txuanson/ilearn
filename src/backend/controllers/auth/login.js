@@ -20,6 +20,7 @@ module.exports = asyncCatch(async (req, res, next) => {
     res.send(
         {
             user_data: {
+                _id: account._id,
                 name: account.name,
                 username: account.username,
                 avatar: account.avatar,

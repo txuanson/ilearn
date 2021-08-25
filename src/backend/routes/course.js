@@ -20,7 +20,7 @@ const router = express.Router();
  *         - in: query
  *           name: query
  *           schema:
- *             type: ObjectId
+ *             type: string
  *         - in: query
  *           name: page
  *           schema:
@@ -29,8 +29,20 @@ const router = express.Router();
  *           name: page_size
  *           schema:
  *             type: int
+ *   /user/course/{course_id}:
+ *     get:
+ *       summary: Get Course Info
+ *       tags:
+ *         - public
+ *       parameters:
+ *         - in: path
+ *           name: course_id
+ *           required: true
+ *           schema:
+ *             type: string
  */
 router.get('/', course.getCourseBy);
+router.get('/:course_id', course.info);
 
 
 module.exports = router;
