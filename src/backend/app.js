@@ -40,7 +40,7 @@ const options = {
             description: "Online learning platform with Zoom intergrated",
         },
         servers: [{
-            url: "https://ilearn.yurineko.com"
+            url: "https://ilearn.yurineko.net"
         }, {
             url: "http://localhost:8081",
         }],
@@ -91,7 +91,8 @@ app.use((req, res, next) => {
 
  const allowlist = [
     'http://localhost:3000',
-    'https://ilearn-two.vercel.app'
+    'https://ilearn-two.vercel.app',
+    'https://ilearn.yurineko.net'
  ];
  const corsOptionsDelegate = function (req, callback) {
      var corsOptions;
