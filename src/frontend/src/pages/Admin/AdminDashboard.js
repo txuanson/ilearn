@@ -39,29 +39,23 @@ export default function AdminDashBoard(props) {
                 <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             </Breadcrumb>
             <Search className="py-2 md:w-1/5 w-full" placeholder="Search" enterButton="Search" allowClear />
-            <div className="site-card-wrapper my-5">
-                <Row gutter={16}>
-                <Col span={6}>
-                    <Card title="Accounts" bordered={false} style={{backgroundColor:'#FA306C', color:'#fff'}} className="text-2xl font-bold text-center">
-                    100 000
-                    </Card>
-                </Col>
-                <Col span={6}>
-                    <Card title="Accounts" bordered={false} style={{backgroundColor:'#A25DFB', color:'#fff'}} className="text-2xl font-bold text-center">
-                    1234
-                    </Card>
-                </Col>
-                <Col span={6}>
-                    <Card title="Courses" bordered={false} style={{backgroundColor:'#51AD97', color:'#fff'}} className="text-2xl font-bold text-center">
-                    1234
-                    </Card>
-                </Col>
-                <Col span={6}>
-                    <Card title="Courses" bordered={false} style={{backgroundColor:'#047D8D', color:'#fff'}} className="text-2xl font-bold text-center">
-                    1234
-                    </Card>
-                </Col>
-                </Row>
+            <div className="site-card-wrapper my-5 flex md:flex-row flex-col">
+                <Card title="Accounts" bordered={false} style={{backgroundColor:'#FA306C', color:'#fff'}} className="text-center md:p-5 md:mx-2 mb-2">
+                    <span className="text-3xl font-bold">100 000</span>
+                    <p>Total number of accounts</p>
+                </Card>
+                <Card title="Accounts" bordered={false} style={{backgroundColor:'#A25DFB', color:'#fff'}} className="text-center md:p-5 md:mx-2 mb-2">
+                    <span className="text-3xl font-bold">1234</span>
+                    <p>New accounts this month</p>
+                </Card>
+                <Card title="Courses" bordered={false} style={{backgroundColor:'#51AD97', color:'#fff'}} className="text-center md:p-5 md:mx-2 mb-2">
+                    <span className="text-3xl font-bold">2000</span>
+                    <p>Total number of courses</p>
+                </Card>
+                <Card title="Courses" bordered={false} style={{backgroundColor:'#047D8D', color:'#fff'}} className="text-center md:p-5 md:mx-2 mb-2">
+                    <span className="text-3xl font-bold">1234</span>
+                    <p>New courses this month</p>
+                </Card>
             </div>
             <Table dataSource={new_courses} pagination={false} scroll={{ x: 'fit-content' }}>
                 <Column title="Course name" dataIndex={"course_name"} key="course_name" />
