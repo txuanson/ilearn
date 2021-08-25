@@ -5,6 +5,24 @@ const router = express.Router();
 /**
  * @openapi
  * paths:
+ *   /course/search:
+ *     get:
+ *       summary: Search course by name
+ *       tags:
+ *         - public
+ *       parameters:
+ *         - in: query
+ *           name: query
+ *           schema:
+ *             type: string
+ *         - in: query
+ *           name: page
+ *           schema:
+ *             type: int
+ *         - in: query
+ *           name: page_size
+ *           schema:
+ *             type: int
  *   /course:
  *     get:
  *       summary: List courses by category/tutor.
@@ -41,6 +59,7 @@ const router = express.Router();
  *           schema:
  *             type: string
  */
+router.get('/search', course.getCourseByName);
 router.get('/', course.getCourseBy);
 router.get('/:course_id', course.info);
 

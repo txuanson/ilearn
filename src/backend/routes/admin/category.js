@@ -15,7 +15,7 @@ const router = express.Router();
  *         name: query
  *         schema:
  *           type: string
- *         description: A part of users's username. Leave blank to list all users.
+ *         description: Query
  *       - in: query
  *         name: page
  *         schema:

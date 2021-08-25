@@ -14,6 +14,52 @@ const queryWithPagiValidator = require("../../validators/queryWithPagi.validator
 const getCurrentSectionValidator = require("../../validators/getCurrentSection.validator");
 const Account = require("../../models/Account");
 
+const getCourseByName = asyncCatch(async (req, res, next) => {
+    const { error, value } = queryWithPagiValidator.validate(req.query);
+    if (error) {
+        throw new BadReqest(error.message);
+    }
+
+    const { query, page, page_size } = value;
+    const pagi = pagination(page, page_size);
+
+    const items = await Course.aggregate()
+        .match({ name: { $regex: query, $options: "i" } })
+        .lookup({ from: 'accounts', localField: 'tutor', foreignField: '_id', as: 'tutor' })
+        .lookup({ from: 'categories', localField: 'category', foreignField: '_id', as: 'category' })
+        .unwind('category')
+        .unwind('tutor')
+        .project({
+            _id: 1,
+            name: 1,
+            cover: 1,
+            public: 1,
+            tutor: {
+                _id: 1,
+                name: 1
+            },
+            category: {
+                _id: 1,
+                name: 1
+            },
+            subscriber_count: { $size: "$subscriber" }
+        })
+        .skip(pagi.skip)
+        .limit(pagi.limit)
+        .exec()
+
+    const itemsCount = await Course.countDocuments({
+        name: {
+            $regex: query, $options: "i"
+        }
+    })
+        .exec();
+
+    res.send({
+        items,
+        items_count: itemsCount
+    });
+})
 
 const getCourseBy = asyncCatch(async (req, res, next) => {
     const { error, value } = getCourseValidator.validate(req.query);
@@ -36,7 +82,7 @@ const getCourseBy = asyncCatch(async (req, res, next) => {
         .project({
             _id: 1,
             name: 1,
-            cover: { $concat: [HOST, '/', '$cover'] },
+            cover: 1,
             public: 1,
             tutor: {
                 _id: 1,
@@ -66,8 +112,8 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
 
     if (req.user_data) {
         extraPayload = {
-            subscribed: { $in : [mongoose.Types.ObjectId(req.user_data._id), "$subscriber"] },
-            pending: { $in : [mongoose.Types.ObjectId(req.user_data._id), "$pending"] }
+            subscribed: { $in: [mongoose.Types.ObjectId(req.user_data._id), "$subscriber"] },
+            pending: { $in: [mongoose.Types.ObjectId(req.user_data._id), "$pending"] }
         }
     }
 
@@ -358,6 +404,7 @@ const unsubscribeFromCourse = asyncCatch(async (req, res, next) => {
 })
 
 module.exports = {
+    getCourseByName,
     getCourseBy: getCourseBy,
     getCurrentSection,
     getOwnedCourse,
