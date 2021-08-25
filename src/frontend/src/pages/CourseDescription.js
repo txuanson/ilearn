@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css';
 import {Link} from "react-router-dom";
 import ReadMore from '../components/ui/ReadMore';
+import { getCourseInfo } from "../api/course";
 
 import {Layout} from 'antd';
 
@@ -105,45 +106,20 @@ For production release:
 
 Generating pre-built zip archives for distribution:
 
-
-## Docker
-
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the
-Dockerfile if necessary. When ready, simply use the Dockerfile to
-build the image.
-
-
-
-This will create the dillinger image and pull in the necessary dependencies.
-Be sure to swap out  with the actual
-version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on
-your host. In this example, we simply map port 8000 of the host to
-port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-Verify the deployment by navigating to your server address in
-your preferred browser.
-
-
-
-## 📫 Contact me:
-
-You can reach me and feedback about this
-
-1. 🔗 iHelloWorld.net
-2. 📧 ihelloworld-contact@gmail.com
-
-## ⚡ File and assets
-
-- 📜 index.js
-- 📂 Demo
-- 🌍 Click to demo website
 `
 
-export default function CourseDescription(data) {
+export default function CourseDescription(course_id) {
+  const [data, setData] = useState([]);
+
+  useEffect(async () => {
+    try {
+      const res = await getCourseInfo(course_id);
+      setData(res.items);
+      console.log(res.items);
+    } catch (err) {
+      console.log("fail");
+    }
+  }, []);
 
     return (
     <>
@@ -159,15 +135,17 @@ export default function CourseDescription(data) {
         <div className="container md:flex md:mx-10 xl:px-40">
             <div className="text-center p-5 justify-center flex flex-col md:text-left">
                 <div className="uppercase block leading-tight text-3xl text-white font-bold">{data.name}</div>
-                <p className="text-white mt-1">{data.text}</p>
+                {/* <p className="text-white mt-1">{data.text}</p> */}
+                <p className="text-white mt-1">Category: {data.category}</p>
+
                 <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {data.tutor}</div>
-                <p className="text-white">Start on {data.start}</p>
+                {/* <p className="text-white">Start on {data.start}</p> */}
                 <Link to="/course/subscribe" className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
                 Subscribe
                 </Link>
          
                 <div className="text-center md:text-left text-white flex" style={{alignItems:'flex-end'}}>
-                    <p className="font-bold text-4xl pr-1">{data.subscriber}</p>
+                    <p className="font-bold text-4xl pr-1">{data.subscriber_count}</p>
                     <p className="pr-4">subscribers</p>
                     <p className="font-bold text-4xl pr-1">{data.view}</p>
                     <p>views</p>
