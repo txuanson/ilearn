@@ -1,11 +1,12 @@
 import { Form, Input, Button, Space } from 'antd';
-import React, {Component} from 'react'
+import React, { useState } from 'react'
 
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+// import { EditorState, convertToRaw } from "draft-js";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftToHtml from "draftjs-to-html";
+// import draftToHtml from "draftjs-to-html";
+import { patchProfile } from '../../api/user';
 
 const layout = {
   labelCol: {
@@ -22,50 +23,56 @@ const tailLayout = {
   },
 };
 
-export class UploadProfile extends Component {
+function UploadProfile(chirdren) {
+    console.log("children: ", chirdren)
 
-  state = {
-    editorState: EditorState.createEmpty(),
-  };
-
-  onEditorStateChange = (editorState) => {
-    this.setState({
-      editorState,
-    });
-  };
-
-
-    formRef = React.createRef();
-    
-    onUpload = (values) => {
-        console.log(values);
+    const [name, setName] = useState("");
+    const [bio, setBio] = useState("");
+    // editorState: EditorState.createEmpty(),
+    const NameChangeHandler = (event) => {
+      setName(event.target.value);
     };
-    onReset = () => {
-        this.formRef.current.resetFields();
+  
+    const BioChangeHandler = (event) => {
+      setBio(event.target.value);
     };
 
-    render() {
-      const { editorState } = this.state;
+    const onUpload = async (event) => {
 
-      return (
-      <Form {...layout} ref={this.formRef} name="control-ref" onFinish={this.onFinish}>
+      try {
+        const res = await patchProfile({name: name, bio: bio});
+
+      } catch (error) {
+        console.log("fail: ", error);
+        // handleErrorApi(error);
+      }
+
+    };
+
+    const onReset = () => {
+      console.log(chirdren)
+      // setName(children.name);
+      // setBio(children.bio);
+    };
+
+    return (
+      <Form {...layout} name="control-ref">
           <Form.Item
             name="Name"
             label="Name: "
           >
-              <Input />
+              <Input onChange={NameChangeHandler}/>
           </Form.Item>
 
           <Form.Item 
             name="Bio"
             label="Bio: "
           >
-              <Editor 
-                editorState={editorState}
+              <Editor onChange={BioChangeHandler}
+                // editorState={editorState}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
-                onEditorStateChange={this.onEditorStateChange}
                 toolbar={{
                   options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
                   inline: { inDropdown: true },
@@ -80,11 +87,11 @@ export class UploadProfile extends Component {
 
           <Form.Item {...tailLayout}>
               <Space>
-                <Button type="link" htmlType="submit" onClick={this.onUpload}>
+                <Button type="link" htmlType="submit" onClick={onUpload}>
                     Upload
                 </Button>
 
-                <Button htmlType="button" onClick={this.onReset}>
+                <Button htmlType="button" onClick={onReset}>
                     Reset
                 </Button>
               </Space>
@@ -92,6 +99,6 @@ export class UploadProfile extends Component {
       </Form>
       );
   }
-}
+
 
 export default UploadProfile
