@@ -53,6 +53,7 @@ for (let i = 1; i < 30; i++) {
     topic: `Section ${i}`,
     section_id: i,
     video: "https://www.youtube.com/embed/bJzb-RuUcMU",
+
     content: markdown,
   });
 }
@@ -104,9 +105,9 @@ export default function ViewSection({course_id, section_id}) {
             </h2>
         </Link>
         <Button htmlType="submit" type="primary" className="hidden md:block" style={{marginLeft: 760}}>
-          <Link to="/zoom-connection">Join Zoom Meeting</Link>
+          <Link to={data.section.join_url}>Join Zoom Meeting</Link>
         </Button>
-        <Link to="/zoom-connection">
+        <Link to={data.section.join_url}>
         <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-2xl mx-2"/>
         </Link>
       </Header>
@@ -146,17 +147,25 @@ export default function ViewSection({course_id, section_id}) {
             style={{minHeight: 360, paddingLeft:10, paddingRight:10}}
           >
             <Switch>
-              {data.course.sections.map((item) => (
+              {/* {data.course.sections.map((item) => (
                 <Route path={`/section/${course_id}/${item.section._id}`}>
                 <SplashRoute key={`/section/${course_id}/${item.section._id}`}>
-                    {/* <Category idCategory = {item._id} nameCategory = {item.name}></Category> */}
+                    <Category idCategory = {item._id} nameCategory = {item.name}></Category>
+
                     <SectionRecord 
                      {...value[0]}
                      />
                 </SplashRoute>
                 </Route>
-              ))}
-              <Route path="/view-section/1">
+              ))} */}
+               <Route path={`/section/${course_id}/${section_id}`}>
+                  <SplashRoute key={`/section/${course_id}/${section_id}`}>
+                     <SectionRecord 
+                     {...data.section}
+                     />
+                  </SplashRoute>   
+              </Route>
+              {/* <Route path="/view-section/1">
                   <SplashRoute key="/view-section/1">
                      <SectionRecord 
                      {...value[0]}
@@ -170,7 +179,7 @@ export default function ViewSection({course_id, section_id}) {
                      content = {value[1].content}
                      />
                   </SplashRoute>
-              </Route>
+              </Route> */}
             </Switch>
           </div>
         </Content>
