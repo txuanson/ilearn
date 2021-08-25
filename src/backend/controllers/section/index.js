@@ -13,7 +13,7 @@ const Account = require("../../models/Account");
 const getSectionWithTutor = asyncCatch(async (req, res, next) => {
     const section_id = req.params.section_id;
     const section = await Section.findById(section_id)
-        .select("_id topic content duration start_time")
+        .select("_id topic content duration start_time video")
         .exec();
     if (!section) throw new NotFound('Section not found!');
     res.send(section);
