@@ -71,8 +71,8 @@ export default function RegularRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route path="/homepage">
-                    <SplashRoute key="/homepage">
+                <Route exact path="/">
+                    <SplashRoute key="/">
                         <HomePage />
                     </SplashRoute>
                 </Route>
