@@ -12,10 +12,9 @@ const user = require('../../controllers/admin/account');
  *         - admin
  *     parameters:
  *       - in: query
- *         name: username
+ *         name: query
  *         schema:
  *           type: string
- *         required: true
  *         description: A part of users's username. Leave blank to list all users.
  *       - in: query
  *         name: page
