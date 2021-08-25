@@ -1,11 +1,6 @@
 import { Form, Input, Button, Space } from 'antd';
 import React, { useState } from 'react'
-
-import { Editor } from "react-draft-wysiwyg";
-// import { EditorState, convertToRaw } from "draft-js";
-
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-// import draftToHtml from "draftjs-to-html";
+import MDEditor from '@uiw/react-md-editor';
 import { patchProfile } from '../../api/user';
 
 const layout = {
@@ -23,18 +18,18 @@ const tailLayout = {
   },
 };
 
-function UploadProfile(chirdren) {
-    console.log("children: ", chirdren)
+function UploadProfile({u_name, u_bio}) {
+    console.log("u_name, u_bio: ", u_name, u_bio)
 
-    const [name, setName] = useState("");
-    const [bio, setBio] = useState("");
-    // editorState: EditorState.createEmpty(),
+    const [name, setName] = useState(u_name);
+    const [bio, setBio] = useState(u_bio);
+
     const NameChangeHandler = (event) => {
       setName(event.target.value);
     };
   
-    const BioChangeHandler = (event) => {
-      setBio(event.target.value);
+    const BioChangeHandler = (editorState) => {
+      setBio(editorState);
     };
 
     const onUpload = async (event) => {
@@ -44,15 +39,13 @@ function UploadProfile(chirdren) {
 
       } catch (error) {
         console.log("fail: ", error);
-        // handleErrorApi(error);
       }
 
     };
 
     const onReset = () => {
-      console.log(chirdren)
-      // setName(children.name);
-      // setBio(children.bio);
+      setName(u_name);
+      setBio(u_bio);
     };
 
     return (
@@ -61,27 +54,20 @@ function UploadProfile(chirdren) {
             name="Name"
             label="Name: "
           >
-              <Input onChange={NameChangeHandler}/>
+            <Input 
+                // value={name}
+                onChange={NameChangeHandler}/>
           </Form.Item>
 
           <Form.Item 
             name="Bio"
             label="Bio: "
           >
-              <Editor onChange={BioChangeHandler}
-                // editorState={editorState}
-                toolbarClassName="toolbarClassName"
-                wrapperClassName="wrapperClassName"
-                editorClassName="editorClassName"
-                toolbar={{
-                  options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
-                  inline: { inDropdown: true },
-                  list: { inDropdown: true },
-                  textAlign: { inDropdown: true },
-                  link: { inDropdown: true },
-                  history: { inDropdown: true },
-                }}
-              />
+            <MDEditor
+                // value={bio}
+                onChange={BioChangeHandler}
+            />
+              {/* <MDEditor.Markdown source={bio} /> */}
           
           </Form.Item>
 

@@ -20,10 +20,6 @@ const { Header, Content, Footer } = Layout;
 
 function Profile() {
 
-    const [name, setUserName] = useState();
-    const [bio, setUserBio] = useState();
-
-
     // let name = 'Import a HTML file and watch'
     let markdown = `    ## 📖 About this class
 - 🖥 Wellcome and prepair
@@ -82,12 +78,12 @@ useEffect(async () => {
                                 name = "Edit Profile" 
                                 title = "Update Profile"
                                 className = "pt-5">
-                                <UploadProfile children = {profileUser}/>
+                                <UploadProfile name = {profileUser.name} bio = {profileUser.bio}/>
                             </EditModal>
                         </div>
 
                         <div className = "p-2">
-                        <Link toHTML = "https://zoom.us/oauth/authorize?response_type=code&client_id=iui08Y6kR8G5HvrZn9m9A&redirect_uri=https://ilearn-two.vercel.app/connect-zoom" />
+                        <Link to = "https://zoom.us/oauth/authorize?response_type=code&client_id=iui08Y6kR8G5HvrZn9m9A&redirect_uri=https://ilearn-two.vercel.app/connect-zoom" />
                             <Button type = "primary" >Connect to Zoom </Button>
                         </div>
 
