@@ -6,7 +6,7 @@ const course = require("../../controllers/course");
  * @openapi
  * paths:
  *   /user/course/{course_id}:
- *     post:
+ *     get:
  *       summary: Get Course Info
  *       tags:
  *         - user
@@ -17,7 +17,7 @@ const course = require("../../controllers/course");
  *           schema:
  *             type: string
  *   /user/course/{course_id}/join:
- *     post:
+ *     get:
  *       summary: Join the course with current learning (new) section
  *       tags:
  *         - user
