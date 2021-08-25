@@ -17,7 +17,7 @@ const getCategory = asyncCatch(async (req, res, next) => {
 
     const items = await Category.aggregate()
         .match({
-            "name": { $regex: req.query.query, $options: "i" }
+            "name": { $regex: query, $options: "i" }
         })
         .lookup({ from: 'courses', localField: '_id', foreignField: 'category', as: 'courses' })
         .project({
