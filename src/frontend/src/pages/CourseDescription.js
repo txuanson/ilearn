@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
+import { joinCourse } from '../api/user';
+import { Layout, Space } from 'antd';
 
-import {Layout} from 'antd';
-
-const {Content} = Layout;
+const { Content } = Layout;
 
 const markdown = `## 📖 About this class
 
@@ -108,73 +108,94 @@ Generating pre-built zip archives for distribution:
 
 `
 
-export default function CourseDescription(course_id) {
-  const [data, setData] = useState([]);
-
-  useEffect(async () => {
-    try {
-      const res = await getCourseInfo(course_id);
-      setData(res.items);
-      console.log(res.items);
-    } catch (err) {
-      console.log("fail");
+export default function CourseDescription({ course_id }) {
+    const [course, setCourse] = useState({});
+    const [section, setSection] = useState({});
+    const [loading, setLoading] = useState(true);
+    
+    const fetchCourse = async () => {
+        try {
+            setLoading(true);
+            const res = await getCourseInfo(course_id);
+            setCourse(res);
+            setLoading(false);
+        } catch (err) {
+            console.log('Failed!!');
+        }
     }
-  }, []);
 
-    return (
-    <>
-    <div style={{backgroundColor: '#001529'}} className="w-full mx-auto shadow-md overflow-hidden">
-        <div className="md:hidden block">
-            <div className="relative m-2">
-                <img src={data.cover} alt={data.name} class="h-60 w-full object-cover"/>
-                <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
-                    {data.public ? 'Public' : 'Private'}
-                </span>
-            </div>
-        </div>
-        <div className="container md:flex md:mx-10 xl:px-40">
-            <div className="text-center p-5 justify-center flex flex-col md:text-left">
-                <div className="uppercase block leading-tight text-3xl text-white font-bold">{data.name}</div>
-                {/* <p className="text-white mt-1">{data.text}</p> */}
-                <p className="text-white mt-1">Category: {data.category}</p>
+    const fetchSection = async () => {
+        try {
+            const res = await joinCourse(course_id);
+            setSection(res);
+        } catch (err) {
+            console.log('Failed!!');
+        }
+    }
+    console.log('Section : ', section);
+    useEffect(() => {
+        fetchCourse();
+    }, []);
 
-                <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {data.tutor}</div>
-                {/* <p className="text-white">Start on {data.start}</p> */}
-                <Link to="/course/subscribe" className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
-                Subscribe
-                </Link>
-         
-                <div className="text-center md:text-left text-white flex" style={{alignItems:'flex-end'}}>
-                    <p className="font-bold text-4xl pr-1">{data.subscriber_count}</p>
-                    <p className="pr-4">subscribers</p>
-                    <p className="font-bold text-4xl pr-1">{data.view}</p>
-                    <p>views</p>
+    useEffect(() => {
+        fetchSection();
+    }, []);
+    console.log(course);
+    return (<>
+        { loading && <></>} 
+        {!loading && <>
+            <div style={{ backgroundColor: '#001529' }} className="w-full mx-auto shadow-md overflow-hidden">
+                <div className="md:hidden block">
+                    <div className="relative m-2">
+                        <img src={'https://ilearn.yurineko.net/' + course.cover} alt={course.name} class="h-60 w-full object-cover" />
+                        <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
+                            {course.public ? 'Public' : 'Private'}
+                        </span>
+                    </div>
+                </div>
+                <div className="container md:flex md:mx-10 xl:px-40">
+                    <div className="text-center p-5 justify-center flex flex-col md:text-left">
+                        <div className="uppercase block leading-tight text-3xl text-white font-bold">{course.name}</div>
+                        <p className="text-white mt-1">{course.description}</p>
+                        <p className="text-white mt-1">Category: {course.category.name}</p>
+
+                        <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
+                        {/* <p className="text-white">Start on {data.start}</p> */}
+                        
+                        {course.public ? <Link to={`/section/${course_id}/${section.section_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
+                            Join
+                        </Link> : <Link to="/course/subscribe" className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
+                            Subscribe
+                        </Link>}
+
+                        <div className="text-center md:text-left text-white flex" style={{ justifyContent:'center', alignItems:'flex-end' }}>
+                            <span className="font-bold text-4xl md:text-5xl pr-1">{course.subscriber_count}</span>
+                            <span className="pr-4">subscribers</span>
+                            <span className="font-bold text-4xl md:text-5xl pr-1">{course.view}</span>
+                            <span>views</span>
+                           
+                        </div>
+                    </div>
+                    <div className="md:flex-shrink-0 md:block hidden">
+                        <div className="relative m-2">
+                            <img src={course.cover} alt={course.name} class="h-60 w-full object-cover md:w-70" />
+                            <span class="px-1 py-1 text-white bg-blue-700 rounded absolute left-0 bottom-0 bg-opacity-50">
+                                {course.public ? 'Public' : 'Private'}
+                            </span>
+                        </div>
+                    </div>
 
                 </div>
             </div>
-            <div className="md:flex-shrink-0 md:block hidden">
-                <div className="relative m-2">
-                    <img src={data.cover} alt={data.name} class="h-60 w-full object-cover md:w-70"/>
-                    <span class="px-1 py-1 text-white bg-blue-700 rounded absolute left-0 bottom-0 bg-opacity-50">
-                        {data.public ? 'Public' : 'Private'}
-                    </span>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-    <Layout className="container mx-auto xl:px-40">
-        <Content className="p-0 md:px-70">
-            <div className="site-layout-background container mx-auto my-2" style={{ padding: 10, minHeight: 360 }}>
-                <ReadMore children = {markdown}/>
-                {/* <article className="prose lg:prose-md max-w-none px-2 my-10">
-                    <ReactMarkdown children={markdown} remarkPlugins={[gfm]}/>
-                </article> */}
-                
-            </div>
-            
-        </Content>
-    </Layout>
+            <Layout className="container mx-auto xl:px-40">
+                <Content className="p-0 md:px-70">
+                    <div className="site-layout-background container mx-auto my-2" style={{ padding: 10, minHeight: 360 }}>
+                        <ReadMore children={course.content} />
+                    </div>
+
+                </Content>
+            </Layout>
+        </>}
     </>
-  );
+    );
 };

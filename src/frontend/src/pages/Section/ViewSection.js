@@ -1,10 +1,10 @@
 import { Button, Layout, Menu} from 'antd';
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import SplashRoute from '../../components/animation/SplashRoute';
 import { Route } from "react-router";
 import { Link, Switch } from "react-router-dom";
 import SectionRecord from './SectionRecord';
-
+import { getSectionInfo } from '../../api/user';
 import {
   DoubleRightOutlined,
   DoubleLeftOutlined,
@@ -47,18 +47,34 @@ const markdown = `## 📖 About this class
   watch the results in the right.
   `
 
-const data = [];
+const value = [];
 for (let i = 1; i < 30; i++) {
-  data.push({
-    title: `Section ${i}`,
+  value.push({
+    topic: `Section ${i}`,
     section_id: i,
     video: "https://www.youtube.com/embed/bJzb-RuUcMU",
     content: markdown,
   });
 }
 
-export default function ViewSection() {
+export default function ViewSection({course_id, section_id}) {
   const [activeKeys, setActiveKeys] = useState([])
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const fetchCourse = async () => {
+      try {
+          setLoading(true);
+          const res = await getSectionInfo(course_id, section_id);
+          setData(res);
+          setLoading(false);
+      } catch (err) {
+          console.log('Failed!!');
+      }
+  }
+  useEffect(() => {
+      fetchCourse();
+  }, []);
+  console.log(data);
   function handleClick({ key }) {
     setActiveKeys([]) // close the menu on click
   }
@@ -66,30 +82,32 @@ export default function ViewSection() {
     setActiveKeys(openKeys)
   }
   return (
-    <>
+  <>
+    { loading && <></>} 
+    {!loading && <>
      <Header
         className="site-layout-sub-header-background flex items-center md:px-10 px-0"
         style={{position:'fixed', width:'100vw', top:0, zIndex:20}}
       >
-        <Link to="/homepage">
+        <Link to="/">
           <h2 className="hidden md:block text-white font-semibold text-3xl md:mx-2">
             <span className="text-blue-500">i</span>Learn
           </h2>
         </Link>
-        <Link to="/homepage">
+        <Link to="/">
         <DoubleLeftOutlined className="block md:hidden text-white mx-10 text-xl"/>
         </Link>
         <DoubleRightOutlined className="hidden md:block text-white mx-10 text-xl"/>
-        <Link to="/course">
-            <h2 className="text-white font-semibold md:text-2xl md:mx-2 text-xl">
-              Nhập môn lập trình
+        <Link to={`/course/${course_id}`}>
+            <h2 className="text-white font-semibold md:text-2xl md:mx-2 text-l">
+            {data.course.name}
             </h2>
         </Link>
         <Button htmlType="submit" type="primary" className="hidden md:block" style={{marginLeft: 760}}>
           <Link to="/zoom-connection">Join Zoom Meeting</Link>
         </Button>
         <Link to="/zoom-connection">
-        <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden ml-10 text-xl"/>
+        <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-2xl mx-2"/>
         </Link>
       </Header>
       <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]} className="block md:hidden mt-16"
@@ -97,20 +115,27 @@ export default function ViewSection() {
       onOpenChange={onOpenChange}
       openKeys={activeKeys}>
           <SubMenu key="sub1" title="Course Section">
-          {data.map(item => (
-            <Menu.Item item={item.title} key={item.section_id}>
-              <Link to={`/view-section/${item.section_id}`}>{item.title}</Link>
+          {/* {value.map(item => (
+            <Menu.Item item={item.topic} key={item.section_id}>
+              <Link to={`/view-section/${item.section_id}`}>{item.topic}</Link>
             </Menu.Item>
+          ))} */}
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+          {data.course.sections.map(item => (
+            <Menu.Item item={item.section.topic} key={item.section._id}>
+            <Link to={`/section/${course_id}/${item.section._id}`}>{item.section.topic}</Link>
+          </Menu.Item>
           ))}
+        </Menu>
           </SubMenu>
       </Menu>
     <Layout className="min-h-screen">
       <Sider theme="light" style={{overflow: 'auto', height: '100vh', position:'fixed', zIndex:10, top:64, left: 0}} className="hidden md:block">
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          {data.map(item => (
-            <Menu.Item item={item.title} key={item.section_id}>
-              <Link to={`/view-section/${item.section_id}`}>{item.title}</Link>
-            </Menu.Item>
+          {data.course.sections.map(item => (
+            <Menu.Item item={item.section.topic} key={item.section._id}>
+            <Link to={`/section/${course_id}/${item.section._id}`}>{item.section.topic}</Link>
+          </Menu.Item>
           ))}
         </Menu>
       </Sider>
@@ -121,10 +146,20 @@ export default function ViewSection() {
             style={{minHeight: 360, paddingLeft:10, paddingRight:10}}
           >
             <Switch>
+              {data.course.sections.map((item) => (
+                <Route path={`/section/${course_id}/${item.section._id}`}>
+                <SplashRoute key={`/section/${course_id}/${item.section._id}`}>
+                    {/* <Category idCategory = {item._id} nameCategory = {item.name}></Category> */}
+                    <SectionRecord 
+                     {...value[0]}
+                     />
+                </SplashRoute>
+                </Route>
+              ))}
               <Route path="/view-section/1">
                   <SplashRoute key="/view-section/1">
                      <SectionRecord 
-                     {...data[0]}
+                     {...value[0]}
                      />
                   </SplashRoute>   
               </Route>
@@ -132,7 +167,7 @@ export default function ViewSection() {
                   <SplashRoute key="/view-section/2">
                     <SectionRecord 
                      video = {false}
-                     content = {data[1].content}
+                     content = {value[1].content}
                      />
                   </SplashRoute>
               </Route>
@@ -144,6 +179,7 @@ export default function ViewSection() {
         </Footer>
       </Layout>
     </Layout>
-    </>
+    </>}
+  </>
   );
 }
