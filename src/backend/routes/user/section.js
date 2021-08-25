@@ -6,7 +6,7 @@ const router = express.Router();
  * @openapi
  * paths:
  *   /user/section/{course_id}/{section_id}:
- *     post:
+ *     get:
  *       summary: Get Section Info
  *       tags:
  *         - user
