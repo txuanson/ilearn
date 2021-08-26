@@ -127,7 +127,6 @@ export default function CreateCourse() {
     }
 
     useEffect(() => {
-        console.log(course_id);
         if (course_id) {
             appendEditData(course_id);
         }
@@ -233,8 +232,7 @@ export default function CreateCourse() {
                             offset: 4
                         }}
                     >
-                        <Button type="primary" htmlType="submit"
-                            class="text-white py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-lg">
+                        <Button type="primary" htmlType="submit">
                             {course_id ? "Edit" : "Create"}
                         </Button>
                     </Form.Item>
