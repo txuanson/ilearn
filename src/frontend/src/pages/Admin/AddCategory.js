@@ -31,7 +31,7 @@ export default function AddCategory({fetch}) {
         const res = await addCategory({name: nameCategory});
         setVisible(false);
         message.success("Category added successfully!");
-        fetch();
+        fetch("");
       } catch (error) {
         handleErrorApi(error)
       }

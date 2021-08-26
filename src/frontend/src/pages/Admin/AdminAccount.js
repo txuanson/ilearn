@@ -2,7 +2,8 @@ import { Breadcrumb, Layout, Space, Pagination, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Search from "antd/lib/input/Search";
-import { getAllUser } from "../../api/admin";
+import { getUser } from "../../api/admin";
+import handleErrorApi from "../../utils/handleErrorApi";
 
 
 export default function AdminAccount(props) {
@@ -12,9 +13,15 @@ export default function AdminAccount(props) {
     const [maxValue, setMaxValue] = useState([]);
     const pageSize = 20;
   
-    useEffect(async () => {
+
+    const onSearch = (value) => {
+      console.log(value)
+      fetchUser(value);
+    }
+
+    const fetchUser = async (key) => {
       try {
-        const res = await getAllUser()
+        const res = await getUser(key)
         setMinValue(0);
 
         res.items.map((items) => {
@@ -35,9 +42,11 @@ export default function AdminAccount(props) {
 
       setMaxValue(pageSize);
       } catch (err) {
-        console.log("fail");
+        handleErrorApi(err)
       }
-    }, []);
+    }
+
+    useEffect(()=>{fetchUser("");}, []);
 
     const handleChange = (value) => {
         if (value <= 1) {
@@ -93,7 +102,7 @@ export default function AdminAccount(props) {
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>Account</Breadcrumb.Item>
             </Breadcrumb>
-            <Search className="py-2 md:w-1/5 w-full" placeholder="Search" enterButton="Search" allowClear />
+            <Search className="py-2 md:w-1/5 w-full" placeholder="Search" enterButton="Search" allowClear onSearch={onSearch}/>
             <Table dataSource={user.slice(minValue, maxValue)} pagination={false} scroll={{ x: 'fit-content' }} columns={columns}></Table>
             <div className="p-3 grid justify-items-end">
             <Pagination defaultCurrent={1} total={user.length} onChange={handleChange} pageSize={pageSize}/>

@@ -15,7 +15,7 @@ export default function DeleteCategory({id, fetch}) {
         const res = await deleteCategory(id)
         setVisible(false)
         message.success("Category delete successfully!");
-        fetch()
+        fetch("")
       } catch (error) {
         handleErrorApi(error)
       }

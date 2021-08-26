@@ -2,7 +2,7 @@ import { Breadcrumb, Layout, Space, Pagination, Table, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Search from "antd/lib/input/Search";
-import { getAllCategoryAdmin } from "../../api/admin";
+import { getSearchCategoryAdmin } from "../../api/admin";
 import EditCategory from "./EditCategory";
 import DeleteCategory from "./DeleteCategory";
 import AddCategory from "./AddCategory";
@@ -14,11 +14,16 @@ export default function AdminCategory(props) {
   const [maxValue, setMaxValue] = useState([]);
   const pageSize = 15;
 
-  const fetchCategory = async () => {
+  const onSearch = (value) => {
+    console.log(value)
+    fetchSearchCategory(value);
+  }
+
+  const fetchSearchCategory = async (key) => {
+    console.log(key)
     try {
-      const res = await getAllCategoryAdmin();
+      const res = await getSearchCategoryAdmin(key)
       setCategory(res.items);
-      console.log(res);
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
@@ -27,7 +32,7 @@ export default function AdminCategory(props) {
   };
 
   useEffect(() => {
-    fetchCategory();
+    fetchSearchCategory("");
   }, []);
 
   const handleChange = (value) => {
@@ -60,9 +65,9 @@ export default function AdminCategory(props) {
           <EditCategory
             id={child._id}
             name={child.name}
-            fetch={fetchCategory}
+            fetch={fetchSearchCategory}
           ></EditCategory>
-          <DeleteCategory id={child._id} fetch={fetchCategory}></DeleteCategory>
+          <DeleteCategory id={child._id} fetch={fetchSearchCategory}></DeleteCategory>
         </Space>
       ),
     },
@@ -84,8 +89,9 @@ export default function AdminCategory(props) {
           placeholder="Search"
           enterButton="Search"
           allowClear
+          onSearch={onSearch}
         />
-        <AddCategory fetch={fetchCategory}></AddCategory>
+        <AddCategory fetch={fetchSearchCategory}></AddCategory>
       </Row>
       <Table
         dataSource={category.slice(minValue, maxValue)}
