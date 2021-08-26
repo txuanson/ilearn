@@ -137,6 +137,68 @@ const courseUploadFileMiddleware = upload.fields([{ name: 'cover', maxCount: 1 }
  *         schema:
  *           type: string
  *         required: true
+ * /tutor/course/{course_id}/approve:
+ *   patch:
+ *     summary: Approve an user to course
+ *     tags:
+ *       - tutor
+ *     parameters:
+ *       - in: path
+ *         name: course_id
+ *         schema:
+ *           type: string
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: string
+ * /tutor/course/{course_id}/ban:
+ *   patch:
+ *     summary: Ban an user from course
+ *     tags:
+ *       - tutor
+ *     parameters:
+ *       - in: path
+ *         name: course_id
+ *         schema:
+ *           type: string
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: string
+ *               reason:
+ *                 type: string
+ * /tutor/course/{course_id}/unban:
+ *   patch:
+ *     summary: Unban an user
+ *     tags:
+ *       - tutor
+ *     parameters:
+ *       - in: path
+ *         name: course_id
+ *         schema:
+ *           type: string
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: string
  */
 
 router.get('/', course.getOwnedCourse);
