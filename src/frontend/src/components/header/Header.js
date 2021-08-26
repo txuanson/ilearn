@@ -9,6 +9,8 @@ import { getAllCategory } from "../../api/homePage";
 import DrawerMenu from "../menu/DrawerMenu";
 import { getProfileUser } from "../../api/user";
 import SearchMoblie from "../search/SearchMoblie";
+import Search from "../search/Search";
+import handleErrorApi from "../../utils/handleErrorApi";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -17,26 +19,32 @@ function classNames(...classes) {
 export default function Header({ user, ...props }) {
   const [nameCategory, setNameCategory] = useState([]);
   const [profileUser, setProfileUser] = useState([]);
+  const [search, setSearch] = useState([]);
 
   useEffect(async () => {
     try {
-      const res = await getAllCategory();
-      setNameCategory(res);
-      console.log(res);
+      const resCategory = await getAllCategory();
+      const resProfile = await getProfileUser();
+      setNameCategory(resCategory);
+      setProfileUser(resProfile);
     } catch (err) {
-      console.log("fail");
+      handleErrorApi()
     }
   }, []);
 
-  useEffect(async () => {
-    try {
-      const res = await getProfileUser();
-      setProfileUser(res);
-      console.log(res);
-    } catch (err) {
-      console.log("fail");
+
+
+  const ChangeHandler = (event) => {
+    setSearch(event.target.value);
+};
+
+  const handleSearch = (event) => {
+    if (event.key === 'Enter') {
+      console.log(search);
+      window.location.href = "/search?query=" + search
     }
-  }, []);
+  };
+
   const menu = (
     <Menu className="bg-white dark:bg-dark-black dark:text-dark-text z-top w-68 p-6 rounded-xl shadow-md max-w-sm dark:shadow-dark">
       <Menu.Item>
@@ -129,6 +137,8 @@ export default function Header({ user, ...props }) {
                   style={{ width: "20rem" }}
                   placeholder="Search"
                   className="rounded-full mr-4 hidden md:block"
+                  onChange={ChangeHandler}
+                  onKeyDown={handleSearch}
                 />
                 {user ? (
                   <div className="hidden md:block">

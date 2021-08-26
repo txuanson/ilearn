@@ -8,6 +8,7 @@ import CourseDescription from "../../pages/CourseDescription";
 const { Meta } = Card;
 
 export default function CardComponent({ dataCard }) {
+  const HOST = process.env.REACT_APP_BASE_HOST;
   return (
     <div>
       {dataCard ? (
@@ -26,9 +27,10 @@ export default function CardComponent({ dataCard }) {
             hoverable
             cover={
               <ReactImageFallback
-                style={{ height: "20 rem" }}
+              style={{height:"140px", width:"100%"}}
+              className="object-fit shadow"
                 alt=""
-                src={dataCard.cover}
+                src={HOST + "/" + dataCard.cover}
                 fallbackImage="/default-class-cover.png"
               />
             }

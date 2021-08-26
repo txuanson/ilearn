@@ -1,7 +1,9 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import React, { useState } from 'react'
 import { addCategory } from '../../api/admin';
 import { Modal } from 'antd';
+import useWindowSize from "../../hooks/useWindowSize";
+import handleErrorApi from '../../utils/handleErrorApi';
 
 
 const layout = {
@@ -14,9 +16,11 @@ const layout = {
 };
 
 
-export default function AddCategory({id}) {
+export default function AddCategory({fetch}) {
     const [nameCategory, setNameCategory] = useState();
     const [visible, setVisible] = useState(false);
+
+    const { width } = useWindowSize();
 
     const NameChangeHandler = (event) => {
         setNameCategory(event.target.value);
@@ -25,9 +29,11 @@ export default function AddCategory({id}) {
     const onUpload = async () => {
       try {
         const res = await addCategory({name: nameCategory});
-        setVisible(false)
+        setVisible(false);
+        message.success("Category added successfully!");
+        fetch("");
       } catch (error) {
-        console.log("fail: ", error);
+        handleErrorApi(error)
       }
 
     };
@@ -35,7 +41,7 @@ export default function AddCategory({id}) {
 
     return (
      <>
-    <Button type="primary" onClick={() => setVisible(true)}>
+    <Button className="ml-auto" style={{alignSelf: "center"}} type="primary" onClick={() => setVisible(true)}>
          Add new category
     </Button>
     <Modal
@@ -44,9 +50,10 @@ export default function AddCategory({id}) {
         visible={visible}
         onOk={() => onUpload()}
         onCancel={() => setVisible(false)}
-        width={1000}
+        width={500 < width * 1 ? 500 : width}
       >
-         <Input onChange={NameChangeHandler}/>
+        
+        <Input placeholder="Category name" onChange={NameChangeHandler}/>
       </Modal>
     </>
       );

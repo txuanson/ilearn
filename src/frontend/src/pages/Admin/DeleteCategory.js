@@ -1,10 +1,11 @@
-import { Form, Input, Button } from 'antd';
+import { message, Button } from 'antd';
 import React, { useState } from 'react'
 import { deleteCategory } from '../../api/admin';
 import { Modal } from 'antd';
+import handleErrorApi from '../../utils/handleErrorApi';
 
 
-export default function DeleteCategory({id}) {
+export default function DeleteCategory({id, fetch}) {
     const [visible, setVisible] = useState(false);
 
 
@@ -13,8 +14,10 @@ export default function DeleteCategory({id}) {
       try {
         const res = await deleteCategory(id)
         setVisible(false)
+        message.success("Category delete successfully!");
+        fetch("")
       } catch (error) {
-        console.log("fail: ", error);
+        handleErrorApi(error)
       }
 
     };
@@ -26,15 +29,15 @@ export default function DeleteCategory({id}) {
         Delete
     </Button>
     <Modal
-        title="Are you sure you want to delete?"
+        title="Delete"
         centered
         visible={visible}
         onOk={() => onDelete()}
         onCancel={() => setVisible(false)}
         okText = "Confirm"
-        width={1000}
+        width={500}
       >
-      <h1>Are you sure you want to delete?</h1>
+      <h1 className = "text-center ">Are you sure you want to delete?</h1>
       </Modal>
     </>
     );
