@@ -62,7 +62,7 @@ export default function AdminCategory(props) {
         <Layout>
             <Breadcrumb style={{ margin: '10px 0' }}>
                 <Breadcrumb.Item>
-                    <Link to="/homepage">iLearn</Link>
+                    <Link to="/">iLearn</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                     <Link to="/admin">Admin</Link>

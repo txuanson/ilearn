@@ -48,7 +48,7 @@ export default function ListSection(props) {
                 <Breadcrumb.Item>My Course</Breadcrumb.Item>
             </Breadcrumb>
 
-            <Table dataSource={sections} pagination={false}>
+            <Table dataSource={sections} pagination={false} scroll={{ x: 'fit-content' }}>
                 <Column title="Topic" dataIndex={["section", "topic"]} key="topic" />
                 <Column title="Type" dataIndex="section_type" key="type" />
                 <Column title="Visible" dataIndex={["section", "visible"]} key="visible" render={((visible) => (

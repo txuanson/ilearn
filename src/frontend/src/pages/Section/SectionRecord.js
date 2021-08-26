@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 export default function SectionRecord(data){
     function ShowVideo(props){
         const hasVideo = props.hasVideo;
-        const video_code = data.video.split('/')
+        const video_code = data.section.video.split('/')
         const embed_video =  'https://www.youtube.com/embed/' + video_code[video_code.length - 1]
         if (hasVideo){
             return (
@@ -25,13 +25,13 @@ export default function SectionRecord(data){
     
     return (
         <Layout className="md:ml-20">
-            <ShowVideo hasVideo={data.video}/>
+            <ShowVideo hasVideo={data.section.video}/>
             <Row className="md:ml-10">
                 <Col span={24}>
                     <Tabs defaultActiveKey="1">
                         <TabPane tab="Document" key="1">
                         <article className="prose lg:prose-md max-w-none px-2" style={{border:'solid'}}>
-                            <ReactMarkdown children={data.content} remarkPlugins={[gfm]}/>
+                            <ReactMarkdown children={data.section.content} remarkPlugins={[gfm]}/>
                         </article> 
                         </TabPane>
                         <TabPane tab="Comment" key="2">
