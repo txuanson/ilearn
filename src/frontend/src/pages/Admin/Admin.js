@@ -11,6 +11,7 @@ import {
   BookOutlined,
   UserOutlined
 } from "@ant-design/icons";
+import AdminCategory from "./AdminCategory";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -43,6 +44,9 @@ export default function Admin() {
           <Menu.Item key="3" icon={<FieldTimeOutlined />}>
             <Link to="/admin/course">Course</Link>
           </Menu.Item>
+          <Menu.Item key="4" icon={<FieldTimeOutlined />}>
+            <Link to="/admin/category">Category</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>
@@ -57,6 +61,11 @@ export default function Admin() {
             style={{ padding: 10, minHeight: 360 }}
           >
             <Switch>
+            <Route path="/admin/category">
+                  <SplashRoute key="/admin/category">
+                     <AdminCategory />
+                  </SplashRoute>   
+              </Route>
               <Route path="/admin/course">
                   <SplashRoute key="/admin/course">
                      <AdminCourse />
