@@ -1,11 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {Layout, Button, Divider} from "antd";
 import 'antd/dist/antd.css';
 
-import { getUserProfile } from "../api/userProfile";
+import { getProfileUser } from "../api/user";
+import { getUserInfo } from "../api/user";
 
 import { CameraOutlined } from '@ant-design/icons';
 import { EditOutlined } from '@ant-design/icons';
@@ -19,10 +20,6 @@ const { Header, Content, Footer } = Layout;
 
 function Profile() {
 
-    const [name, setUserName] = useState();
-    const [bio, setUserBio] = useState();
-
-
     // let name = 'Import a HTML file and watch'
     let markdown = `    ## 📖 About this class
 - 🖥 Wellcome and prepair
@@ -33,70 +30,32 @@ function Profile() {
 
 ## 🌟 Content
 
-- Import a HTML file and watch it magically convert to Markdown
-- Drag and drop images (requires your Dropbox account be linked)
-- Import and save files from GitHub, Dropbox, Google Drive and One Drive
-- Drag and drop markdown and HTML files into Dillinger
-- Export documents as Markdown, HTML and PDF
-
-  Markdown is a lightweight markup language based on the formatting conventions
-  that people naturally use in email.
-  As [John Gruber] writes on the [Markdown site][df1]
-
-  > The overriding design goal for Markdown's
-  > formatting syntax is to make it as readable
-  > as possible. The idea is that a
-  > Markdown-formatted document should be
-  > publishable as-is, as plain text, without
-  > looking like it's been marked up with tags
-  > or formatting instructions.
-
-  This text you see here is actually-written in Markdown! To get a feel
-  for Markdown's syntax, type some text into the left window and
-  watch the results in the right.
-
-## Tech
-
-Dillinger uses a number of open source projects to work properly:
-
-- [AngularJS] - HTML enhanced for web apps!
-- [Ace Editor] - awesome web-based text editor
-- [markdown-it] - Markdown parser done right. Fast and easy to extend.
-- [Twitter Bootstrap] - great UI boilerplate for modern web apps
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework [@tjholowaychuk]
-- [Gulp] - the streaming build system
-- [Breakdance](https://breakdance.github.io/breakdance/) - HTML
-to Markdown converter
-- [jQuery] - duh
-
-And of course Dillinger itself is open source with a [public repository][dill]
-on GitHub.
-
-## Installation
-
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
-For production environments...
-
-
-## Plugins
-
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below. 
 `
 
-const { user_id } = useParams();
+// Get ID
+const [user, setUser] = useState([]);
 
 useEffect(async () => {
     try {
-      const res = await getUserProfile(user_id)
-      setUserName(res.name);
-      setUserBio(res.bio);
+      const res = await getProfileUser();
+      setUser(res);
+      console.log("user._id: ", user._id)
     } catch (err) {
-      console.log("fail");
+      console.log("fail: ", err);
+    }
+  }, []);
+
+// Get USER INFO from ID
+const [profileUser, setProfileUser] = useState([]);
+
+useEffect(async () => {
+    try {
+      console.log(user._id);
+      const res = await getUserInfo(user._id);
+      setProfileUser(res);
+      console.log("profile: ")
+    } catch (err) {
+      console.log("fail: ", err);
     }
   }, []);
 
@@ -106,7 +65,7 @@ useEffect(async () => {
                 <div className = "flex flex-col md:flex-row"> 
                     <div className = "flex flex-col items-center">
                         <img className = "w-40 h-40 border-4 rounded-full border-white"
-                            src = "https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar.png" />
+                            src = {"https://ilearn-19clc3.herokuapp.com/" + profileUser.avatar} />
 
                         <div className = " flex flex-row md:flex-col">
                             <EditModal icon = {<CameraOutlined style={{ fontSize: '16px'}} /> }
@@ -119,12 +78,13 @@ useEffect(async () => {
                                 name = "Edit Profile" 
                                 title = "Update Profile"
                                 className = "pt-5">
-                                <UploadProfile />
+                                <UploadProfile name = {profileUser.name} bio = {profileUser.bio}/>
                             </EditModal>
                         </div>
 
                         <div className = "p-2">
-                            <Button type = "primary"> Connect to Zoom </Button>
+                        <Link to = "https://zoom.us/oauth/authorize?response_type=code&client_id=iui08Y6kR8G5HvrZn9m9A&redirect_uri=https://ilearn-two.vercel.app/connect-zoom" />
+                            <Button type = "primary" >Connect to Zoom </Button>
                         </div>
 
                     </div>
@@ -132,13 +92,13 @@ useEffect(async () => {
                         <div className = "px-0 md:px-10">
                             <div className = "flex flex-col max-w-lg">
                                 <p className = "pb-4 text-2xl md:text-4xl text-center break-normal ">
-                                    {/* {name} */}
-                                    HOANG LE KHANH HOANG LE
+                                    {profileUser.name}
                                 </p> 
                                 <div className="site-layout-background container mx-auto my-2">
                                     <p className="break-normal" >
-                                        {/* <ReadMore children = {bio === "" ? " no profile " : bio}/> */}
-                                        <ReadMore children = {markdown}/>
+                                        {typeof profileUser.bio == "undefined" || (profileUser.bio).length< 500
+                                            ? <p> {profileUser.bio} </p> : <ReadMore children = {profileUser.bio}/> }
+                                            {/* {profileUser.bio} */}
                                     </p>
                                 </div>
                                 

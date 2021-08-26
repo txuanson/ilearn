@@ -40,7 +40,7 @@ export default function Header({ user, ...props }) {
   const menu = (
     <Menu className="bg-white dark:bg-dark-black dark:text-dark-text z-top w-68 p-6 rounded-xl shadow-md max-w-sm dark:shadow-dark">
       <Menu.Item>
-        <Link to="/profile">
+        <Link to="/me">
           <div className="flex">
             <div
               className="flex items-center justify-center overflow-hidden rounded-full mr-2 avatar flex-shrink-0"
