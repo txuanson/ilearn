@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { register } from "../utils/auth";
 import { postRegister } from "../api/auth";
 import { message } from "antd";
+import handleErrorApi from "../utils/handleErrorApi";
 
 export function Register() {
   const [email, setEnterEmail] = useState("");
@@ -44,7 +45,7 @@ export function Register() {
         });
         register(res);
       } catch (error) {
-        // handleErrorApi(error);
+        handleErrorApi(error);
       }
     }
   };

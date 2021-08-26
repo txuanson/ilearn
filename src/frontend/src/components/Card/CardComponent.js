@@ -27,8 +27,8 @@ export default function CardComponent({ dataCard }) {
             hoverable
             cover={
               <ReactImageFallback
-              className="object-cover"
-                style={{ }}
+              style={{height:"140px", width:"100%"}}
+              className="object-fit shadow"
                 alt=""
                 src={HOST + "/" + dataCard.cover}
                 fallbackImage="/default-class-cover.png"

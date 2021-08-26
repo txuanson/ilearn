@@ -4,7 +4,8 @@ import { Link, useParams} from "react-router-dom";
 import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
-import { Layout, Space } from 'antd';
+import { Layout, Space, message} from 'antd';
+import { subscribeCourse } from '../api/user';
 
 const { Content } = Layout;
 
@@ -40,24 +41,6 @@ const markdown = `## 📖 About this class
   for Markdown's syntax, type some text into the left window and
   watch the results in the right.
 
-## Tech
-
-Dillinger uses a number of open source projects to work properly:
-
-- [AngularJS] - HTML enhanced for web apps!
-- [Ace Editor] - awesome web-based text editor
-- [markdown-it] - Markdown parser done right. Fast and easy to extend.
-- [Twitter Bootstrap] - great UI boilerplate for modern web apps
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework [@tjholowaychuk]
-- [Gulp] - the streaming build system
-- [Breakdance](https://breakdance.github.io/breakdance/) - HTML
-to Markdown converter
-- [jQuery] - duh
-
-And of course Dillinger itself is open source with a [public repository][dill]
-on GitHub.
-
 ## Installation
 
 Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
@@ -82,37 +65,15 @@ Instructions on how to use them in your own application are linked below.
 | Google Analytics | [plugins/googleanalytics/README.md][plga] |
 
 
-## Development
-
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
-
-Second Tab:
-
-(optional) Third:
-
-
-#### Building for source
-
-For production release:
-
-
-
-Generating pre-built zip archives for distribution:
-
 `
 
 export default function CourseDescription() {
     const { course_id } = useParams();
     const [course, setCourse] = useState({});
     const [section, setSection] = useState({});
+    const [subscribed, setSubscribed] = useState(false);
     const [loading, setLoading] = useState(true);
+    
     
     const fetchCourse = async () => {
         try {
@@ -132,6 +93,13 @@ export default function CourseDescription() {
         } catch (err) {
             console.log('Failed!!');
         }
+    }
+
+    const subscriber = () => {
+        subscribeCourse(course_id);
+        setSubscribed(true);
+        message.success("Successfully subscribe to this course!");
+
     }
     console.log('Section : ', section);
     useEffect(() => {
@@ -155,18 +123,17 @@ export default function CourseDescription() {
                         </span>
                     </div>
                 </div>
-                <div className="container md:flex md:mx-10 xl:px-40">
+                <div className="container md:flex md:mx-10 xl:px-40" style={{justifyContent:'space-between'}}>
                     <div className="text-center p-5 justify-center flex flex-col md:text-left">
                         <div className="uppercase block leading-tight text-3xl text-white font-bold">{course.name}</div>
                         <p className="text-white mt-1">{course.description}</p>
                         <p className="text-white mt-1">Category: {course.category.name}</p>
 
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
-                        {/* <p className="text-white">Start on {data.start}</p> */}
                         
-                        {course.public ? <Link to={`/section/${course_id}/${section.section_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
+                        {course.public || subscribed? <Link to={`/section/${course_id}/${section.section_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
                             Join
-                        </Link> : <Link to="/course/subscribe" className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
+                        </Link> : <Link to={`/course/${course_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center" onClick={subscriber}>
                             Subscribe
                         </Link>}
 
@@ -178,7 +145,7 @@ export default function CourseDescription() {
                            
                         </div>
                     </div>
-                    <div className="md:flex-shrink-0 md:block hidden">
+                    <div className="md:flex-shrink-0 md:block hidden right-0 text-right">
                         <div className="relative m-2">
                             <img src={course.cover} alt={course.name} class="h-60 w-full object-cover md:w-70" />
                             <span class="px-1 py-1 text-white bg-red-700 rounded absolute left-0 bottom-0">

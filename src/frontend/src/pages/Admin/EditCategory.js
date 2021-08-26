@@ -31,7 +31,7 @@ export default function EditCategory({id, name, fetch}) {
         const res = await editCategory(id, {name: nameCategory});
         setVisible(false);
         message.success("Category edit successfully!");
-        fetch();
+        fetch("");
       } catch (error) {
         handleErrorApi(error)
       }

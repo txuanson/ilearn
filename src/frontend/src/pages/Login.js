@@ -3,6 +3,7 @@ import { login } from "../utils/auth";
 import { postLogin } from "../api/auth";
 import { message } from "antd";
 import { Link } from "react-router-dom";
+import handleErrorApi from "../utils/handleErrorApi";
 
 export function Login() {
   const [username, setEnterUsername] = useState("");
@@ -19,8 +20,7 @@ export function Login() {
       const res = await postLogin({ username: username, password: password });
       login(res);
     } catch (error) {
-      message.error("đăng nhập thất bại");
-      // handleErrorApi(error);
+      handleErrorApi(error);
     }
   };
   return (

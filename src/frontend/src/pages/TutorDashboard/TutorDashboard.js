@@ -11,6 +11,7 @@ import {
   VideoCameraOutlined,
   ContactsOutlined,
 } from "@ant-design/icons";
+import CreateSection from "./CreateSection";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -27,7 +28,7 @@ function TutorDashBoard() {
         }}
       >
         <div className="flex justify-center my-4">
-          <Link to="/homepage">
+          <Link to="/">
             <h2 className="text-white font-semibold text-3xl md:mx-2">
               <span className="text-blue-500">i</span>Learn
             </h2>
@@ -64,9 +65,19 @@ function TutorDashBoard() {
                      <CreateCourse />
                   </SplashRoute>   
               </Route>
+              <Route path="/tutor/course/:course_id/create-section">
+                  <SplashRoute key="/tutor/course/:course_id/create-section">
+                     <CreateSection />
+                  </SplashRoute>   
+              </Route>
               <Route path="/tutor/create-course">
                   <SplashRoute key="/tutor/create-course">
                      <CreateCourse />
+                  </SplashRoute>   
+              </Route>
+              <Route path="/tutor/section/:section_id/edit">
+                  <SplashRoute key="/tutor/section/:section_id/edit">
+                     <CreateSection />
                   </SplashRoute>   
               </Route>
               <Route path="/tutor">

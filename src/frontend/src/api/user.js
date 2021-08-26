@@ -9,8 +9,8 @@ export const getSectionInfo = (course_id, section_id) =>
 export const joinCourse = (course_id) => 
     callApi({url: `/user/course/${course_id}/join`, method: 'GET'});
 
-
-
+export const subscribeCourse = (course_id) => 
+    callApi({url: `/user/course/${course_id}/subscribe`, method: 'PATCH'});
 
 export const getUserInfo = (user_id) =>
     callApi({ url: `/profile/${user_id}`, method: 'GET' });
