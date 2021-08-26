@@ -14,52 +14,10 @@ import {
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
-const markdown = `## 📖 About this class
-
-- 🖥 Wellcome and prepair
-- 💼 About Javascript
-- 🎓 Javascript Fundamentals
-- 🌐 Callback function
-- 🔭 Arrow function
-
-## 🌟 Content
-
-- Import a HTML file and watch it magically convert to Markdown
-- Drag and drop images (requires your Dropbox account be linked)
-- Import and save files from GitHub, Dropbox, Google Drive and One Drive
-- Drag and drop markdown and HTML files into Dillinger
-- Export documents as Markdown, HTML and PDF
-
-  Markdown is a lightweight markup language based on the formatting conventions
-  that people naturally use in email.
-  As [John Gruber] writes on the [Markdown site][df1]
-
-  > The overriding design goal for Markdown's
-  > formatting syntax is to make it as readable
-  > as possible. The idea is that a
-  > Markdown-formatted document should be
-  > publishable as-is, as plain text, without
-  > looking like it's been marked up with tags
-  > or formatting instructions.
-
-  This text you see here is actually-written in Markdown! To get a feel
-  for Markdown's syntax, type some text into the left window and
-  watch the results in the right.
-  `
-
-const value = [];
-for (let i = 1; i < 30; i++) {
-  value.push({
-    topic: `Section ${i}`,
-    section_id: i,
-    video: "https://www.youtube.com/embed/bJzb-RuUcMU",
-
-    content: markdown,
-  });
-}
 
 export default function ViewSection() {
   const { course_id, section_id} = useParams();
+  
   const [activeKeys, setActiveKeys] = useState([])
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -76,7 +34,11 @@ export default function ViewSection() {
   useEffect(() => {
       fetchCourse();
   }, []);
-  console.log(data);
+
+  const onNewSection = (section_id) => {
+    console.log(section_id);
+    fetchCourse();
+}
   function handleClick({ key }) {
     setActiveKeys([]) // close the menu on click
   }
@@ -97,34 +59,32 @@ export default function ViewSection() {
           </h2>
         </Link>
         <Link to="/">
-        <DoubleLeftOutlined className="block md:hidden text-white mx-10 text-xl"/>
+            <DoubleLeftOutlined className="block md:hidden text-white mx-5 text-xl"/>
         </Link>
         <DoubleRightOutlined className="hidden md:block text-white mx-10 text-xl"/>
         <Link to={`/course/${course_id}`}>
-            <h2 className="text-white font-semibold md:text-2xl md:mx-2 text-l">
+            <h2 className="text-white font-semibold md:text-2xl md:mx-2 text-xl">
             {data.course.name}
             </h2>
         </Link>
-        <Button htmlType="submit" type="primary" className="hidden md:block" style={{marginLeft: 760}}>
-          <a href={data.section.join_url}>Join Zoom Meeting</a>
+        <Button htmlType="submit" type="primary" className="hidden md:block" style={{marginLeft: 700}}>
+            <a href={data.section.join_url}>Join Zoom Meeting</a>
         </Button>
         <a href={data.section.join_url}>
-        <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-2xl mx-2"/>
+            <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-2xl mx-2"/>
         </a>
       </Header>
+
+
+          {/* Menu on mobile */}
       <Menu theme="dark" mode="inline" defaultSelectedKeys={section_id} className="block md:hidden mt-16"
       onClick={handleClick}
       onOpenChange={onOpenChange}
       openKeys={activeKeys}>
           <SubMenu key="sub1" title="Course Section">
-          {/* {value.map(item => (
-            <Menu.Item item={item.topic} key={item.section_id}>
-              <Link to={`/view-section/${item.section_id}`}>{item.topic}</Link>
-            </Menu.Item>
-          ))} */}
             {data.course.sections.map(item => (
               <Menu.Item item={item.section.topic} key={item.section._id}>
-              <Link to={`/section/${course_id}/${item.section._id}`}>{item.section.topic}</Link>
+              <Link to={`/section/${course_id}/${item.section._id}`} onClick={()=> onNewSection(item.section._id)}>{item.section.topic}</Link>
             </Menu.Item>
             ))}
           </SubMenu>
@@ -134,7 +94,7 @@ export default function ViewSection() {
         <Menu theme="dark" mode="inline" defaultSelectedKeys={section_id}>
           {data.course.sections.map(item => (
             <Menu.Item item={item.section.topic} key={item.section._id}>
-            <Link to={`/section/${course_id}/${item.section._id}`}>{item.section.topic}</Link>
+            <Link to={`/section/${course_id}/${item.section._id}`} onClick={()=> onNewSection(item.section._id)}>{item.section.topic}</Link>
           </Menu.Item>
           ))}
         </Menu>
@@ -145,24 +105,27 @@ export default function ViewSection() {
             className="site-layout-background"
             style={{minHeight: 360, paddingLeft:10, paddingRight:10}}
           >
-            <Switch>
+            <SectionRecord 
+              section_id = {section_id}
+              course_id = {course_id}
+              />
+            
+            {/* <Switch>
               {data.course.sections.map((item) => (
                 <Route path={`/section/${course_id}/${item.section._id}`}>
                 <SplashRoute key={`/section/${course_id}/${item.section._id}`}>
-                    <SectionRecord 
-                     {...data}
-                     />
+                    <ViewSection />
                 </SplashRoute>
                 </Route>
               ))}
-               {/* <Route path={`/section/${course_id}/${section_id}`}>
+               <Route path={`/section/${course_id}/${section_id}`}>
                   <SplashRoute key={`/section/${course_id}/${section_id}`}>
                      <SectionRecord 
                      {...data}
                      />
                   </SplashRoute>   
-              </Route> */}
-            </Switch>
+              </Route>
+            </Switch> */}
           </div>
         </Content>
         <Footer className="text-center">

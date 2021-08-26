@@ -1,13 +1,31 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css';
 import ReactMarkdown from 'react-markdown';
 import gfm from "remark-gfm";
 import { Layout, Tabs, Row, Col, Tag} from 'antd';
 import CommentQA from '../../components/comment/CommentQA';
+import { getSectionInfo } from '../../api/user';
 const { TabPane } = Tabs;
 
 
-export default function SectionRecord(data){
+export default function SectionRecord({section_id, course_id}){
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const fetchCourse = async () => {
+      try {
+          setLoading(true);
+          const res = await getSectionInfo(course_id, section_id);
+          setData(res);
+          console.log('New data = ', data)
+          setLoading(false);
+      } catch (err) {
+          console.log('Failed!!');
+      }
+  }
+  useEffect(() => {
+      fetchCourse();
+  }, []);
+
     function ShowVideo(props){
         const hasVideo = props.hasVideo;
         const video_code = data.section.video.split('/')
@@ -23,7 +41,9 @@ export default function SectionRecord(data){
     }
     
     
-    return (
+    return (<>
+         { loading && <></>} 
+         {!loading && <>
         <Layout className="md:ml-20">
             <ShowVideo hasVideo={data.section.video}/>
             <Row className="md:ml-10">
@@ -39,11 +59,10 @@ export default function SectionRecord(data){
                         </TabPane>
                     </Tabs>
                 </Col>
-            </Row>
-
-            
-            
+            </Row>     
         </Layout>
+        </>}
+    </>
     );
 
 }
