@@ -10,6 +10,7 @@ import DrawerMenu from "../menu/DrawerMenu";
 import { getProfileUser } from "../../api/user";
 import SearchMoblie from "../search/SearchMoblie";
 import Search from "../search/Search";
+import handleErrorApi from "../../utils/handleErrorApi";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -22,23 +23,16 @@ export default function Header({ user, ...props }) {
 
   useEffect(async () => {
     try {
-      const res = await getAllCategory();
-      setNameCategory(res);
-      console.log(res);
+      const resCategory = await getAllCategory();
+      const resProfile = await getProfileUser();
+      setNameCategory(resCategory);
+      setProfileUser(resProfile);
     } catch (err) {
-      console.log("fail");
+      handleErrorApi()
     }
   }, []);
 
-  useEffect(async () => {
-    try {
-      const res = await getProfileUser();
-      setProfileUser(res);
-      console.log(res);
-    } catch (err) {
-      console.log("fail");
-    }
-  }, []);
+
 
   const ChangeHandler = (event) => {
     setSearch(event.target.value);
@@ -47,7 +41,7 @@ export default function Header({ user, ...props }) {
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
       console.log(search);
-      <Search key = {search}></Search>
+      window.location.href = "/search?query=" + search
     }
   };
 

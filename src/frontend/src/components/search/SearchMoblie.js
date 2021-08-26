@@ -7,11 +7,24 @@ import { logout } from "../../utils/auth";
 
 export default function SearchMoblie() {
   const [visible, setVisible] = useState(false);
+  const [search, setSearch] = useState([]);
+
   const showDrawer = () => {
     setVisible(true);
   };
   const onClose = () => {
     setVisible(false);
+  };
+
+  const ChangeHandler = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const handleSearch = (event) => {
+    if (event.key === "Enter") {
+      console.log(search);
+      window.location.href = "/search?query=" + search;
+    }
   };
 
   return (
@@ -39,7 +52,12 @@ export default function SearchMoblie() {
       >
         <div className="w-full mb-2">
           <div className="relative flex z-top justify-center items-center mt-2 px-3">
-            <Input placeholder="Search" className="rounded-xl" />
+            <Input
+              placeholder="Search"
+              className="rounded-xl"
+              onChange={ChangeHandler}
+              onKeyDown={handleSearch}
+            />
           </div>
         </div>
       </Drawer>

@@ -6,6 +6,7 @@ import { getAllCategoryAdmin } from "../../api/admin";
 import EditCategory from "./EditCategory";
 import DeleteCategory from "./DeleteCategory";
 import AddCategory from "./AddCategory";
+import handleErrorApi from "../../utils/handleErrorApi";
 
 export default function AdminCategory(props) {
   const [category, setCategory] = useState([]);
@@ -21,7 +22,7 @@ export default function AdminCategory(props) {
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
-      console.log("fail");
+      handleErrorApi(err)
     }
   };
 
