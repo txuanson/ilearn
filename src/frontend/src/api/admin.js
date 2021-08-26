@@ -14,3 +14,6 @@ export const addCategory = (data) =>
 
 export const getUser = (key) =>
     callApi({ url: `/admin/user?query=${key}`, method: 'GET'});
+
+export const getCourseAdmin = (key) =>
+    callApi({url: `/admin/course/?query=${key}`, method:'GET'});

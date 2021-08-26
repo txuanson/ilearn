@@ -15,7 +15,6 @@ export default function AdminCategory(props) {
   const pageSize = 15;
 
   const onSearch = (value) => {
-    console.log(value)
     fetchSearchCategory(value);
   }
 
@@ -27,7 +26,7 @@ export default function AdminCategory(props) {
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
-      handleErrorApi(err)
+      handleErrorApi(err);
     }
   };
 

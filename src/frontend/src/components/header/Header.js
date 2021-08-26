@@ -28,7 +28,7 @@ export default function Header({ user, ...props }) {
       setNameCategory(resCategory);
       setProfileUser(resProfile);
     } catch (err) {
-      handleErrorApi()
+      handleErrorApi(err)
     }
   }, []);
 
