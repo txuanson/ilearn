@@ -155,4 +155,8 @@ router.get('/:course_id/subscriber', course.listSubscriber);
 router.get('/:course_id/pending', course.listPending);
 router.get('/:course_id/banned', course.listBanned);
 router.get('/:course_id/section', course.listSectionTutor);
+
+router.patch('/:course_id/approve', course.approveUser);
+router.patch('/:course_id/ban', course.banUser);
+router.patch('/:course_id/unban', course.unbanUser);
 module.exports = router;

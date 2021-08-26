@@ -13,6 +13,8 @@ const { deleteCourseHelper } = require("../../helpers/query");
 const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
 const getCurrentSectionValidator = require("../../validators/getCurrentSection.validator");
 const Account = require("../../models/Account");
+const approveUserValidator = require("../../validators/approveUser.validator");
+const banUserValidator = require("../../validators/banUser.validator");
 
 const getCourseByName = asyncCatch(async (req, res, next) => {
     const { error, value } = queryWithPagiValidator.validate(req.query);
@@ -336,7 +338,7 @@ const listPending = asyncCatch(async (req, res, next) => {
         .lean()
         .exec();
     res.send({
-        items: items?.queue ?? []
+        items: items?.pending ?? []
     })
 })
 
@@ -403,6 +405,63 @@ const unsubscribeFromCourse = asyncCatch(async (req, res, next) => {
     res.send("Success!");
 })
 
+const approveUser = asyncCatch(async (req, res, next) => {
+    const { course_id } = req.params;
+    const { error, value } = approveUserValidator.validate(req.body);
+    if (error) {
+        throw new BadReqest(error.message);
+    }
+    const { user_id } = value;
+    await Course.updateOne({ _id: course_id }, {
+        $pull: {
+            pending: user_id
+        },
+        $addToSet: {
+            subscriber: user_id
+        }
+    }).exec();
+    res.send('Success!');
+});
+
+const banUser = asyncCatch(async (req, res, next) => {
+    const { course_id } = req.params;
+    const { error, value } = banUserValidator.validate(req.body);
+    if (error) {
+        throw new BadReqest(error.message);
+    }
+    const { user_id, reason } = value;
+    await Course.updateOne({ _id: course_id }, {
+        $pull: {
+            pending: user_id
+        },
+        $pull: {
+            subscriber: user_id
+        },
+        $addToSet: {
+            banned: {
+                account_id: user_id,
+                reason: reason
+            }
+        }
+    }).exec();
+    res.send('Success!');
+});
+
+const unbanUser = asyncCatch(async (req, res, next) => {
+    const { course_id } = req.params;
+    const { error, value } = approveUserValidator.validate(req.body);
+    if (error) {
+        throw new BadReqest(error.message);
+    }
+    const { user_id } = value;
+    await Course.updateOne({ _id: course_id }, {
+        $pull: {
+            banned: { account_id: user_id }
+        }
+    }).exec();
+    res.send('Success!');
+});
+
 module.exports = {
     getCourseByName,
     getCourseBy: getCourseBy,
@@ -417,5 +476,8 @@ module.exports = {
     listSubscriber,
     listPending,
     listBanned,
-    listSectionTutor
+    listSectionTutor,
+    approveUser,
+    banUser,
+    unbanUser
 }

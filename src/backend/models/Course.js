@@ -42,7 +42,10 @@ const courseSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Account'
             },
-            reason: String
+            reason: {
+                type: String,
+                default: ""
+            }
         }
     ],
     sections: [{
