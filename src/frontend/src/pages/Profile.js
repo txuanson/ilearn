@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 
 import {Layout, Button, Divider} from "antd";
 import 'antd/dist/antd.css';
@@ -20,44 +20,38 @@ const { Header, Content, Footer } = Layout;
 
 function Profile() {
 
-    // let name = 'Import a HTML file and watch'
-    let markdown = `    ## 📖 About this class
-- 🖥 Wellcome and prepair
-- 💼 About Javascript
-- 🎓 Javascript Fundamentals
-- 🌐 Callback function
-- 🔭 Arrow function
+    // Get ID
+    const [me, setMe] = useState([]);
 
-## 🌟 Content
+    useEffect(async () => {
+        try {
+            const res = await getProfileUser();
+            setMe(res);
+        } catch (err) {
+            console.log("fail: ", err);
+        }
+    }, []);
 
-`
+    const { user_id } = useParams();
 
-// Get ID
-const [user, setUser] = useState([]);
+    // Get USER INFO from ID
+    const [profileUser, setProfileUser] = useState([]);
 
-useEffect(async () => {
-    try {
-      const res = await getProfileUser();
-      setUser(res);
-      console.log("user._id: ", user._id)
-    } catch (err) {
-      console.log("fail: ", err);
+    // useEffect(async () => {
+    const fetchUserInfo = async() => {
+        try {
+            // console.log(user_id);
+            const res = await getUserInfo(user_id); 
+            setProfileUser(res);
+        } catch (err) {
+            console.log("fail: ", err);
+        }
     }
-  }, []);
 
-// Get USER INFO from ID
-const [profileUser, setProfileUser] = useState([]);
-
-useEffect(async () => {
-    try {
-      console.log(user._id);
-      const res = await getUserInfo(user._id);
-      setProfileUser(res);
-      console.log("profile: ")
-    } catch (err) {
-      console.log("fail: ", err);
-    }
-  }, []);
+    useEffect(() => {
+        fetchUserInfo();
+    }, []);
+    console.log("profile: ", profileUser)
 
     return (
         <Layout className = "container mx-auto xl:px-40">
@@ -67,6 +61,8 @@ useEffect(async () => {
                         <img className = "w-40 h-40 border-4 rounded-full border-white"
                             src = {"https://ilearn-19clc3.herokuapp.com/" + profileUser.avatar} />
 
+                        { me._id != user_id && <></>} 
+                        { me._id == user_id && <>
                         <div className = " flex flex-row md:flex-col">
                             <EditModal icon = {<CameraOutlined style={{ fontSize: '16px'}} /> }
                                 name = "Edit Avatar"
@@ -82,11 +78,13 @@ useEffect(async () => {
                             </EditModal>
                         </div>
 
-                        <div className = "p-2">
-                        <Link to = "https://zoom.us/oauth/authorize?response_type=code&client_id=iui08Y6kR8G5HvrZn9m9A&redirect_uri=https://ilearn-two.vercel.app/connect-zoom" />
-                            <Button type = "primary" >Connect to Zoom </Button>
+                        <div className = "p-2">                        
+                            <Button type = "primary" 
+                                href = "https://zoom.us/oauth/authorize?response_type=code&client_id=iui08Y6kR8G5HvrZn9m9A&redirect_uri=https://ilearn-two.vercel.app/connect-zoom"
+                            >Connect to Zoom </Button>
                         </div>
-
+                    </>}
+                    
                     </div>
                     <div>
                         <div className = "px-0 md:px-10">

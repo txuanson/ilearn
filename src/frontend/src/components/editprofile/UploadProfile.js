@@ -18,11 +18,10 @@ const tailLayout = {
   },
 };
 
-function UploadProfile({u_name, u_bio}) {
-    console.log("u_name, u_bio: ", u_name, u_bio)
-
-    const [name, setName] = useState(u_name);
-    const [bio, setBio] = useState(u_bio);
+function UploadProfile(props) {
+    const [name, setName] = useState("");
+    const [bio, setBio] = useState("");
+    const [form] = Form.useForm();
 
     const NameChangeHandler = (event) => {
       setName(event.target.value);
@@ -36,6 +35,7 @@ function UploadProfile({u_name, u_bio}) {
 
       try {
         const res = await patchProfile({name: name, bio: bio});
+        
 
       } catch (error) {
         console.log("fail: ", error);
@@ -44,18 +44,17 @@ function UploadProfile({u_name, u_bio}) {
     };
 
     const onReset = () => {
-      setName(u_name);
-      setBio(u_bio);
+      form.resetFields();
     };
 
     return (
-      <Form {...layout} name="control-ref">
+      <Form {...layout} name="control-ref" form={form} initialValues = { {Name : props.name, Bio : props.bio} } >
           <Form.Item
             name="Name"
             label="Name: "
           >
             <Input 
-                // value={name}
+                value={name}
                 onChange={NameChangeHandler}/>
           </Form.Item>
 
@@ -64,7 +63,7 @@ function UploadProfile({u_name, u_bio}) {
             label="Bio: "
           >
             <MDEditor
-                // value={bio}
+                value={bio}
                 onChange={BioChangeHandler}
             />
               {/* <MDEditor.Markdown source={bio} /> */}

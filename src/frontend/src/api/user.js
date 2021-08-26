@@ -15,7 +15,7 @@ export const joinCourse = (course_id) =>
 export const getUserInfo = (user_id) =>
     callApi({ url: `/profile/${user_id}`, method: 'GET' });
 
-export const putdAvatar = (data) =>
+export const putAvatar = (data) =>
     callApi({ url: `/user/profile/avatar`, method: 'PUT', data: data, option: { headers: { 'Content-Type': 'multipart/form-data' } } });
 
 export const patchProfile = (data) =>

@@ -78,8 +78,8 @@ export default function RegularRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route exact path="/profile">
-                    <SplashRoute key="/profile">
+                <Route exact path="/profile/:user_id">
+                    <SplashRoute key="/profile/:user_id">
                      <Profile></Profile>
                     </SplashRoute>
                 </Route>
