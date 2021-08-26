@@ -2,7 +2,7 @@ import { Button, Layout, Menu} from 'antd';
 import React, {useState, useEffect} from "react";
 import SplashRoute from '../../components/animation/SplashRoute';
 import { Route } from "react-router";
-import { Link, Switch } from "react-router-dom";
+import { Link, Switch, useParams } from "react-router-dom";
 import SectionRecord from './SectionRecord';
 import { getSectionInfo } from '../../api/user';
 import {
@@ -53,11 +53,13 @@ for (let i = 1; i < 30; i++) {
     topic: `Section ${i}`,
     section_id: i,
     video: "https://www.youtube.com/embed/bJzb-RuUcMU",
+
     content: markdown,
   });
 }
 
-export default function ViewSection({course_id, section_id}) {
+export default function ViewSection() {
+  const { course_id, section_id} = useParams();
   const [activeKeys, setActiveKeys] = useState([])
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -104,13 +106,13 @@ export default function ViewSection({course_id, section_id}) {
             </h2>
         </Link>
         <Button htmlType="submit" type="primary" className="hidden md:block" style={{marginLeft: 760}}>
-          <Link to="/zoom-connection">Join Zoom Meeting</Link>
+          <a href={data.section.join_url}>Join Zoom Meeting</a>
         </Button>
-        <Link to="/zoom-connection">
+        <a href={data.section.join_url}>
         <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-2xl mx-2"/>
-        </Link>
+        </a>
       </Header>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]} className="block md:hidden mt-16"
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={section_id} className="block md:hidden mt-16"
       onClick={handleClick}
       onOpenChange={onOpenChange}
       openKeys={activeKeys}>
@@ -120,18 +122,16 @@ export default function ViewSection({course_id, section_id}) {
               <Link to={`/view-section/${item.section_id}`}>{item.topic}</Link>
             </Menu.Item>
           ))} */}
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          {data.course.sections.map(item => (
-            <Menu.Item item={item.section.topic} key={item.section._id}>
-            <Link to={`/section/${course_id}/${item.section._id}`}>{item.section.topic}</Link>
-          </Menu.Item>
-          ))}
-        </Menu>
+            {data.course.sections.map(item => (
+              <Menu.Item item={item.section.topic} key={item.section._id}>
+              <Link to={`/section/${course_id}/${item.section._id}`}>{item.section.topic}</Link>
+            </Menu.Item>
+            ))}
           </SubMenu>
       </Menu>
     <Layout className="min-h-screen">
       <Sider theme="light" style={{overflow: 'auto', height: '100vh', position:'fixed', zIndex:10, top:64, left: 0}} className="hidden md:block">
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={section_id}>
           {data.course.sections.map(item => (
             <Menu.Item item={item.section.topic} key={item.section._id}>
             <Link to={`/section/${course_id}/${item.section._id}`}>{item.section.topic}</Link>
@@ -149,28 +149,19 @@ export default function ViewSection({course_id, section_id}) {
               {data.course.sections.map((item) => (
                 <Route path={`/section/${course_id}/${item.section._id}`}>
                 <SplashRoute key={`/section/${course_id}/${item.section._id}`}>
-                    {/* <Category idCategory = {item._id} nameCategory = {item.name}></Category> */}
                     <SectionRecord 
-                     {...value[0]}
+                     {...data}
                      />
                 </SplashRoute>
                 </Route>
               ))}
-              <Route path="/view-section/1">
-                  <SplashRoute key="/view-section/1">
+               {/* <Route path={`/section/${course_id}/${section_id}`}>
+                  <SplashRoute key={`/section/${course_id}/${section_id}`}>
                      <SectionRecord 
-                     {...value[0]}
+                     {...data}
                      />
                   </SplashRoute>   
-              </Route>
-              <Route path="/view-section/2">
-                  <SplashRoute key="/view-section/2">
-                    <SectionRecord 
-                     video = {false}
-                     content = {value[1].content}
-                     />
-                  </SplashRoute>
-              </Route>
+              </Route> */}
             </Switch>
           </div>
         </Content>

@@ -11,6 +11,7 @@ import { Content } from "antd/lib/layout/layout";
 import { useForm } from 'antd/lib/form/Form';
 import { createCourse, editCourse } from "../../api/tutorDashboard";
 import { getCourseInfo } from "../../api/course";
+import TextArea from "antd/lib/input/TextArea";
 
 const formItemLayout = {
     labelCol: {
@@ -33,7 +34,8 @@ const mapCourseInfoToForm = (course) =>
     name: course.name,
     content: course.content,
     public: course.public,
-    category: course.category.name
+    category: course.category._id,
+    description: course.description
 })
 export default function CreateCourse() {
     const { course_id } = useParams();
@@ -50,12 +52,13 @@ export default function CreateCourse() {
             formData.append('public', values.public ?? true);
             formData.append('category', values.category);
             formData.append('content', content);
+            formData.append('description', values.description);
             if (course_id) {
                 if (cover) {
                     formData.append('cover', cover);
                 }
                 await editCourse(course_id, formData);
-                message.success("Course patched successfully!");
+                message.success("Course edited successfully!");
             }
             else {
                 formData.append('cover', cover);
@@ -204,7 +207,16 @@ export default function CreateCourse() {
                             </ImgCrop>
                         </div>
                     </Form.Item>
-
+                    <Form.Item name="description" label="Description"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter course description!',
+                            },
+                        ]}>
+                        <TextArea placeholder="Please enter course description"></TextArea>
+                    </Form.Item>
                     <Form.Item name="content" label="Content"
                         hasFeedback
                         rules={[

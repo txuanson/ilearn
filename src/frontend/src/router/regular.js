@@ -41,11 +41,9 @@ export default function RegularRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route exact path="/course/61266b24f77d707b9db4af87">
-                    <SplashRoute key="/course/61266b24f77d707b9db4af87">
-                        <CourseDescription
-                            course_id="61266b24f77d707b9db4af87">
-                        </CourseDescription>
+                <Route exact path="/course/:course_id">
+                    <SplashRoute key="/course/:course_id">
+                        <CourseDescription/>
                     </SplashRoute>
                 </Route>
             

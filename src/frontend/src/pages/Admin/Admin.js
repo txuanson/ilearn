@@ -9,7 +9,8 @@ import AdminAccount from "./AdminAccount";
 import {
   FieldTimeOutlined,
   BookOutlined,
-  UserOutlined
+  UserOutlined, 
+  FolderOpenOutlined
 } from "@ant-design/icons";
 import AdminCategory from "./AdminCategory";
 
@@ -44,7 +45,7 @@ export default function Admin() {
           <Menu.Item key="3" icon={<FieldTimeOutlined />}>
             <Link to="/admin/course">Course</Link>
           </Menu.Item>
-          <Menu.Item key="4" icon={<FieldTimeOutlined />}>
+          <Menu.Item key="4" icon={<FolderOpenOutlined />}>
             <Link to="/admin/category">Category</Link>
           </Menu.Item>
         </Menu>

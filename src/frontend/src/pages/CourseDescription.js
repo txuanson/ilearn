@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
-import { Link } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
@@ -108,7 +108,8 @@ Generating pre-built zip archives for distribution:
 
 `
 
-export default function CourseDescription({ course_id }) {
+export default function CourseDescription() {
+    const { course_id } = useParams();
     const [course, setCourse] = useState({});
     const [section, setSection] = useState({});
     const [loading, setLoading] = useState(true);
@@ -148,7 +149,8 @@ export default function CourseDescription({ course_id }) {
                 <div className="md:hidden block">
                     <div className="relative m-2">
                         <img src={'https://ilearn.yurineko.net/' + course.cover} alt={course.name} class="h-60 w-full object-cover" />
-                        <span class="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
+                        <span class="px-1 py-1 text-white bg-red-700 rounded absolute right-0 bottom-0"> 
+                        {/* bg-opacity-50 */}
                             {course.public ? 'Public' : 'Private'}
                         </span>
                     </div>
@@ -179,7 +181,7 @@ export default function CourseDescription({ course_id }) {
                     <div className="md:flex-shrink-0 md:block hidden">
                         <div className="relative m-2">
                             <img src={course.cover} alt={course.name} class="h-60 w-full object-cover md:w-70" />
-                            <span class="px-1 py-1 text-white bg-blue-700 rounded absolute left-0 bottom-0 bg-opacity-50">
+                            <span class="px-1 py-1 text-white bg-red-700 rounded absolute left-0 bottom-0">
                                 {course.public ? 'Public' : 'Private'}
                             </span>
                         </div>
