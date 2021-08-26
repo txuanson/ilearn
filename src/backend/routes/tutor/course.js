@@ -102,9 +102,9 @@ const courseUploadFileMiddleware = upload.fields([{ name: 'cover', maxCount: 1 }
  *           type: string
  *         required: true
  * 
- * /tutor/course/{course_id}/queue:
+ * /tutor/course/{course_id}/pending:
  *   get:
- *     summary: List users queuing for approve of course
+ *     summary: List users pending for approve of course
  *     tags:
  *       - tutor
  *     parameters:
@@ -152,7 +152,7 @@ router.patch('/:course_id',
 router.delete('/:course_id', course.delete);
 
 router.get('/:course_id/subscriber', course.listSubscriber);
-router.get('/:course_id/queue', course.listQueue);
+router.get('/:course_id/pending', course.listPending);
 router.get('/:course_id/banned', course.listBanned);
 router.get('/:course_id/section', course.listSectionTutor);
 module.exports = router;

@@ -328,11 +328,11 @@ const listSubscriber = asyncCatch(async (req, res, next) => {
     })
 })
 
-const listQueue = asyncCatch(async (req, res, next) => {
+const listPending = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
-    const items = await Course.findById(course_id, "-_id queue")
-        .select('-_id queue')
-        .populate("queue", "_id name avatar")
+    const items = await Course.findById(course_id, "-_id pending")
+        .select('-_id pending')
+        .populate("pending", "_id name avatar")
         .lean()
         .exec();
     res.send({
@@ -415,7 +415,7 @@ module.exports = {
     delete: deleteCourse,
     edit: editCourse,
     listSubscriber,
-    listQueue,
+    listPending,
     listBanned,
     listSectionTutor
 }
