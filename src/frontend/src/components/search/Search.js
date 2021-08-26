@@ -1,24 +1,27 @@
 import { Pagination, Row, Col } from "antd";
 import CardComponent from "../Card/CardComponent";
 import { useState, useEffect } from "react";
-import { getCategoryID } from "../../api/homePage";
+import { searchCourse } from "../../api/search";
+import handleErrorApi from "../../utils/handleErrorApi";
 
 
-export default function Category({ idCategory, nameCategory }) {
+export default function Search({ key}) {
   const [data, setData] = useState([]);
   const [minValue, setMinValue] = useState([]);
   const [maxValue, setMaxValue] = useState([]);
   const pageSize = 20;
   useEffect(async () => {
     try {
-      const res = await getCategoryID(idCategory);
+      const res = await searchCourse({query: key})
       setData(res.items);
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
-      console.log(idCategory);
+      handleErrorApi(err)
     }
   }, []);
+
+
   
   const handleChange = (value) => {
     if (value <= 1) {
@@ -32,7 +35,7 @@ export default function Category({ idCategory, nameCategory }) {
   return (
     <div className="relative">
       <div class="container mx-auto xl:px-40">
-        <div className="p-4 pb-0 font-bold text-lg">Category / {nameCategory}</div>
+        <div className="p-4 pb-0 font-bold text-lg">Search / {key}</div>
         <Row>
           {data.slice(minValue, maxValue).map((item) => (
             <Col xl={6} md={6}>

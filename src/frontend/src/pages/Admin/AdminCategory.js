@@ -1,84 +1,106 @@
-import { Breadcrumb, Layout, Space, Switch, Table, Button } from "antd";
+import { Breadcrumb, Layout, Space, Pagination, Table, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Column from "antd/lib/table/Column";
+import { Link } from "react-router-dom";
 import Search from "antd/lib/input/Search";
 import { getAllCategoryAdmin } from "../../api/admin";
-import EditModal from "../../components/ui/EditModal";
 import EditCategory from "./EditCategory";
 import DeleteCategory from "./DeleteCategory";
 import AddCategory from "./AddCategory";
 
-
-
 export default function AdminCategory(props) {
-    
-    const [category, setCategory] = useState([]);
-  
-    useEffect(async () => {
-      try {
-        const res = await getAllCategoryAdmin();
-        setCategory(res.items);
-        console.log(res);
-      } catch (err) {
-        console.log("fail");
-      }
-    }, []);
+  const [category, setCategory] = useState([]);
+  const [minValue, setMinValue] = useState([]);
+  const [maxValue, setMaxValue] = useState([]);
+  const pageSize = 15;
 
-    const columns = [
-        {
-          title: 'Name',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: 'id',
-          dataIndex: '_id',
-          key: '_id',
-        },
-        {
-          title: 'Action',
-          key: 'action',
-          width: 100,
-          render: child =>
-          <Space size="middle">
-            {/* <EditModal
-              name = "Edit"
-              title = "Edit category">
-                <EditCategory id = {child._id} name = {child.name}></EditCategory>
-            </EditModal> */}
+  const fetchCategory = async () => {
+    try {
+      const res = await getAllCategoryAdmin();
+      setCategory(res.items);
+      console.log(res);
+      setMinValue(0);
+      setMaxValue(pageSize);
+    } catch (err) {
+      console.log("fail");
+    }
+  };
 
-            {/* <EditModal
-            name = "Delete"
-            title = "Delete category">
-          </EditModal> */}
-          <EditCategory id = {child._id} name = {child.name}></EditCategory>
-          <DeleteCategory  id = {child._id}></DeleteCategory>
-          </ Space>
-            
-        }
-    ]
-    return (
-        <Layout>
-            <Breadcrumb style={{ margin: '10px 0' }}>
-                <Breadcrumb.Item>
-                    <Link to="/homepage">iLearn</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    <Link to="/admin">Admin</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>Category</Breadcrumb.Item>
-            </Breadcrumb>
-            <Search className="py-2 md:w-1/5 w-full" placeholder="Search" enterButton="Search" allowClear />
-            {/* <Table dataSource={category} pagination={false} scroll={{ x: 'fit-content' }}>
-                <Column title="Name Category" dataIndex={"name"} key="name" />
-                <Column title="ID" dataIndex={"_id"} key="_id" />
-                <Column title="Action"  key="action">
-                </Column>
-            </Table> */}
-            <Table dataSource={category} pagination={false} scroll={{ x: 'fit-content' }} columns={columns}></Table>
-            <AddCategory></AddCategory>
-            
-        </Layout>
-    );
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
+  const handleChange = (value) => {
+    if (value <= 1) {
+      setMinValue(0);
+      setMaxValue(pageSize);
+    } else {
+      setMinValue((value - 1) * pageSize);
+      setMaxValue(value * pageSize);
+    }
+  };
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Course",
+      dataIndex: "courses_count",
+      key: "courses_count",
+    },
+    {
+      title: "Action",
+      key: "action",
+      width: 100,
+      render: (child) => (
+        <Space size="middle">
+          <EditCategory
+            id={child._id}
+            name={child.name}
+            fetch={fetchCategory}
+          ></EditCategory>
+          <DeleteCategory id={child._id} fetch={fetchCategory}></DeleteCategory>
+        </Space>
+      ),
+    },
+  ];
+  return (
+    <Layout>
+      <Breadcrumb style={{ margin: "10px 0" }}>
+        <Breadcrumb.Item>
+          <Link to="/homepage">iLearn</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/admin">Admin</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>Category</Breadcrumb.Item>
+      </Breadcrumb>
+      <Row>
+        <Search
+          className="py-2 md:w-1/5 w-full"
+          placeholder="Search"
+          enterButton="Search"
+          allowClear
+        />
+        <AddCategory fetch={fetchCategory}></AddCategory>
+      </Row>
+      <Table
+        dataSource={category.slice(minValue, maxValue)}
+        pagination={false}
+        scroll={{ x: "fit-content" }}
+        columns={columns}
+      ></Table>
+
+      <div className="p-3 grid justify-items-end">
+        <Pagination
+          defaultCurrent={1}
+          total={category.length}
+          onChange={handleChange}
+          pageSize={pageSize}
+        />
+      </div>
+    </Layout>
+  );
 }

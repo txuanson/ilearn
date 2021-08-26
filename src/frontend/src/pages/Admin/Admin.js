@@ -28,7 +28,7 @@ export default function Admin() {
         }}
       >
         <div className="flex justify-center my-4">
-          <Link to="/homepage">
+          <Link to="/">
             <h2 className="text-white font-semibold text-3xl md:mx-2">
               <span className="text-blue-500">i</span>Learn
             </h2>

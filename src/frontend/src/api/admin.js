@@ -11,3 +11,6 @@ export const deleteCategory = (id) =>
 
 export const addCategory = (data) =>
     callApi({ url: `/admin/category`, method: 'POST', data});
+
+export const getAllUser = () =>
+    callApi({ url: `/admin/user`, method: 'GET'});

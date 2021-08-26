@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const { Meta } = Card;
 
 export default function CardComponent({ dataCard }) {
+  const HOST = process.env.REACT_APP_BASE_HOST;
   return (
     <div>
       {dataCard ? (
@@ -13,9 +14,10 @@ export default function CardComponent({ dataCard }) {
             hoverable
             cover={
               <ReactImageFallback
-                style={{ height: "20 rem" }}
+              className="object-cover"
+                style={{ }}
                 alt=""
-                src={dataCard.cover}
+                src={HOST + "/" + dataCard.cover}
                 fallbackImage="/default-class-cover.png"
               />
             }

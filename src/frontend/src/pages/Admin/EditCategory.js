@@ -1,7 +1,9 @@
-import { Form, Input, Button } from 'antd';
+import { Input, Button, message } from 'antd';
 import React, { useState } from 'react'
 import { editCategory } from '../../api/admin';
 import { Modal } from 'antd';
+import useWindowSize from "../../hooks/useWindowSize";
+import handleErrorApi from '../../utils/handleErrorApi';
 
 
 const layout = {
@@ -14,7 +16,9 @@ const layout = {
 };
 
 
-export default function EditCategory({id, name}) {
+export default function EditCategory({id, name, fetch}) {
+  const { width } = useWindowSize();
+
     const [nameCategory, setNameCategory] = useState(name);
     const [visible, setVisible] = useState(false);
 
@@ -25,9 +29,11 @@ export default function EditCategory({id, name}) {
     const onUpload = async () => {
       try {
         const res = await editCategory(id, {name: nameCategory});
-        setVisible(false)
+        setVisible(false);
+        message.success("Category edit successfully!");
+        fetch();
       } catch (error) {
-        console.log("fail: ", error);
+        handleErrorApi(error)
       }
 
     };
@@ -44,9 +50,9 @@ export default function EditCategory({id, name}) {
         visible={visible}
         onOk={() => onUpload()}
         onCancel={() => setVisible(false)}
-        width={1000}
+        width={500 < width * 1 ? 500 : width}
       >
-         <Input onChange={NameChangeHandler}/>
+         <Input placeholder="Category name" value={nameCategory} onChange={NameChangeHandler}/>
       </Modal>
     </>
       );

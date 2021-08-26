@@ -9,6 +9,7 @@ import { getAllCategory } from "../../api/homePage";
 import DrawerMenu from "../menu/DrawerMenu";
 import { getProfileUser } from "../../api/user";
 import SearchMoblie from "../search/SearchMoblie";
+import Search from "../search/Search";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -17,6 +18,7 @@ function classNames(...classes) {
 export default function Header({ user, ...props }) {
   const [nameCategory, setNameCategory] = useState([]);
   const [profileUser, setProfileUser] = useState([]);
+  const [search, setSearch] = useState([]);
 
   useEffect(async () => {
     try {
@@ -37,6 +39,18 @@ export default function Header({ user, ...props }) {
       console.log("fail");
     }
   }, []);
+
+  const ChangeHandler = (event) => {
+    setSearch(event.target.value);
+};
+
+  const handleSearch = (event) => {
+    if (event.key === 'Enter') {
+      console.log(search);
+      <Search key = {search}></Search>
+    }
+  };
+
   const menu = (
     <Menu className="bg-white dark:bg-dark-black dark:text-dark-text z-top w-68 p-6 rounded-xl shadow-md max-w-sm dark:shadow-dark">
       <Menu.Item>
@@ -129,6 +143,8 @@ export default function Header({ user, ...props }) {
                   style={{ width: "20rem" }}
                   placeholder="Search"
                   className="rounded-full mr-4 hidden md:block"
+                  onChange={ChangeHandler}
+                  onKeyDown={handleSearch}
                 />
                 {user ? (
                   <div className="hidden md:block">

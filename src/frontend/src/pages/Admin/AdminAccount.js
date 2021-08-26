@@ -1,22 +1,86 @@
-import { Breadcrumb, Layout, Space, Switch, Table } from "antd";
+import { Breadcrumb, Layout, Space, Pagination, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Column from "antd/lib/table/Column";
+import { Link } from "react-router-dom";
 import Search from "antd/lib/input/Search";
-const data = [
-    {
-        ban: true,
-    },
-    {
-        ban: false,
-    },
-    {
-        ban: true,
-    },
-];
+import { getAllUser } from "../../api/admin";
 
 
 export default function AdminAccount(props) {
+
+    const [user, setUser] = useState([]);
+    const [minValue, setMinValue] = useState([]);
+    const [maxValue, setMaxValue] = useState([]);
+    const pageSize = 20;
+  
+    useEffect(async () => {
+      try {
+        const res = await getAllUser()
+        setMinValue(0);
+
+        res.items.map((items) => {
+          if(items.role == 10)
+            items.role= "Admin";
+          else if(items.role == 5)
+            items.role = "Tutor";
+          else 
+            items.role = "User";
+          
+          return items;
+        }
+        )
+
+        setUser(res.items);
+
+        
+
+      setMaxValue(pageSize);
+      } catch (err) {
+        console.log("fail");
+      }
+    }, []);
+
+    const handleChange = (value) => {
+        if (value <= 1) {
+          setMinValue(0);
+          setMaxValue(pageSize);
+        } else {
+          setMinValue((value - 1) * pageSize);
+          setMaxValue(value * pageSize);
+        }
+      };
+
+    const columns = [
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: 'Username',
+          dataIndex: 'username',
+          key: 'username',
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+          },
+          {
+            title: 'Role',
+            dataIndex: 'role',
+            key: 'role',
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          width: 100,
+          render: child =>
+          <Space size="middle">
+              Ban
+          </ Space>
+            
+        }
+    ]
     
     return (
         <Layout>
@@ -30,16 +94,10 @@ export default function AdminAccount(props) {
                 <Breadcrumb.Item>Account</Breadcrumb.Item>
             </Breadcrumb>
             <Search className="py-2 md:w-1/5 w-full" placeholder="Search" enterButton="Search" allowClear />
-            <Table dataSource={data} pagination={false} scroll={{ x: 'fit-content' }}>
-                <Column title="User" dataIndex={"user"} key="user" />
-                <Column title="Role" dataIndex={"role"} key="role" />
-                <Column title="Date registered" dataIndex={"date_registered"} key="date_registered" />
-                <Column title="Last login" dataIndex={"last_login"} key="last_login" />
-                <Column title="Status" dataIndex={"Status"} key="Status" />
-                <Column title="Action" key="action" render={((text, record) => (
-                    <a>Ban</a>
-                ))}></Column>
-            </Table>
+            <Table dataSource={user.slice(minValue, maxValue)} pagination={false} scroll={{ x: 'fit-content' }} columns={columns}></Table>
+            <div className="p-3 grid justify-items-end">
+            <Pagination defaultCurrent={1} total={user.length} onChange={handleChange} pageSize={pageSize}/>
+          </div>
         </Layout>
     );
 }
