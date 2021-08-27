@@ -42,7 +42,7 @@ export default function Search({ key}) {
   }, []);
   return (
     <div className="relative">
-      <div class="container mx-auto xl:px-40">
+      <div class="container mx-auto xl:px-40 min-h-screen">
         <div className="p-4 pb-0 font-bold text-lg">Search / {key}</div>
         <Row>
           {data.slice(minValue, maxValue).map((item) => (
