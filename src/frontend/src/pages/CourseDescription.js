@@ -4,76 +4,19 @@ import { Link, useParams} from "react-router-dom";
 import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
-import { Layout, Space, message} from 'antd';
+import { Layout, Space, message, Button} from 'antd';
 import { subscribeCourse } from '../api/user';
 
 const { Content } = Layout;
-
-const markdown = `## 📖 About this class
-
-- 🖥 Wellcome and prepair
-- 💼 About Javascript
-- 🎓 Javascript Fundamentals
-- 🌐 Callback function
-- 🔭 Arrow function
-
-## 🌟 Content
-
-- Import a HTML file and watch it magically convert to Markdown
-- Drag and drop images (requires your Dropbox account be linked)
-- Import and save files from GitHub, Dropbox, Google Drive and One Drive
-- Drag and drop markdown and HTML files into Dillinger
-- Export documents as Markdown, HTML and PDF
-
-  Markdown is a lightweight markup language based on the formatting conventions
-  that people naturally use in email.
-  As [John Gruber] writes on the [Markdown site][df1]
-
-  > The overriding design goal for Markdown's
-  > formatting syntax is to make it as readable
-  > as possible. The idea is that a
-  > Markdown-formatted document should be
-  > publishable as-is, as plain text, without
-  > looking like it's been marked up with tags
-  > or formatting instructions.
-
-  This text you see here is actually-written in Markdown! To get a feel
-  for Markdown's syntax, type some text into the left window and
-  watch the results in the right.
-
-## Installation
-
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
-For production environments...
-
-
-## Plugins
-
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below.
-
-| Plugin           | README                                    |
-| ---------------- | ----------------------------------------- |
-| Dropbox          | [plugins/dropbox/README.md][pldb]         |
-| GitHub           | [plugins/github/README.md][plgh]          |
-| Google Drive     | [plugins/googledrive/README.md][plgd]     |
-| OneDrive         | [plugins/onedrive/README.md][plod]        |
-| Medium           | [plugins/medium/README.md][plme]          |
-| Google Analytics | [plugins/googleanalytics/README.md][plga] |
-
-
-`
 
 export default function CourseDescription() {
     const { course_id } = useParams();
     const [course, setCourse] = useState({});
     const [section, setSection] = useState({});
     const [subscribed, setSubscribed] = useState(false);
+    const [pending, setPending] = useState(false);
     const [loading, setLoading] = useState(true);
-    
+
     
     const fetchCourse = async () => {
         try {
@@ -96,13 +39,16 @@ export default function CourseDescription() {
     }
 
     const subscriber = async() => {
-        const subscribed = await subscribeCourse(course_id);
-        setSubscribed(subscribed);
+        const subs = await subscribeCourse(course_id);
+        setSubscribed(subs);
+        if (subs && course.public){
+            setPending(true);
+        }
         message.success("Successfully subscribe to this course!");
     }
     useEffect(() => {
         fetchCourse();
-        fetchSection();
+        // fetchSection();
 
     }, []);
 
@@ -129,13 +75,23 @@ export default function CourseDescription() {
 
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
                         
-                        {subscribed? <Link to={`/section/${course_id}/${section.section_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
+                        {course.subscribed && (!course.pending || course.public)?
+                        <div className="flex flex-row" style={{justifyContent:'center'}}>
+                         <Button type="primary" className="font-bold px-5 mr-4 mt-2">
+                         <Link to={`/section/${course_id}/${section.section_id}`}>
                             Join
-                        </Link> : <Link to={`/course/${course_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center" onClick={subscriber}>
+                        </Link> 
+                         </Button>
+                         <Button type="primary" className="font-bold px-5 mt-2">
+                         Unsubscribed
+                         </Button>
+                         
+                        </div>
+                        : <Link to={`/course/${course_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center" onClick={subscriber}>
                             Subscribe
                         </Link>}
 
-                        <div className="text-center md:text-left text-white flex" style={{ justifyContent:'center', alignItems:'flex-end' }}>
+                        <div className="text-center md:text-left text-white flex mt-2" style={{ justifyContent:'center', alignItems:'flex-end' }}>
                             <span className="font-bold text-4xl md:text-5xl pr-1">{course.subscriber_count}</span>
                             <span className="pr-4">subscribers</span>
                             <span className="font-bold text-4xl md:text-5xl pr-1">{course.view}</span>
