@@ -13,6 +13,7 @@ import Category from "../components/Category/Category";
 import { useEffect, useState } from "react";
 import { getAllCategory } from "../api/homePage";
 import Search from "../components/search/Search";
+import MyLearn from "../pages/mylearn";
 
 export default function RegularRoute() {
     const [category, setCategory] = useState([]);
@@ -87,6 +88,12 @@ export default function RegularRoute() {
                 <Route exact path="/search">
                     <SplashRoute key="/search">
                      <Search></Search>
+                    </SplashRoute>
+                </Route>
+
+                <Route exact path="/mylearn">
+                    <SplashRoute key="/mylearn">
+                     <MyLearn></MyLearn>
                     </SplashRoute>
                 </Route>
             </Switch>

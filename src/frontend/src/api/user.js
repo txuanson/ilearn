@@ -20,3 +20,6 @@ export const putAvatar = (data) =>
 
 export const patchProfile = (data) =>
     callApi({ url: `/user/profile`, method: 'PATCH', data });
+
+export const getHistory = () =>
+    callApi({ url: `/user/account/history`, method: 'GET'});

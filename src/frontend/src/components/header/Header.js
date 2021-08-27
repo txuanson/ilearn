@@ -9,17 +9,15 @@ import { getAllCategory } from "../../api/homePage";
 import DrawerMenu from "../menu/DrawerMenu";
 import { getProfileUser } from "../../api/user";
 import SearchMoblie from "../search/SearchMoblie";
-import Search from "../search/Search";
 import handleErrorApi from "../../utils/handleErrorApi";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Header({ user, ...props }) {
   const [nameCategory, setNameCategory] = useState([]);
   const [profileUser, setProfileUser] = useState([]);
   const [search, setSearch] = useState([]);
+
+  const HOST = process.env.REACT_APP_BASE_HOST;
 
   useEffect(async () => {
     try {
@@ -56,7 +54,7 @@ export default function Header({ user, ...props }) {
             >
               <ReactImageFallback
                 className="min-w-full min-h-full block flex-shrink-0"
-                src={"https://ilearn-19clc3.herokuapp.com/" + profileUser.avata}
+                src={HOST + profileUser.avata}
                 alt="logo"
                 fallbackImage="/avata-default.jpg"
               />
@@ -70,7 +68,7 @@ export default function Header({ user, ...props }) {
       </Menu.Item>
       <hr></hr>
       <Menu.Item>
-        <Link to="/profile">My profile</Link>
+        <Link to={"/profile/"+profileUser._id}>My profile</Link>
       </Menu.Item>
       <hr></hr>
       <Menu.Item>
