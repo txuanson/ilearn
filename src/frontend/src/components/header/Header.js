@@ -53,7 +53,7 @@ export default function Header({ user, ...props }) {
               style={{ width: 40, height: 40 }}
             >
               <ReactImageFallback
-                className="min-w-full min-h-full block flex-shrink-0"
+                className="ring ring-black min-w-full min-h-full block flex-shrink-0"
                 src={HOST + profileUser.avata}
                 alt="logo"
                 fallbackImage="/avata-default.jpg"
@@ -96,15 +96,7 @@ export default function Header({ user, ...props }) {
                 profileUser={profileUser}
               ></DrawerMenu>
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                {/* <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button> */}
+
               </div>
               <div className="flex-1 flex items-center justify-center md:items-stretch md:justify-start">
                 <div className="flex-shrink-0 flex items-center rounded-lg bg-gray-200">
@@ -146,8 +138,8 @@ export default function Header({ user, ...props }) {
                       className="cursor-pointer"
                     >
                       <div
-                        className="ring ring-white flex items-center justify-center overflow-hidden rounded-full cursor-pointer"
-                        style={{ width: 40, height: "auto" }}
+                        className="ring ring-gray flex items-center justify-center overflow-hidden rounded-full cursor-pointer "
+                        style={{ width: 40, height: 40 }}
                       >
                         <ReactImageFallback
                           className="min-w-full min-h-full block flex-shrink-0"

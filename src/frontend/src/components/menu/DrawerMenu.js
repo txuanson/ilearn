@@ -43,10 +43,11 @@ export default function DrawerMenu({ category, user, profileUser }) {
           <div>
             <Link to={"/profile/" + profileUser._id}>
               <ReactImageFallback
-                className="min-w-full min-h-full block flex-shrink-0 rounded-full"
+                className="min-w-full block flex-shrink-0 rounded-full ring ring-gray-500"
                 src={HOST + profileUser.avata}
                 alt="logo"
                 fallbackImage="/avata-default.jpg"
+                style={{ height: 200 }}
               />
               <div>
                 <p className="font-bold text-xl text-center">
