@@ -1,10 +1,9 @@
 import { Button, Layout, Menu} from 'antd';
 import React, {useState, useEffect} from "react";
-import SplashRoute from '../../components/animation/SplashRoute';
-import { Route } from "react-router";
 import { Link, Switch, useParams } from "react-router-dom";
 import SectionRecord from './SectionRecord';
 import { getSectionInfo } from '../../api/user';
+import handleErrorApi from '../../utils/handleErrorApi';
 import {
   DoubleRightOutlined,
   DoubleLeftOutlined,
@@ -28,7 +27,7 @@ export default function ViewSection() {
           setData(res);
           setLoading(false);
       } catch (err) {
-          console.log('Failed!!');
+          handleErrorApi(err);
       }
   }
   useEffect(() => {

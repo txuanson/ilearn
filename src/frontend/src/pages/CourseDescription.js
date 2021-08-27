@@ -6,6 +6,7 @@ import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
 import { Layout, Space, message, Button} from 'antd';
 import { subscribeCourse } from '../api/user';
+import handleErrorApi from '../utils/handleErrorApi';
 
 const { Content } = Layout;
 
@@ -13,8 +14,8 @@ export default function CourseDescription() {
     const { course_id } = useParams();
     const [course, setCourse] = useState({});
     const [section, setSection] = useState({});
-    const [subscribed, setSubscribed] = useState(false);
-    const [pending, setPending] = useState(false);
+    const [subscribed, setSubscribed] = useState(course.subscribed);
+    const [pending, setPending] = useState(course.pending);
     const [loading, setLoading] = useState(true);
 
     
@@ -25,7 +26,7 @@ export default function CourseDescription() {
             setCourse(res);
             setLoading(false);
         } catch (err) {
-            console.log('Failed!!');
+            handleErrorApi(err);
         }
     }
 
@@ -34,22 +35,23 @@ export default function CourseDescription() {
             const res = await joinCourse(course_id);
             setSection(res);
         } catch (err) {
-            console.log('Failed!!');
+            handleErrorApi(err);
         }
     }
 
     const subscriber = async() => {
-        const subs = await subscribeCourse(course_id);
-        setSubscribed(subs);
-        if (subs && course.public){
-            setPending(true);
+        try {
+            const subs = await subscribeCourse(course_id);
+            setSubscribed(subs);
+            if (subscribed && course.public){
+                setPending(true);
         }
-        message.success("Successfully subscribe to this course!");
+        } catch (err) {
+            handleErrorApi(err);
+        }  
     }
     useEffect(() => {
         fetchCourse();
-        // fetchSection();
-
     }, []);
 
     
@@ -62,7 +64,6 @@ export default function CourseDescription() {
                     <div className="relative m-2">
                         <img src={HOST + '/' + course.cover} alt={course.name} class="h-60 w-full object-cover" />
                         <span class="px-1 py-1 text-white bg-red-700 rounded absolute right-0 bottom-0"> 
-                        {/* bg-opacity-50 */}
                             {course.public ? 'Public' : 'Private'}
                         </span>
                     </div>
@@ -75,12 +76,12 @@ export default function CourseDescription() {
 
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
                         
-                        {course.subscribed && (!course.pending || course.public)?
+                        {subscribed && course.public?
                         <div className="flex flex-row" style={{justifyContent:'center'}}>
-                         <Button type="primary" className="font-bold px-5 mr-4 mt-2">
-                         <Link to={`/section/${course_id}/${section.section_id}`}>
-                            Join
-                        </Link> 
+                         <Button type="primary" className="font-bold px-5 mr-4 mt-2" onClick={fetchSection}> 
+                            <Link to={`/section/${course_id}/${section.section_id}`}>
+                                Join
+                            </Link> 
                          </Button>
                          <Button type="primary" className="font-bold px-5 mt-2">
                          Unsubscribed

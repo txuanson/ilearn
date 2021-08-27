@@ -5,6 +5,9 @@ import gfm from "remark-gfm";
 import { Layout, Tabs, Row, Col, Tag} from 'antd';
 import CommentQA from '../../components/comment/CommentQA';
 import { getSectionInfo } from '../../api/user';
+import handleErrorApi from '../../utils/handleErrorApi';
+
+
 const { TabPane } = Tabs;
 
 
@@ -16,10 +19,9 @@ export default function SectionRecord({section_id, course_id}){
           setLoading(true);
           const res = await getSectionInfo(course_id, section_id);
           setData(res);
-          console.log('New data = ', data)
           setLoading(false);
       } catch (err) {
-          console.log('Failed!!');
+        handleErrorApi(err);
       }
   }
   useEffect(() => {

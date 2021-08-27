@@ -26,7 +26,7 @@ export default function Header({ user, ...props }) {
       setNameCategory(resCategory);
       setProfileUser(resProfile);
     } catch (err) {
-      handleErrorApi(err)
+      handleErrorApi(err);
     }
   }, []);
 
@@ -39,7 +39,7 @@ export default function Header({ user, ...props }) {
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
       console.log(search);
-      window.location.href = "/search?query=" + search
+      window.location.href = "/search?query=" + search;
     }
   };
 
