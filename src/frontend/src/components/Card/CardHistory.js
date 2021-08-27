@@ -18,20 +18,6 @@ export default function CardHistory({ dataCard }) {
             "/section/" + dataCard.course_id._id + "/" + dataCard.section_id._id
           }
         >
-          {/* <Switch>
-            <Route
-              exact
-              path={`/section/${dataCard.course_id._id}/${dataCard.section_id._id}`}
-            >
-              <SplashRoute
-                key={`/section/${dataCard.course_id._id}/${dataCard.section_id._id}`}
-              >
-                <CourseDescription
-                  course_id={dataCard.course_id._id}
-                ></CourseDescription>
-              </SplashRoute>
-            </Route>
-          </Switch> */}
           <Card
             className="m-auto"
             hoverable

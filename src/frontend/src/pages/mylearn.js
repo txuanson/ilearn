@@ -2,6 +2,7 @@ import { Pagination, Row, Col } from "antd";
 import { useState, useEffect } from "react";
 import { getHistory } from "../api/user";
 import CardHistory from "../components/Card/CardHistory";
+import handleErrorApi from "../utils/handleErrorApi";
 
 
 export default function MyLearn() {
@@ -29,12 +30,12 @@ export default function MyLearn() {
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
-      // handleErrorApi(err);
+      handleErrorApi(err)
     }
   }, []);
   return (
     <div className="relative">
-      <div class="container mx-auto xl:px-40 min-h-screen">
+      <div class="container mx-auto xl:px-40">
         <div className="p-4 pb-0 font-bold text-lg">History</div>
         <Row>
           {data.slice(minValue, maxValue).map((item) => (

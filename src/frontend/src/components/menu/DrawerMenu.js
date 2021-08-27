@@ -8,6 +8,8 @@ import { logout } from "../../utils/auth";
 export default function DrawerMenu({ category, user, profileUser }) {
   const [visible, setVisible] = useState(false);
   const [childrenDrawer, setChildrenDrawer] = useState(false);
+  const HOST = process.env.REACT_APP_BASE_HOST;
+
   const showDrawer = () => {
     setVisible(true);
   };
@@ -39,10 +41,10 @@ export default function DrawerMenu({ category, user, profileUser }) {
       >
         {user ? (
           <div>
-            <Link to="/profile">
+            <Link to={"/profile/" + profileUser._id}>
               <ReactImageFallback
                 className="min-w-full min-h-full block flex-shrink-0 rounded-full"
-                src={"https://ilearn-19clc3.herokuapp.com/" + profileUser.avata}
+                src={HOST + profileUser.avata}
                 alt="logo"
                 fallbackImage="/avata-default.jpg"
               />
@@ -54,7 +56,7 @@ export default function DrawerMenu({ category, user, profileUser }) {
               </div>
             </Link>
             <hr></hr>
-            <Link to="/profile">
+            <Link to={"/profile/" + profileUser._id}>
               <div className="p-2 pl-1 font-bold">My profile</div>
             </Link>
             <hr></hr>

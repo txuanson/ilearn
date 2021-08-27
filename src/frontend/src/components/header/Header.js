@@ -46,7 +46,7 @@ export default function Header({ user, ...props }) {
   const menu = (
     <Menu className="bg-white dark:bg-dark-black dark:text-dark-text z-top w-68 p-6 rounded-xl shadow-md max-w-sm dark:shadow-dark">
       <Menu.Item>
-        <Link to="/me">
+        <Link to={"/profile/"+profileUser._id}>
           <div className="flex">
             <div
               className="flex items-center justify-center overflow-hidden rounded-full mr-2 avatar flex-shrink-0"
@@ -151,10 +151,7 @@ export default function Header({ user, ...props }) {
                       >
                         <ReactImageFallback
                           className="min-w-full min-h-full block flex-shrink-0"
-                          src={
-                            "https://ilearn-19clc3.herokuapp.com/" +
-                            profileUser.avata
-                          }
+                          src={HOST + profileUser.avata}
                           alt="logo"
                           fallbackImage="/avata-default.jpg"
                         />

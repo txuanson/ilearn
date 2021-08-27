@@ -13,15 +13,6 @@ export default function CardComponent({ dataCard }) {
     <div>
       {dataCard ? (
         <Link to={"/course/" + dataCard._id}>
-          <Switch>
-            <Route exact path={`/course/${dataCard._id}`}>
-                <SplashRoute key={`/course/${dataCard._id}`}>
-                    <CourseDescription
-                        course_id={dataCard._id}>
-                    </CourseDescription>
-                </SplashRoute>
-            </Route>
-          </Switch>
           <Card
             className="m-auto"
             hoverable
