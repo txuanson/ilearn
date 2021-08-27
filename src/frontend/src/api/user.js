@@ -10,7 +10,7 @@ export const joinCourse = (course_id) =>
     callApi({url: `/user/course/${course_id}/join`, method: 'GET'});
 
 export const subscribeCourse = (course_id) => 
-    callApi({url: `/user/course/${course_id}/subscribe`, method: 'PATCH'});
+    callApi({url: `/user/course/${course_id}/subscribe`, method: 'PATCH', data:course_id});
 
 export const getUserInfo = (user_id) =>
     callApi({ url: `/profile/${user_id}`, method: 'GET' });
@@ -20,3 +20,6 @@ export const putAvatar = (data) =>
 
 export const patchProfile = (data) =>
     callApi({ url: `/user/profile`, method: 'PATCH', data });
+
+export const getHistory = () =>
+    callApi({ url: `/user/account/history`, method: 'GET'});

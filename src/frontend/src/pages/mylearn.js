@@ -1,32 +1,16 @@
 import { Pagination, Row, Col } from "antd";
-import CardComponent from "../Card/CardComponent";
 import { useState, useEffect } from "react";
-import { searchCourse } from "../../api/search";
-import handleErrorApi from "../../utils/handleErrorApi";
-import { useLocation } from "react-router";
+import { getHistory } from "../api/user";
+import CardHistory from "../components/Card/CardHistory";
+import handleErrorApi from "../utils/handleErrorApi";
 
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
 
-export default function Search() {
-    const query = useQuery();
-
+export default function MyLearn() {
   const [data, setData] = useState([]);
   const [minValue, setMinValue] = useState([]);
   const [maxValue, setMaxValue] = useState([]);
   const pageSize = 20;
   
-  const fetch = async () => {
-    try {
-      const res = await searchCourse(query.get("query"))
-      setData(res.items);
-      setMinValue(0);
-      setMaxValue(pageSize);
-    } catch (err) {
-      handleErrorApi(err)
-    }
-  }
   
   const handleChange = (value) => {
     if (value <= 1) {
@@ -37,21 +21,30 @@ export default function Search() {
       setMaxValue(value * pageSize);
     }
   };
-  useEffect(() => {
-    fetch();
+
+  useEffect(async () => {
+    try {
+      const res = await getHistory();
+      console.log(res.items.history)
+      setData(res.items.history);
+      setMinValue(0);
+      setMaxValue(pageSize);
+    } catch (err) {
+      handleErrorApi(err)
+    }
   }, []);
   return (
     <div className="relative">
       <div class="container mx-auto xl:px-40">
-        <div className="p-4 pb-0 font-bold text-lg">Search: {query.get("query")}</div>
+        <div className="p-4 pb-0 font-bold text-lg">History</div>
         <Row>
           {data.slice(minValue, maxValue).map((item) => (
             <Col xl={6} md={6}>
               <div className="p-2">
-                <CardComponent
+                <CardHistory
                   dataCard={item}
                   bordered={false}
-                ></CardComponent>
+                ></CardHistory>
               </div>
             </Col>
           ))}

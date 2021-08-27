@@ -9,17 +9,15 @@ import { getAllCategory } from "../../api/homePage";
 import DrawerMenu from "../menu/DrawerMenu";
 import { getProfileUser } from "../../api/user";
 import SearchMoblie from "../search/SearchMoblie";
-import Search from "../search/Search";
 import handleErrorApi from "../../utils/handleErrorApi";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Header({ user, ...props }) {
   const [nameCategory, setNameCategory] = useState([]);
   const [profileUser, setProfileUser] = useState([]);
   const [search, setSearch] = useState([]);
+
+  const HOST = process.env.REACT_APP_BASE_HOST;
 
   useEffect(async () => {
     try {
@@ -28,7 +26,7 @@ export default function Header({ user, ...props }) {
       setNameCategory(resCategory);
       setProfileUser(resProfile);
     } catch (err) {
-      handleErrorApi(err)
+      handleErrorApi(err);
     }
   }, []);
 
@@ -41,22 +39,22 @@ export default function Header({ user, ...props }) {
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
       console.log(search);
-      window.location.href = "/search?query=" + search
+      window.location.href = "/search?query=" + search;
     }
   };
 
   const menu = (
     <Menu className="bg-white dark:bg-dark-black dark:text-dark-text z-top w-68 p-6 rounded-xl shadow-md max-w-sm dark:shadow-dark">
       <Menu.Item>
-        <Link to="/me">
+        <Link to={"/profile/"+profileUser._id}>
           <div className="flex">
             <div
               className="flex items-center justify-center overflow-hidden rounded-full mr-2 avatar flex-shrink-0"
               style={{ width: 40, height: 40 }}
             >
               <ReactImageFallback
-                className="min-w-full min-h-full block flex-shrink-0"
-                src={"https://ilearn-19clc3.herokuapp.com/" + profileUser.avata}
+                className="ring ring-black min-w-full min-h-full block flex-shrink-0"
+                src={HOST + profileUser.avata}
                 alt="logo"
                 fallbackImage="/avata-default.jpg"
               />
@@ -70,7 +68,7 @@ export default function Header({ user, ...props }) {
       </Menu.Item>
       <hr></hr>
       <Menu.Item>
-        <Link to="/profile">My profile</Link>
+        <Link to={"/profile/"+profileUser._id}>My profile</Link>
       </Menu.Item>
       <hr></hr>
       <Menu.Item>
@@ -98,15 +96,7 @@ export default function Header({ user, ...props }) {
                 profileUser={profileUser}
               ></DrawerMenu>
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                {/* <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button> */}
+
               </div>
               <div className="flex-1 flex items-center justify-center md:items-stretch md:justify-start">
                 <div className="flex-shrink-0 flex items-center rounded-lg bg-gray-200">
@@ -148,15 +138,12 @@ export default function Header({ user, ...props }) {
                       className="cursor-pointer"
                     >
                       <div
-                        className="ring ring-white flex items-center justify-center overflow-hidden rounded-full cursor-pointer"
-                        style={{ width: 40, height: "auto" }}
+                        className="ring ring-gray flex items-center justify-center overflow-hidden rounded-full cursor-pointer "
+                        style={{ width: 40, height: 40 }}
                       >
                         <ReactImageFallback
                           className="min-w-full min-h-full block flex-shrink-0"
-                          src={
-                            "https://ilearn-19clc3.herokuapp.com/" +
-                            profileUser.avata
-                          }
+                          src={HOST + profileUser.avata}
                           alt="logo"
                           fallbackImage="/avata-default.jpg"
                         />
