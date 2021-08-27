@@ -97,6 +97,7 @@ import { Upload, message, Button } from 'antd';
 import ImgCrop from "antd-img-crop";
 
 import { putAvatar } from '../../api/user';
+import handleErrorApi from '../../utils/handleErrorApi';
 
 function UploadAvatar() {
 
@@ -134,9 +135,11 @@ function UploadAvatar() {
 
     const onUpload = async (event) => {
         try {
-            const res = await putAvatar({avatar: avatar});           
+            const res = await putAvatar({avatar: image});  
+            window.location.reload();
+
         } catch (error) {
-            console.log("fail: ", error);
+            handleErrorApi(error);
         }
     };
 

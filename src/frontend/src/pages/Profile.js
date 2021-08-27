@@ -1,8 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { Link, useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
+import gfm from "remark-gfm";
+import ReactMarkdown from 'react-markdown'
 
-import {Layout, Button, Divider} from "antd";
+import {Layout, Button} from "antd";
 import 'antd/dist/antd.css';
 
 import { getProfileUser } from "../api/user";
@@ -16,6 +18,7 @@ import ReadMore from '../components/ui/ReadMore';
 
 import UploadAvatar from '../components/editprofile/UploadAvatar'
 import UploadProfile from '../components/editprofile/UploadProfile'
+import handleErrorApi from '../utils/handleErrorApi';
 const { Header, Content, Footer } = Layout;
 
 function Profile() {
@@ -43,8 +46,8 @@ function Profile() {
             // console.log(user_id);
             const res = await getUserInfo(user_id); 
             setProfileUser(res);
-        } catch (err) {
-            console.log("fail: ", err);
+        } catch (error) {
+            handleErrorApi(error);
         }
     }
 
@@ -89,14 +92,12 @@ function Profile() {
                     <div>
                         <div className = "px-0 md:px-10">
                             <div className = "flex flex-col max-w-lg">
-                                <p className = "pb-4 text-2xl md:text-4xl text-center break-normal ">
+                                <p className = "pb-4 text-center text-2xl md:text-4xl break-normal ">
                                     {profileUser.name}
                                 </p> 
-                                <div className="site-layout-background container mx-auto my-2">
+                                <div className="site-layout-background container mx-auto">
                                     <p className="break-normal" >
-                                        {typeof profileUser.bio == "undefined" || (profileUser.bio).length< 500
-                                            ? <p> {profileUser.bio} </p> : <ReadMore children = {profileUser.bio}/> }
-                                            {/* {profileUser.bio} */}
+                                        <ReadMore children = {profileUser.bio}/>
                                     </p>
                                 </div>
                                 

@@ -2,6 +2,8 @@ import { Form, Input, Button, Space } from 'antd';
 import React, { useState } from 'react'
 import MDEditor from '@uiw/react-md-editor';
 import { patchProfile } from '../../api/user';
+import handleErrorApi from '../../utils/handleErrorApi';
+
 
 const layout = {
   labelCol: {
@@ -19,8 +21,8 @@ const tailLayout = {
 };
 
 function UploadProfile(props) {
-    const [name, setName] = useState("");
-    const [bio, setBio] = useState("");
+    const [name, setName] = useState(props.name);
+    const [bio, setBio] = useState(props.bio);
     const [form] = Form.useForm();
 
     const NameChangeHandler = (event) => {
@@ -35,10 +37,10 @@ function UploadProfile(props) {
 
       try {
         const res = await patchProfile({name: name, bio: bio});
-        
+        window.location.reload();
 
       } catch (error) {
-        console.log("fail: ", error);
+        handleErrorApi(error);
       }
 
     };

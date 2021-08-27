@@ -9,7 +9,7 @@ function ReadMore({ children, maxCharCount = 200 }) {
 
     const [isTruncated, setIsTruncated] = useState(true);
 
-    const res = isTruncated ? text.slice(0, maxCharCount) : text;
+    const res = (typeof text != "undefined" && isTruncated) ? text.slice(0, maxCharCount) : text;
 
     function toggleIsTruncated() {
         setIsTruncated (!isTruncated);
@@ -24,11 +24,14 @@ function ReadMore({ children, maxCharCount = 200 }) {
             {/* <ReactMarkdown 
                     remarkPlugins={[gfm]} 
                     children={res} /> */}
-            {/* <p> {res} </p> */}
+            {/* <p> {res} </p> */}            
 
-            <Button type = "text" onClick = {toggleIsTruncated}>
-                {isTruncated ? "Read more" : "Hide"}
-            </Button>
+            {typeof text == "undefined" || text.length <= 500 ? <></> : 
+                <Button type = "text" onClick = {toggleIsTruncated}>
+                    {isTruncated ? "Read more" : "Hide"}
+                </Button>
+            }
+
         </div>
         
     )
