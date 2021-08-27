@@ -95,28 +95,26 @@ export default function CourseDescription() {
         }
     }
 
-    const subscriber = () => {
-        subscribeCourse(course_id);
-        setSubscribed(true);
+    const subscriber = async() => {
+        const subscribed = await subscribeCourse(course_id);
+        setSubscribed(subscribed);
         message.success("Successfully subscribe to this course!");
-
     }
-    console.log('Section : ', section);
     useEffect(() => {
         fetchCourse();
+        fetchSection();
+
     }, []);
 
-    useEffect(() => {
-        fetchSection();
-    }, []);
-    console.log(course);
+    
+    const HOST = process.env.REACT_APP_BASE_HOST;
     return (<>
         { loading && <></>} 
         {!loading && <>
             <div style={{ backgroundColor: '#001529' }} className="w-full mx-auto shadow-md overflow-hidden">
                 <div className="md:hidden block">
                     <div className="relative m-2">
-                        <img src={'https://ilearn.yurineko.net/' + course.cover} alt={course.name} class="h-60 w-full object-cover" />
+                        <img src={HOST + '/' + course.cover} alt={course.name} class="h-60 w-full object-cover" />
                         <span class="px-1 py-1 text-white bg-red-700 rounded absolute right-0 bottom-0"> 
                         {/* bg-opacity-50 */}
                             {course.public ? 'Public' : 'Private'}
@@ -131,7 +129,7 @@ export default function CourseDescription() {
 
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
                         
-                        {course.public || subscribed? <Link to={`/section/${course_id}/${section.section_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
+                        {subscribed? <Link to={`/section/${course_id}/${section.section_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center">
                             Join
                         </Link> : <Link to={`/course/${course_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center" onClick={subscriber}>
                             Subscribe
@@ -147,7 +145,7 @@ export default function CourseDescription() {
                     </div>
                     <div className="md:flex-shrink-0 md:block hidden right-0 text-right">
                         <div className="relative m-2">
-                            <img src={course.cover} alt={course.name} class="h-60 w-full object-cover md:w-70" />
+                            <img src={HOST + '/' + course.cover} alt={course.name} class="h-60 w-full object-cover md:w-70" />
                             <span class="px-1 py-1 text-white bg-red-700 rounded absolute left-0 bottom-0">
                                 {course.public ? 'Public' : 'Private'}
                             </span>
