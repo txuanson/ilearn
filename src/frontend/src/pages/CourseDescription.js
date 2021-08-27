@@ -147,7 +147,7 @@ export default function CourseDescription() {
                     </div>
                     <div className="md:flex-shrink-0 md:block hidden right-0 text-right">
                         <div className="relative m-2">
-                            <img src={course.cover} alt={course.name} class="h-60 w-full object-cover md:w-70" />
+                            <img src={'https://ilearn.yurineko.net/' + course.cover} alt={course.name} class="h-60 w-full object-cover md:w-70" />
                             <span class="px-1 py-1 text-white bg-red-700 rounded absolute left-0 bottom-0">
                                 {course.public ? 'Public' : 'Private'}
                             </span>
