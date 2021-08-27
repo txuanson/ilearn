@@ -77,7 +77,7 @@ export default function CourseDescription() {
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
                         
                         {subscribed && course.public?
-                        <div className="flex flex-row" style={{justifyContent:'center'}}>
+                        <div className="flex flex-row justify-center md:justify-start">
                          <Button type="primary" className="font-bold px-5 mr-4 mt-2" onClick={fetchSection}> 
                             <Link to={`/section/${course_id}/${section.section_id}`}>
                                 Join
@@ -92,7 +92,7 @@ export default function CourseDescription() {
                             Subscribe
                         </Link>}
 
-                        <div className="text-center md:text-left text-white flex mt-2" style={{ justifyContent:'center', alignItems:'flex-end' }}>
+                        <div className="text-center md:text-left text-white flex mt-2 justify-center md:justify-start" style={{ alignItems:'flex-end' }}>
                             <span className="font-bold text-4xl md:text-5xl pr-1">{course.subscriber_count}</span>
                             <span className="pr-4">subscribers</span>
                             <span className="font-bold text-4xl md:text-5xl pr-1">{course.view}</span>
