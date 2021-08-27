@@ -57,7 +57,7 @@ function Profile() {
     console.log("profile: ", profileUser)
 
     return (
-        <Layout className = "container mx-auto xl:px-40 min-h-screen">
+        <Layout className = "container mx-auto xl:px-40">
             <Content className = "p-10 container">
                 <div className = "flex flex-col md:flex-row"> 
                     <div className = "flex flex-col items-center">

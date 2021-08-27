@@ -50,7 +50,7 @@ export function Register() {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div class="flex flex-col w-full max-w-md px-4 pt-10 pb-12 bg-white rounded-xl shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
           <img

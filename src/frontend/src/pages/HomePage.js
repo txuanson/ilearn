@@ -4,7 +4,7 @@ import React from "react";
 export default function HomePage() {
   return (
     <div className="relative">
-      <div class="container mx-auto xl:px-40 bg-gray-10 pb-5 min-h-screen">
+      <div class="container mx-auto xl:px-40 bg-gray-10 pb-5">
         <div
           className="flex item-center justify-center h-96 w-auto hidden md:block"
           style={{ backgroundImage: 'url("/backgroundHeader.jpg")' }}

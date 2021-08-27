@@ -9,7 +9,7 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
 
-export default function Search({ key}) {
+export default function Search() {
     const query = useQuery();
 
   const [data, setData] = useState([]);
@@ -42,8 +42,8 @@ export default function Search({ key}) {
   }, []);
   return (
     <div className="relative">
-      <div class="container mx-auto xl:px-40 min-h-screen">
-        <div className="p-4 pb-0 font-bold text-lg">Search / {key}</div>
+      <div class="container mx-auto xl:px-40">
+        <div className="p-4 pb-0 font-bold text-lg">Search: {query.get("query")}</div>
         <Row>
           {data.slice(minValue, maxValue).map((item) => (
             <Col xl={6} md={6}>

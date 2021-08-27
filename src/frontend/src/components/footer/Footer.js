@@ -4,21 +4,21 @@ import {Link} from "react-router-dom";
 export default function Footer() {
 
     return (
-    <div class="relative">
-        <footer class="bg-blue-700 dark:bg-gray-800 pt-4 pb-8 xl:pt-8">
+    <div class="absolute mt-auto bottom-0 w-screen">
+        <footer class="bg-blue-700 dark:bg-gray-800 pt-4 pb-4 xl:pt-8">
             <div class="max-w-screen-lg xl:max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 text-gray-400 dark:text-gray-300">
-                <ul class="text-lg font-light pb-4 flex flex-wrap justify-center">
+                <ul class="text-lg font-light flex flex-wrap justify-center">
                     <div class="text-left mb-4 md:w-1/3 lg:w-1/3">
                             <div class="flex-1 flex sm:items-stretch sm:justify-center">
                                 <div class="flex-shrink-0 flex items-center rounded-lg bg-gray-200 shadow-xl">
                                     <Link to = "/">
                                     <img
-                                        class="block lg:hidden h-14 w-auto"
+                                        class="block md:hidden h-5 w-auto"
                                         src="/logo-iLearn.svg"
                                         alt="Workflow"
                                     />
                                     <img
-                                        class="hidden lg:block h-14 w-auto"
+                                        class="hidden md:block h-14 w-auto"
                                         src="/logo-iLearn.svg"
                                         alt="Workflow"
                                     />
@@ -27,8 +27,8 @@ export default function Footer() {
                             </div>
                     </div>
                     
-                    <li class="w-screen md:w-1/3 lg:w-1/3 ">
-                        <div class="text-center sm:text-left">
+                    <li class="w-screen md:w-1/3 lg:w-1/3 xs:text-xs">
+                        <div class="text-center md:text-left">
                             <h2 class="text-gray-300 text-md uppercase mb-2 font-bold text-center">
                                 Contacts
                             </h2>
@@ -46,7 +46,7 @@ export default function Footer() {
                         </div>
                     </li>
 
-                    <li class="w-screen md:w-1/3 lg:w-1/3">
+                    <li class="w-screen md:w-1/3 lg:w-1/3 hidden md:block">
                         <div class="text-left">
                             <h2 class="text-gray-300 dark:text-gray-200 text-md uppercase mb-2 font-bold text-center">
                                 Share us on
