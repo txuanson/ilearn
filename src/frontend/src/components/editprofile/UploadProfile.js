@@ -1,9 +1,8 @@
-import { Form, Input, Button, Space } from 'antd';
+import { Form, Input, Button, Space, message } from 'antd';
 import React, { useState } from 'react'
 import MDEditor from '@uiw/react-md-editor';
 import { patchProfile } from '../../api/user';
 import handleErrorApi from '../../utils/handleErrorApi';
-
 
 const layout = {
   labelCol: {
@@ -37,6 +36,7 @@ function UploadProfile(props) {
 
       try {
         const res = await patchProfile({name: name, bio: bio});
+        message.success("Profile changed successfully!");
         window.location.reload();
 
       } catch (error) {

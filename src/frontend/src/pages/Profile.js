@@ -1,8 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import gfm from "remark-gfm";
-import ReactMarkdown from 'react-markdown'
+import ReactImageFallback from "react-image-fallback";
 
 import {Layout, Button} from "antd";
 import 'antd/dist/antd.css';
@@ -61,8 +60,10 @@ function Profile() {
             <Content className = "p-10 container">
                 <div className = "flex flex-col md:flex-row"> 
                     <div className = "flex flex-col items-center">
-                        <img className = "w-40 h-40 border-4 rounded-full border-white"
-                            src = {"https://ilearn-19clc3.herokuapp.com/" + profileUser.avatar} />
+                        <ReactImageFallback className = "w-40 h-40 block border-4 rounded-full border-white"
+                            src = {"https://ilearn-19clc3.herokuapp.com/" + profileUser.avatar} 
+                            alt="logo"
+                            fallbackImage="/avata-default.jpg" />
 
                         { me._id != user_id && <></>} 
                         { me._id == user_id && <>
@@ -95,7 +96,7 @@ function Profile() {
                                 <p className = "pb-4 text-center text-2xl md:text-4xl break-normal ">
                                     {profileUser.name}
                                 </p> 
-                                <div className="site-layout-background container mx-auto">
+                                <div className="site-layout-background container mx-auto my-2">
                                     <p className="break-normal" >
                                         <ReadMore children = {profileUser.bio}/>
                                     </p>
