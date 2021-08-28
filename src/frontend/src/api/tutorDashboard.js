@@ -20,3 +20,6 @@ export const editCourse = (course_id, data) =>
 
 export const deleteCourse = (course_id) =>
     callApi({ url: `/tutor/course/${course_id}`, method: 'DELETE' });
+
+export const courseActionWithType = ({ course_id, action, user_id }) =>
+    callApi({ url: `/tutor/course/${course_id}/${action}`, method: 'PATCH', data: { user_id } });

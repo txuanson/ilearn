@@ -21,10 +21,10 @@ export default function Course({
                 <a onClick={() => onOpenModal(data._id,"Subscribers", "subscriber", "Ban")}>Subscribers</a>
             </Menu.Item>
             <Menu.Item key="4">
-                <a onClick={() => onOpenModal(data._id,"Pending For Accept", "queue", "Accept")}>Pending</a>
+                <a onClick={() => onOpenModal(data._id,"Pending For Accept", "pending", "Approve")}>Pending</a>
             </Menu.Item>
             <Menu.Item key="5">
-                <a onClick={() => onOpenModal(data._id,"Banned Users", "subscriber", "Unban")}>Banned</a>
+                <a onClick={() => onOpenModal(data._id,"Banned Users", "banned", "Unban")}>Banned</a>
             </Menu.Item>
             <Menu.Item key="6">
                 <a onClick={() => showConfirmDeleteCourse(data._id)}>Delete</a>

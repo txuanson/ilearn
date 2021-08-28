@@ -2,7 +2,7 @@ import { Breadcrumb, Layout, message, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Course from "../../components/course/Course";
-import { deleteCourse, listCourse, listUser } from "../../api/tutorDashboard";
+import { courseActionWithType, deleteCourse, listCourse, listUser } from "../../api/tutorDashboard";
 import handleErrorApi from "../../utils/handleErrorApi";
 import confirm from "antd/lib/modal/confirm";
 import { ExclamationCircleOutlined } from '@ant-design/icons'
@@ -24,6 +24,8 @@ export default function ListCourse() {
     const [titleModal, setTitleModal] = useState("");
     const [visibleModal, setVisibleModal] = useState(false);
     const [listUserAction, setListUserAction] = useState("");
+    const [currentListUserType, setCurrentListUserType] = useState("");
+    const [currentCourse, setCurrentCourse] = useState("");
 
     const onSearch = (query) => {
         fetchCourse({ query });
@@ -45,8 +47,19 @@ export default function ListCourse() {
     const fetchListUserWithType = async (course_id, type) => {
         try {
             const response = await listUser(course_id, type);
-            setTableData(response);
+            setTableData(response.items);
         } catch (err) {
+            handleErrorApi(err);
+        }
+    }
+
+    const doCourseAction = async (course_id, user_id) => {
+        try {
+            await courseActionWithType({ course_id, action: listUserAction.toLowerCase(), user_id });
+            message.success(`${listUserAction} user successfully!`)
+            fetchListUserWithType(course_id, currentListUserType);
+        }
+        catch (err) {
             handleErrorApi(err);
         }
     }
@@ -79,14 +92,24 @@ export default function ListCourse() {
     }
 
     const onOpenModal = (course_id, title, type, action) => {
+        setCurrentListUserType(type);
         setVisibleModal(true);
-        setTitleModal(title);
         fetchListUserWithType(course_id, type);
+        setTitleModal(title);
+        setCurrentCourse(course_id);
         setListUserAction(action);
     }
 
     const onCancelModal = () => {
+        setTableData([]);
         setVisibleModal(false);
+        setCurrentListUserType("");
+        setCurrentCourse("");
+        
+    }
+
+    const handleAction = (user_id) => {
+        doCourseAction(currentCourse, user_id);
     }
 
     useEffect(() => {
@@ -118,7 +141,7 @@ export default function ListCourse() {
                 onCancel={onCancelModal}
                 width={1204 < width * 1 ? 1204 : width}
             >
-                <ListUserTable data={tableData} action={listUserAction} />
+                <ListUserTable data={tableData} action={listUserAction} handleAction={handleAction}/>
             </Modal>
         </Layout>
     );
