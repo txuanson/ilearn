@@ -38,14 +38,8 @@ const courseSchema = mongoose.Schema({
     ],
     banned: [
         {
-            account_id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Account'
-            },
-            reason: {
-                type: String,
-                default: ""
-            }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Account'
         }
     ],
     sections: [{

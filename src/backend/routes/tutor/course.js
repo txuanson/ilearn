@@ -177,8 +177,6 @@ const courseUploadFileMiddleware = upload.fields([{ name: 'cover', maxCount: 1 }
  *             properties:
  *               user_id:
  *                 type: string
- *               reason:
- *                 type: string
  * /tutor/course/{course_id}/unban:
  *   patch:
  *     summary: Unban an user

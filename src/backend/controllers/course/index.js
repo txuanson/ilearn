@@ -13,8 +13,7 @@ const { deleteCourseHelper } = require("../../helpers/query");
 const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
 const getCurrentSectionValidator = require("../../validators/getCurrentSection.validator");
 const Account = require("../../models/Account");
-const approveUserValidator = require("../../validators/approveUser.validator");
-const banUserValidator = require("../../validators/banUser.validator");
+const courseUserActionValidator = require("../../validators/courseUserAction.validator");
 
 const getCourseByName = asyncCatch(async (req, res, next) => {
     const { error, value } = queryWithPagiValidator.validate(req.query);
@@ -407,7 +406,7 @@ const unsubscribeFromCourse = asyncCatch(async (req, res, next) => {
 
 const approveUser = asyncCatch(async (req, res, next) => {
     const { course_id } = req.params;
-    const { error, value } = approveUserValidator.validate(req.body);
+    const { error, value } = courseUserActionValidator.validate(req.body);
     if (error) {
         throw new BadReqest(error.message);
     }
@@ -425,11 +424,11 @@ const approveUser = asyncCatch(async (req, res, next) => {
 
 const banUser = asyncCatch(async (req, res, next) => {
     const { course_id } = req.params;
-    const { error, value } = banUserValidator.validate(req.body);
+    const { error, value } = courseUserActionValidator.validate(req.body);
     if (error) {
         throw new BadReqest(error.message);
     }
-    const { user_id, reason } = value;
+    const { user_id} = value;
     await Course.updateOne({ _id: course_id }, {
         $pull: {
             pending: user_id
@@ -438,10 +437,7 @@ const banUser = asyncCatch(async (req, res, next) => {
             subscriber: user_id
         },
         $addToSet: {
-            banned: {
-                account_id: user_id,
-                reason: reason
-            }
+            banned: user_id
         }
     }).exec();
     res.send('Success!');
@@ -449,14 +445,14 @@ const banUser = asyncCatch(async (req, res, next) => {
 
 const unbanUser = asyncCatch(async (req, res, next) => {
     const { course_id } = req.params;
-    const { error, value } = approveUserValidator.validate(req.body);
+    const { error, value } = courseUserActionValidator.validate(req.body);
     if (error) {
         throw new BadReqest(error.message);
     }
     const { user_id } = value;
     await Course.updateOne({ _id: course_id }, {
         $pull: {
-            banned: { account_id: user_id }
+            banned: user_id
         }
     }).exec();
     res.send('Success!');
