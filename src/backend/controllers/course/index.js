@@ -345,7 +345,7 @@ const listBanned = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
     const items = await Course.findById(course_id, "-_id banned")
         .select('-_id banned')
-        .populate("banned.account_id", "_id name avatar")
+        .populate("banned", "_id name avatar")
         .lean()
         .exec();
     res.send({
