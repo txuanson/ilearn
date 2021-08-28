@@ -4,8 +4,8 @@ import { Link, useParams} from "react-router-dom";
 import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
-import { Layout, Space, message, Button} from 'antd';
-import { subscribeCourse } from '../api/user';
+import { Layout, Button, message} from 'antd';
+import { subscribeCourse, unsubscribeCourse, getProfileUser } from '../api/user';
 import handleErrorApi from '../utils/handleErrorApi';
 
 const { Content } = Layout;
@@ -13,17 +13,19 @@ const { Content } = Layout;
 export default function CourseDescription() {
     const { course_id } = useParams();
     const [course, setCourse] = useState({});
-    const [section, setSection] = useState({});
-    const [subscribed, setSubscribed] = useState(course.subscribed);
-    const [pending, setPending] = useState(course.pending);
+    const [subscriber, setSubscriber] = useState(0);
+    const [subscribed, setSubscribed] = useState(false);
+    const [pending, setPending] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    
     const fetchCourse = async () => {
         try {
             setLoading(true);
             const res = await getCourseInfo(course_id);
             setCourse(res);
+            setSubscribed(res.subscribed);
+            setPending(res.pending);
+            setSubscriber(res.subscriber_count);
             setLoading(false);
         } catch (err) {
             handleErrorApi(err);
@@ -32,20 +34,35 @@ export default function CourseDescription() {
 
     const fetchSection = async () => {
         try {
-            const res = await joinCourse(course_id);
-            setSection(res);
+            const section = await joinCourse(course_id);
+            if (section.section_id)
+                window.location.href = `/section/${course_id}/${section.section_id}`;
         } catch (err) {
             handleErrorApi(err);
         }
     }
 
-    const subscriber = async() => {
+
+    const patchSubscribe = async() => {
         try {
-            const subs = await subscribeCourse(course_id);
-            setSubscribed(subs);
-            if (subscribed && course.public){
-                setPending(true);
-        }
+            await subscribeCourse(course_id);
+            setPending(true);
+            if (course.public){
+                setSubscribed(true);
+                setPending(false);
+            }
+            setSubscriber(subscriber + 1);
+        } catch (err) {
+            handleErrorApi(err);
+        }  
+    }
+
+    const patchUnsubscribe = async() => {
+        try {
+            await unsubscribeCourse(course_id);
+            setSubscribed(false);
+            setPending(false);
+            setSubscriber(subscriber - 1);
         } catch (err) {
             handleErrorApi(err);
         }  
@@ -68,7 +85,7 @@ export default function CourseDescription() {
                         </span>
                     </div>
                 </div>
-                <div className="container md:flex md:mx-10 xl:px-40" style={{justifyContent:'space-between'}}>
+                <div className="container md:flex xl:px-40 md:mx-10" style={{justifyContent:'space-between'}}>
                     <div className="text-center p-5 justify-center flex flex-col md:text-left">
                         <div className="uppercase block leading-tight text-3xl text-white font-bold">{course.name}</div>
                         <p className="text-white mt-1">{course.description}</p>
@@ -77,24 +94,37 @@ export default function CourseDescription() {
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
                         
                         {subscribed && course.public?
-                        <div className="flex flex-row justify-center md:justify-start">
+                        <div className="flex flex-row  justify-center md:justify-start">
                          <Button type="primary" className="font-bold px-5 mr-4 mt-2" onClick={fetchSection}> 
-                            <Link to={`/section/${course_id}/${section.section_id}`}>
-                                Join
-                            </Link> 
+                            Join
                          </Button>
-                         <Button type="primary" className="font-bold px-5 mt-2">
-                         Unsubscribed
+                         <Button type="danger" className="font-bold px-5 mt-2" onClick={patchUnsubscribe}>
+                         Unsubscribe
                          </Button>
                          
                         </div>
-                        : <Link to={`/course/${course_id}`} className="bg-blue-500 font-bold text-white py-3 px-2 hover:bg-blue-600 my-2 md:w-20 text-center" onClick={subscriber}>
+                        : <>
+                        {pending ? 
+                        
+                        <div className="md:place-items-start place-items-center">
+                            <div className="font-bold p-2 mr-4 mt-2 bg-yellow-500 text-center text-white text-l md:w-min w-full"> 
+                                Pending
+                            </div>
+                         
+                         </div>
+                        :
+                        <div>
+                            <Button type="primary" className="font-bold mt-2 px-5 py-2 md:px-2 md:place-items-start place-items-center" onClick = {patchSubscribe} style={{width:'fit-content', blockSize:'fit-content'}}>
                             Subscribe
-                        </Link>}
+                        </Button>
+                        </div>}
+                        </>}
 
-                        <div className="text-center md:text-left text-white flex mt-2 justify-center md:justify-start" style={{ alignItems:'flex-end' }}>
-                            <span className="font-bold text-4xl md:text-5xl pr-1">{course.subscriber_count}</span>
-                            <span className="pr-4">subscribers</span>
+                        <div className="text-center md:text-left text-white flex mt-2 justify-center md:justify-start" style={{alignItems:'flex-end' }}>
+                            <span className="font-bold text-4xl md:text-5xl pr-1">{subscriber}</span>
+                            <span className="pr-4">
+                                {subscriber > 1 ? 'subscribers' : 'subscriber'}
+                            </span>
                             <span className="font-bold text-4xl md:text-5xl pr-1">{course.view}</span>
                             <span>views</span>
                            
