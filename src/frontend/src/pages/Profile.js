@@ -61,7 +61,7 @@ function Profile() {
                 <div className = "flex flex-col md:flex-row"> 
                     <div className = "flex flex-col items-center">
                         <ReactImageFallback className = "w-40 h-40 block border-4 rounded-full border-white"
-                            src = {"https://ilearn-19clc3.herokuapp.com/" + profileUser.avatar} 
+                            src = {process.env.REACT_APP_BASE_HOST+ "/" + profileUser.avatar} 
                             alt="logo"
                             fallbackImage="/avata-default.jpg" />
 
