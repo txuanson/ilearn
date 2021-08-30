@@ -50,8 +50,9 @@ export default function CourseDescription() {
             if (course.public){
                 setSubscribed(true);
                 setPending(false);
+                setSubscriber(subscriber + 1);
+
             }
-            setSubscriber(subscriber + 1);
         } catch (err) {
             handleErrorApi(err);
         }  

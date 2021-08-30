@@ -89,7 +89,7 @@ export default function ViewSection() {
           </SubMenu>
       </Menu>
     <Layout className="min-h-screen">
-      <Sider theme="light" style={{overflow: 'auto', height: '100vh', position:'fixed', zIndex:10, top:64, left: 0}} className="hidden md:block">
+      <Sider theme="dark" style={{overflow: 'auto', height: '100vh', position:'fixed', zIndex:10, top:64, left: 0}} className="hidden md:block">
         <Menu theme="dark" mode="inline" defaultSelectedKeys={section_id}>
           {data.course.sections.map(item => (
             <Menu.Item item={item.section.topic} key={item.section._id}>
@@ -108,23 +108,6 @@ export default function ViewSection() {
               section_id = {section_id}
               course_id = {course_id}
               />
-            
-            {/* <Switch>
-              {data.course.sections.map((item) => (
-                <Route path={`/section/${course_id}/${item.section._id}`}>
-                <SplashRoute key={`/section/${course_id}/${item.section._id}`}>
-                    <ViewSection />
-                </SplashRoute>
-                </Route>
-              ))}
-               <Route path={`/section/${course_id}/${section_id}`}>
-                  <SplashRoute key={`/section/${course_id}/${section_id}`}>
-                     <SectionRecord 
-                     {...data}
-                     />
-                  </SplashRoute>   
-              </Route>
-            </Switch> */}
           </div>
         </Content>
         <Footer className="text-center">
