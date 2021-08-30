@@ -1,3 +1,4 @@
+const Comment = require("../models/Comment");
 const Course = require("../models/Course");
 const Section = require("../models/Section");
 const { zoomDeleteMeeting } = require("../services/zoom.service");
@@ -28,6 +29,7 @@ const deleteSectionHelper = async (user_id, section_id) => {
             }
         }
     ).exec()
+    await Comment.deleteMany({ section_id: section_id }).exec();
 }
 
 const deleteSectionContent = async (user_id, section_id) => {

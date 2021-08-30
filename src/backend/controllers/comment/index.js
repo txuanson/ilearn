@@ -71,8 +71,36 @@ const getComment = asyncCatch(async (req, res, next) => {
             "section_id": new mongoose.Types.ObjectId(section_id)
         })
         .lookup({ from: 'accounts', localField: 'user_id', foreignField: '_id', as: 'user' })
-        .lookup({ from: 'accounts', localField: 'reply.user_id', foreignField: '_id', as: 'reply.user' })
         .unwind('user')
+        .lookup({ from: 'accounts', localField: 'reply.user_id', foreignField: '_id', as: 'reply_user' })
+        .project({
+            _id: 1,
+            content: 1,
+            user: {
+                _id: 1,
+                name: 1,
+                username: 1,
+                avatar: 1,
+                role: 1
+            },
+            create_at: 1,
+            reply: {
+                $map: {
+                    input: "$reply",
+                    in: {
+                        _id: "$$this._id",
+                        content: "$$this.content",
+                        create_at: "$$this.create_at",
+                        user: {
+                            $arrayElemAt: [
+                                "$reply_user",
+                                { $indexOfArray: ["$reply_user._id", "$$this.user_id"] }
+                            ]
+                        }
+                    }
+                }
+            }
+        })
         .project({
             _id: 1,
             content: 1,
@@ -88,12 +116,12 @@ const getComment = asyncCatch(async (req, res, next) => {
                 _id: 1,
                 content: 1,
                 create_at: 1,
-                user:{
-                    name: 1,
+                user: {
                     _id: 1,
+                    name: 1,
                     username: 1,
-                    role: 1,
-                    avatar: 1
+                    avatar: 1,
+                    role: 1
                 }
             }
         })
@@ -148,7 +176,7 @@ const replyComment = asyncCatch(async (req, res, next) => {
             _id: "$a._id",
             content: "$a.content",
             create_at: "$a.create_at",
-            user:{
+            user: {
                 _id: 1,
                 name: 1,
                 role: 1,
