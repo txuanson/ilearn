@@ -53,25 +53,29 @@ export default function ViewSection() {
         style={{position:'fixed', width:'100vw', top:0, zIndex:20}}
       >
         <Link to="/">
-          <h2 className="hidden md:block text-white font-semibold text-3xl md:mx-2">
-            <span className="text-blue-500">i</span>Learn
-          </h2>
+            <h2 className="hidden md:block text-white font-semibold text-3xl md:mx-2">
+              <span className="text-blue-500">i</span>Learn
+            </h2>
         </Link>
         <Link to="/">
             <DoubleLeftOutlined className="block md:hidden text-white mx-5 text-xl"/>
         </Link>
         <DoubleRightOutlined className="hidden md:block text-white mx-10 text-xl"/>
-        <Link to={`/course/${course_id}`}>
+        
+        <Link to={`/course/${course_id}`} className="w-full">
             <h2 className="text-white font-semibold md:text-2xl md:mx-2 text-xl">
             {data.course.name}
             </h2>
         </Link>
-        <Button htmlType="submit" type="primary" className="hidden md:block" style={{marginLeft: 700}}>
-            <a href={data.section.join_url}>Join Zoom Meeting</a>
-        </Button>
-        <a href={data.section.join_url}>
-            <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-2xl mx-2"/>
-        </a>
+        <div className=" grid place-items-end">
+            <Button htmlType="submit" type="primary" className="hidden md:block"> 
+                <a href={data.section.join_url}>Join Zoom Meeting</a>
+            </Button>
+            <a href={data.section.join_url}>
+                <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-2xl mx-2"/>
+            </a>
+        </div>
+         
       </Header>
 
 

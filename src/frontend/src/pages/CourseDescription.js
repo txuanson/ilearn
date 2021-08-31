@@ -5,7 +5,7 @@ import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
 import { Layout, Button, message} from 'antd';
-import { subscribeCourse, unsubscribeCourse, getProfileUser } from '../api/user';
+import { subscribeCourse, unsubscribeCourse, getProfileUser} from '../api/user';
 import handleErrorApi from '../utils/handleErrorApi';
 
 const { Content } = Layout;
@@ -16,6 +16,7 @@ export default function CourseDescription() {
     const [subscriber, setSubscriber] = useState(0);
     const [subscribed, setSubscribed] = useState(false);
     const [pending, setPending] = useState(false);
+    const [user, setUser] = useState("");
     const [loading, setLoading] = useState(true);
 
     const fetchCourse = async () => {
@@ -32,30 +33,37 @@ export default function CourseDescription() {
         }
     }
 
+    const fetchUser = async () => {
+        try {
+            const profile = await getProfileUser();
+            setUser(profile._id);
+        } catch (err) {
+            handleErrorApi(err);
+        }
+    }
+
     const fetchSection = async () => {
         try {
             const section = await joinCourse(course_id);
             if (section.section_id)
                 window.location.href = `/section/${course_id}/${section.section_id}`;
         } catch (err) {
-            const status = err.response.status;
-            if (status==404)
-                message.info('This course has not started yet');  
             handleErrorApi(err);
         }
     }
-
 
     const patchSubscribe = async() => {
         try {
             await subscribeCourse(course_id);
             setPending(true);
-            if (course.public){
+            console.log(user == course.tutor._id);
+            if (course.public || user == course.tutor._id){
                 setSubscribed(true);
                 setPending(false);
+            }
+            if (user != course.tutor._id && course.public)
                 setSubscriber(subscriber + 1);
 
-            }
         } catch (err) {
             handleErrorApi(err);
         }  
@@ -66,13 +74,16 @@ export default function CourseDescription() {
             await unsubscribeCourse(course_id);
             setSubscribed(false);
             setPending(false);
-            setSubscriber(subscriber - 1);
+            if (user != course.tutor._id)
+                setSubscriber(subscriber - 1);
         } catch (err) {
             handleErrorApi(err);
         }  
     }
     useEffect(() => {
         fetchCourse();
+        fetchUser();
+
     }, []);
 
     
@@ -97,7 +108,7 @@ export default function CourseDescription() {
 
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
                         
-                        {subscribed && course.public?
+                        {subscribed?
                         <div className="flex flex-row  justify-center md:justify-start">
                          <Button type="primary" className="font-bold px-5 mr-4 mt-2" onClick={fetchSection}> 
                             Join
