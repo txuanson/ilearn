@@ -27,3 +27,12 @@ export const patchProfile = (data) =>
 
 export const getHistory = () =>
     callApi({ url: `/user/account/history`, method: 'GET'});
+   
+export const getAllCommentSection = (IDSection) =>
+    callApi({ url: `/user/comment/?section_id=${IDSection}`, method: 'GET'});
+
+export const writeCommentSection = (data) =>
+    callApi({ url: `/user/comment`, method: 'POST', data});
+
+export const repCommentSection = (data) =>
+    callApi({ url: `/user/comment/reply`, method: 'POST', data});
