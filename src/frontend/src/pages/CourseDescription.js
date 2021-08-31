@@ -16,7 +16,7 @@ export default function CourseDescription() {
     const [subscriber, setSubscriber] = useState(0);
     const [subscribed, setSubscribed] = useState(false);
     const [pending, setPending] = useState(false);
-    const [user, setUser] = useState("");
+    const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
 
     const fetchCourse = async () => {
@@ -36,7 +36,8 @@ export default function CourseDescription() {
     const fetchUser = async () => {
         try {
             const profile = await getProfileUser();
-            setUser(profile._id);
+            setUser(profile);
+            console.log('user: ', profile);
         } catch (err) {
             handleErrorApi(err);
         }
@@ -56,13 +57,12 @@ export default function CourseDescription() {
         try {
             await subscribeCourse(course_id);
             setPending(true);
-            console.log(user == course.tutor._id);
-            if (course.public || user == course.tutor._id){
+            if (course.public || user._id == course.tutor._id || user.role == 10){
                 setSubscribed(true);
                 setPending(false);
-            }
-            if (user != course.tutor._id && course.public)
                 setSubscriber(subscriber + 1);
+                console.log('role: ', user.role);
+            }
 
         } catch (err) {
             handleErrorApi(err);
@@ -74,8 +74,7 @@ export default function CourseDescription() {
             await unsubscribeCourse(course_id);
             setSubscribed(false);
             setPending(false);
-            if (user != course.tutor._id)
-                setSubscriber(subscriber - 1);
+            setSubscriber(subscriber - 1);
         } catch (err) {
             handleErrorApi(err);
         }  
