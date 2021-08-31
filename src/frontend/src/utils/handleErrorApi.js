@@ -6,18 +6,19 @@ export default function handleErrorApi(err) {
   } else {
     const status = err.response.status;
 
-    if (status == 401) {
+    if (status === 401) {
       //handle 401 error
     }
-    if (status == 400) {
+    if (status === 400) {
       message.error(err.response.data.detail ?? "There was an error!");
 
       //   window.location.href = '/500'
 
       console.log(err);
-    } else if (status == 404) {
+    } else if (status === 404) {
+      // message.info('This course has not started yet');
       // window.location.href = "/404";
-    } else if (status == 429) {
+    } else if (status === 429) {
       message.warning("Too fast, try again.");
     } else {
       console.log(err);

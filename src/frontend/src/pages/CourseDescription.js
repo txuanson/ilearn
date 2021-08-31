@@ -38,6 +38,9 @@ export default function CourseDescription() {
             if (section.section_id)
                 window.location.href = `/section/${course_id}/${section.section_id}`;
         } catch (err) {
+            const status = err.response.status;
+            if (status==404)
+                message.info('This course has not started yet');  
             handleErrorApi(err);
         }
     }
