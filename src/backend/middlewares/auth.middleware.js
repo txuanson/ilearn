@@ -17,7 +17,7 @@ module.exports = asyncCatch(async (req, res, next) => {
 			else
 				decodedData = decoded;
 		});
-		const user_data = await Account.findById(decodedData._id, "_id username email role").exec()
+		const user_data = await Account.findById(decodedData._id, "_id username email role").lean().exec()
 		if(!user_data) throw new Unauthorized("Unauthorized!");
 		req.user_data = user_data;
 	}

@@ -32,16 +32,15 @@ const getSectionInfo = asyncCatch(async (req, res, next) => {
 
     if (!course)
         throw new NotFound("Course not found!");
-
-    if (course.tutor != req.user_data._id &&
-        (course.banned.indexOf(req.user_data._id) != -1 ||
-            (course.public == false && course.subscriber.indexOf(req.user_data._id) == -1)))
+    if (!course.tutor.equals(req.user_data._id) &&
+        (JSON.stringify(course.banned).indexOf(req.user_data._id) != -1 ||
+            (course.public == false && JSON.stringify(course.subscriber).indexOf(req.user_data._id) == -1)))
         throw new Forbidden("You have no rights to access this course!");
 
     delete course.banned;
     delete course.subscriber;
 
-    const section = await Section.findOne({ _id: section_id})
+    const section = await Section.findOne({ _id: section_id })
         .select("-meeting_id")
         .lean()
         .exec();
