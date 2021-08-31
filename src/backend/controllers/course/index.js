@@ -356,7 +356,7 @@ const listBanned = asyncCatch(async (req, res, next) => {
 const listSectionTutor = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
     const course = await Course.findById(course_id)
-        .populate('sections.section', '_id topic visible start_url')
+        .populate('sections.section', '_id topic start_url')
         .select({
             _id: 1,
             name: 1,

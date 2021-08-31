@@ -41,8 +41,8 @@ const getSectionInfo = asyncCatch(async (req, res, next) => {
     delete course.banned;
     delete course.subscriber;
 
-    const section = await Section.findOne({ _id: section_id, visible: true })
-        .select("-visible -meeting_id")
+    const section = await Section.findOne({ _id: section_id})
+        .select("-meeting_id")
         .lean()
         .exec();
 
@@ -102,7 +102,6 @@ const createSection = asyncCatch(async (req, res, next) => {
         meeting_id: meeting.meeting_id,
         start_time: value.start_time,
         duration: value.duration,
-        visible: value.visible,
         video: value.video
     })
 

@@ -21,8 +21,6 @@ const router = express.Router();
  *           type: integer
  *         start_time:
  *           type: date-time
- *         visible:
- *           type: boolean
  *         video:
  *           type: string
  *       required: 

@@ -25,10 +25,6 @@ const sectionSchema = mongoose.Schema({
         type: Number,
         default: 45
     },
-    visible: {
-        type: Boolean,
-        default: false
-    },
     video: {
         type: String,
         default: null
