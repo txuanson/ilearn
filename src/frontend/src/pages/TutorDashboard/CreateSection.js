@@ -48,7 +48,7 @@ export default function CreateSection() {
                 window.location.href = `/tutor/course/${course_id}/section`;
             }
             else if (section_id) {
-                await editSection(payload);
+                await editSection(section_id, payload);
                 message.success("Section edited successfully!");
                 window.location.hread = `/tutor`;
             }

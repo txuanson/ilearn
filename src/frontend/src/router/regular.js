@@ -6,8 +6,6 @@ import Register from "../pages/Register";
 import CourseDescription from "../pages/CourseDescription";
 import HomePage from "../pages/HomePage";
 import HomeLayout from "../layout/HomeLayout";
-import ListSection from "../pages/ListSection";
-import CreateNewSection from "../pages/CreateNewSection";
 import Profile from "../pages/Profile";
 import Category from "../components/Category/Category";
 import { useEffect, useState } from "react";

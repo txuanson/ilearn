@@ -15,10 +15,6 @@ export default function ListSection(props) {
     const [value, setValue] = useState('');
     const [sections, setSection] = useState([]);
 
-    const onEditSection = (section_id) => {
-
-    }
-
     const handleDeleteSection = async (section_id) => {
         try {
             await deleteSection(section_id);
@@ -57,11 +53,6 @@ export default function ListSection(props) {
         });
     }
 
-    const onChangeVisibleSwitch = (section_id) => {
-        console.log(section_id);
-        fetchListCourse();
-    }
-
     useEffect(() => {
         fetchListCourse()
     }, [])
@@ -81,9 +72,6 @@ export default function ListSection(props) {
             <Table dataSource={sections} pagination={false} scroll={{ x: 'fit-content' }}>
                 <Column title="Topic" dataIndex={["section", "topic"]} key="topic" />
                 <Column title="Type" dataIndex="section_type" key="type" />
-                <Column title="Visible" key="visible" render={((text, record) => (
-                    <Switch checkedChildren="Show" unCheckedChildren="Hide" checked={record.section.visible} onChange={() => onChangeVisibleSwitch(record.section._id)} />
-                ))} />
                 <Column title="Action" key="action" render={((text, record) => (
                     <Space size="small">
                         <a href={record.section.start_url} target="_blank">Start</a>

@@ -60,18 +60,6 @@ export default function CreateNewSection() {
                     <Input/>
                 </Form.Item>
 
-                <Form.Item label="Visible: " name="visible"
-                hasFeedback
-                rules={[
-                {
-                    required: true,
-                    message: 'Please choose visibility!',
-                },
-                ]}
-                >
-                    <Switch />
-                </Form.Item>
-
                 <Form.Item label="Content: " name="content"
                     rules={[{ required: true, message: 'Content is required!' }]}
                 >
