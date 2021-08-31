@@ -1,15 +1,17 @@
 import { Comment, Avatar, Collapse, Tooltip, Input, Tag } from "antd";
 import Form from "antd/lib/form/Form";
 import moment from "moment";
-import { createElement, useState } from "react";
+import { createElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { repCommentSection } from "../../api/user";
+import { getProfileUser, repCommentSection } from "../../api/user";
 import handleErrorApi from "../../utils/handleErrorApi";
+import EditComment from "./EditComment";
 const { Panel } = Collapse;
 
-export default function CommentQA({ children, isChild , fetch}) {
-  const [isReply, setIsReply] = useState(false);
+export default function CommentQA({ children, isChild , fetch, section_id}) {
+  // const [isReply, setIsReply] = useState(false);
   const [reply, setReply] = useState("");
+  const [profileUser, setProfileUser] = useState([]);
 
   const onChange = (e) => {
     setReply(e.target.value);
@@ -25,26 +27,19 @@ export default function CommentQA({ children, isChild , fetch}) {
     }
     }
   }
+
+  useEffect(async () => {
+    try {
+      const resProfile = await getProfileUser();
+      setProfileUser(resProfile);
+    } catch (err) {
+      handleErrorApi(err);
+    }
+  }, []);
   return (
     <>
       <Comment
         className="bg-white rounded-lg p-3 shadow-lg"
-        actions={[
-          <span
-            onClick={() => {
-              setIsReply(true);
-            }}
-          >
-            Reply
-            {isReply ? (
-              <div className="max-w-full min-w-3/4 relative">
-                <Input className = "max-w-full" onChange={onChange} addonBefore={children.user.name} onKeyDown={handleRep}></Input>
-              </div>
-            ) : (
-              <></>
-            )}
-          </span>,
-        ]}
         author={
           <Link to={"/profile/" + children.user._id}>{children.user.name}</Link>
         }
@@ -80,6 +75,20 @@ export default function CommentQA({ children, isChild , fetch}) {
       ) : (
         <></>
       )}
+      {isChild?(<>
+        <Comment
+        className="bg-white rounded-lg p-3 shadow-lg ml-9 mr-4 mt-3 py-1"
+          avatar={
+            <Avatar
+              src={process.env.REACT_APP_BASE_HOST + "/" + profileUser.avatar}
+              alt=""
+            />
+          }
+          content={
+            <Input onChange={onChange}
+            onKeyDown={handleRep}></Input>
+          }/>
+      </>):(<></>)}
     </>
   );
 }

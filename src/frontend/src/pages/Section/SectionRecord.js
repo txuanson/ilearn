@@ -112,6 +112,7 @@ export default function SectionRecord({ section_id, course_id }) {
                           children={item}
                           isChild={true}
                           fetch={fetchComment}
+                          section_id={section_id}
                         ></CommentQA>
                       </div>
                     ))}
