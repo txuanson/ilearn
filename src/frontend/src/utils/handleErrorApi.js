@@ -15,8 +15,12 @@ export default function handleErrorApi(err) {
       //   window.location.href = '/500'
 
       console.log(err);
-    } else if (status === 404) {
-      // message.info('This course has not started yet');
+    } else if (status === 403) {
+      message.error(err.response.data.message ?? "There was an error!");
+      setTimeout(() => {
+        window.location.href = document.referrer;
+      }, 3000);
+
       // window.location.href = "/404";
     } else if (status === 429) {
       message.warning("Too fast, try again.");

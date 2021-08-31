@@ -5,7 +5,7 @@ import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
 import { Layout, Button, message} from 'antd';
-import { subscribeCourse, unsubscribeCourse, getProfileUser } from '../api/user';
+import { subscribeCourse, unsubscribeCourse} from '../api/user';
 import handleErrorApi from '../utils/handleErrorApi';
 
 const { Content } = Layout;
@@ -38,13 +38,9 @@ export default function CourseDescription() {
             if (section.section_id)
                 window.location.href = `/section/${course_id}/${section.section_id}`;
         } catch (err) {
-            const status = err.response.status;
-            if (status==404)
-                message.info('This course has not started yet');  
             handleErrorApi(err);
         }
     }
-
 
     const patchSubscribe = async() => {
         try {
@@ -54,7 +50,6 @@ export default function CourseDescription() {
                 setSubscribed(true);
                 setPending(false);
                 setSubscriber(subscriber + 1);
-
             }
         } catch (err) {
             handleErrorApi(err);
@@ -97,7 +92,7 @@ export default function CourseDescription() {
 
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
                         
-                        {subscribed && course.public?
+                        {subscribed?
                         <div className="flex flex-row  justify-center md:justify-start">
                          <Button type="primary" className="font-bold px-5 mr-4 mt-2" onClick={fetchSection}> 
                             Join
