@@ -34,7 +34,7 @@ export default function Header({ user, ...props }) {
 
   const ChangeHandler = (event) => {
     setSearch(event.target.value);
-};
+  };
 
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
@@ -46,7 +46,7 @@ export default function Header({ user, ...props }) {
   const menu = (
     <Menu className="bg-white dark:bg-dark-black dark:text-dark-text z-top w-68 p-6 rounded-xl shadow-md max-w-sm dark:shadow-dark">
       <Menu.Item>
-        <Link to={"/profile/"+profileUser._id}>
+        <Link to={"/profile/" + profileUser._id}>
           <div className="flex">
             <div
               className="flex items-center justify-center overflow-hidden rounded-full mr-2 avatar flex-shrink-0"
@@ -54,7 +54,7 @@ export default function Header({ user, ...props }) {
             >
               <ReactImageFallback
                 className="ring ring-black min-w-full min-h-full block flex-shrink-0"
-                src={HOST + profileUser.avata}
+                src={HOST + "/" + profileUser.avatar}
                 alt="logo"
                 fallbackImage="/avata-default.jpg"
               />
@@ -68,7 +68,7 @@ export default function Header({ user, ...props }) {
       </Menu.Item>
       <hr></hr>
       <Menu.Item>
-        <Link to={"/profile/"+profileUser._id}>My profile</Link>
+        <Link to={"/profile/" + profileUser._id}>My profile</Link>
       </Menu.Item>
       <hr></hr>
       <Menu.Item>
@@ -143,7 +143,7 @@ export default function Header({ user, ...props }) {
                       >
                         <ReactImageFallback
                           className="min-w-full min-h-full block flex-shrink-0"
-                          src={HOST + profileUser.avata}
+                          src={HOST + "/" + profileUser.avatar}
                           alt="logo"
                           fallbackImage="/avata-default.jpg"
                         />
@@ -172,7 +172,7 @@ export default function Header({ user, ...props }) {
               </div>
             </div>
           </div>
-          
+
         </>
       )}
     </Disclosure>
