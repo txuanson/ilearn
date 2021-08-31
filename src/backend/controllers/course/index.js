@@ -372,10 +372,10 @@ const listSectionTutor = asyncCatch(async (req, res, next) => {
 
 const subscribeToCourse = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
-    const checkCourse = await Course.findById(course_id, "-_id public").exec();
+    const checkCourse = await Course.findById(course_id, "-_id public tutor").exec();
     if (!checkCourse)
         throw new BadReqest("Course not found!");
-    const payload = checkCourse.public == true ?
+    const payload = checkCourse.public == true || checkCourse.tutor.equals(req.user_data._id) || req.user_data.role == Admin ?
         {
             subscriber: new mongoose.Types.ObjectId(req.user_data._id)
         }
