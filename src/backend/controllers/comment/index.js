@@ -125,6 +125,7 @@ const getComment = asyncCatch(async (req, res, next) => {
                 }
             }
         })
+        .sort({ create_at: -1 })
         .skip(pagi.skip)
         .limit(pagi.limit)
         .exec();

@@ -12,7 +12,7 @@ const replySchema = new mongoose.Schema({
     },
     create_at: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     }
 })
 
@@ -36,7 +36,7 @@ const commentSchema = new mongoose.Schema({
     ],
     create_at: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     }
 });
 
