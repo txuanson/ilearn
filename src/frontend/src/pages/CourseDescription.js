@@ -80,8 +80,8 @@ export default function CourseDescription() {
             <div style={{ backgroundColor: '#001529' }} className="w-full mx-auto shadow-md overflow-hidden">
                 <div className="md:hidden block">
                     <div className="relative m-2">
-                        <img src={HOST + '/' + course.cover} alt={course.name} class="h-60 w-full object-cover" />
-                        <span class="px-1 py-1 text-white bg-red-700 rounded absolute right-0 bottom-0"> 
+                        <img src={HOST + '/' + course.cover} alt={course.name} className="h-60 w-full object-cover" />
+                        <span className="px-1 py-1 text-white bg-red-700 rounded absolute right-0 bottom-0"> 
                             {course.public ? 'Public' : 'Private'}
                         </span>
                     </div>
@@ -133,8 +133,8 @@ export default function CourseDescription() {
                     </div>
                     <div className="md:flex-shrink-0 md:block hidden right-0 text-right">
                         <div className="relative m-2">
-                            <img src={HOST + '/' + course.cover} alt={course.name} class="h-60 w-full object-cover md:w-70" />
-                            <span class="px-1 py-1 text-white bg-red-700 rounded absolute left-0 bottom-0">
+                            <img src={HOST + '/' + course.cover} alt={course.name} className="h-60 w-full object-cover md:w-70" />
+                            <span className="px-1 py-1 text-white bg-red-700 rounded absolute left-0 bottom-0">
                                 {course.public ? 'Public' : 'Private'}
                             </span>
                         </div>

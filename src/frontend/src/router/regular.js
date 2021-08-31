@@ -13,7 +13,7 @@ import Category from "../components/Category/Category";
 import { useEffect, useState } from "react";
 import { getAllCategory } from "../api/homePage";
 import Search from "../components/search/Search";
-import MyLearn from "../pages/mylearn";
+import MyLearn from "../pages/MyLearn";
 
 export default function RegularRoute() {
     const [category, setCategory] = useState([]);
@@ -60,6 +60,7 @@ export default function RegularRoute() {
                         <HomePage />
                     </SplashRoute>
                 </Route>
+                
                 {category.map((item) => (
                     <Route path={"/category/" + item._id}>
                     <SplashRoute key={"/category/" + item._id}>
@@ -67,17 +68,6 @@ export default function RegularRoute() {
                     </SplashRoute>
                     </Route>
             ))}
-                
-                <Route exact path="/tutors/section">
-                    <SplashRoute key="/tutors/section">
-                        <CreateNewSection/>
-                    </SplashRoute>
-                </Route>
-                <Route exact path="/tutors/course/001/section">
-                    <SplashRoute key="/tutors/course/001/section">
-                        <ListSection/>
-                    </SplashRoute>
-                </Route>
 
                 <Route exact path="/profile/:user_id">
                     <SplashRoute key="/profile/:user_id">
@@ -91,8 +81,8 @@ export default function RegularRoute() {
                     </SplashRoute>
                 </Route>
 
-                <Route exact path="/mylearn">
-                    <SplashRoute key="/mylearn">
+                <Route exact path="/learning">
+                    <SplashRoute key="/learning">
                      <MyLearn></MyLearn>
                     </SplashRoute>
                 </Route>

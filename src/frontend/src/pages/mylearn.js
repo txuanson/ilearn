@@ -35,7 +35,7 @@ export default function MyLearn() {
   }, []);
   return (
     <div className="relative">
-      <div class="container mx-auto xl:px-40">
+      <div className="container mx-auto xl:px-40">
         <div className="p-4 pb-0 font-bold text-lg">History</div>
         <Row>
           {data.slice(minValue, maxValue).map((item) => (

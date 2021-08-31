@@ -61,7 +61,7 @@ export default function DrawerMenu({ category, user, profileUser }) {
               <div className="p-2 pl-1 font-bold">My profile</div>
             </Link>
             <hr></hr>
-            <Link to="/mylearn">
+            <Link to="/learning">
               <div className="p-2 pl-1 font-bold">My learn</div>
             </Link>
           </div>

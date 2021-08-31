@@ -93,7 +93,7 @@ export default function CreateNewSection() {
                     }}
                 >
                     <Button type="primary" htmlType="submit" onClick={onFinish}
-                    class="text-white py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-lg">
+                    className="text-white py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-lg">
                     Create
                     </Button>
                 </Form.Item>
