@@ -1,6 +1,6 @@
 import { Button, Layout, Menu} from 'antd';
 import React, {useState, useEffect} from "react";
-import { Link, Switch, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SectionRecord from './SectionRecord';
 import { getSectionInfo } from '../../api/user';
 import handleErrorApi from '../../utils/handleErrorApi';

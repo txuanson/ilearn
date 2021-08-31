@@ -1,11 +1,9 @@
-import { Comment, Avatar, Collapse, Tooltip, Input, Tag } from "antd";
-import Form from "antd/lib/form/Form";
+import { Comment, Avatar, Collapse, Tooltip, Input } from "antd";
 import moment from "moment";
-import { createElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getProfileUser, repCommentSection } from "../../api/user";
 import handleErrorApi from "../../utils/handleErrorApi";
-import EditComment from "./EditComment";
 const { Panel } = Collapse;
 
 export default function CommentQA({ children, isChild , fetch, section_id}) {
@@ -21,6 +19,7 @@ export default function CommentQA({ children, isChild , fetch, section_id}) {
     if (event.key === 'Enter') {
       try {
         await repCommentSection({comment_id: children._id, content: reply});
+        setReply('');
         fetch();
     } catch (err) {
       handleErrorApi(err)
@@ -51,8 +50,8 @@ export default function CommentQA({ children, isChild , fetch, section_id}) {
         }
         content={<div className="border-solid">{children.content}</div>}
         datetime={
-          <Tooltip title={moment(children.create_at).endOf("day").fromNow()}>
-            <span>{moment(children.create_at).endOf("day").fromNow()}</span>
+          <Tooltip title={moment(children.create_at).fromNow()}>
+            <span>{moment(children.create_at).fromNow()}</span>
           </Tooltip>
         }
       >
@@ -86,7 +85,8 @@ export default function CommentQA({ children, isChild , fetch, section_id}) {
           }
           content={
             <Input onChange={onChange}
-            onKeyDown={handleRep}></Input>
+            onKeyDown={handleRep}
+            value={reply}></Input>
           }/>
       </>):(<></>)}
     </>

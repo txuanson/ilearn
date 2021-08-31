@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Comment, Avatar, Form, Button, List, Input, Tooltip} from 'antd';
-import moment from 'moment';
+import { Comment, Avatar, Form, Button, Input} from 'antd';
 import handleErrorApi from '../../utils/handleErrorApi';
 import { getProfileUser, writeCommentSection } from '../../api/user';
 
@@ -31,6 +30,7 @@ export default function EditComment({section_id, fetch}) {
         setSubmitting(false);
         try {
             await writeCommentSection({section_id: section_id, content: value});
+            setValue('');
             fetch();
         } catch (err) {
           handleErrorApi(err)

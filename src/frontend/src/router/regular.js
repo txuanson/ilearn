@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { getAllCategory } from "../api/homePage";
 import Search from "../components/search/Search";
 import MyLearn from "../pages/MyLearn";
+import handleErrorApi from "../utils/handleErrorApi";
 
 export default function RegularRoute() {
     const [category, setCategory] = useState([]);
@@ -22,7 +23,7 @@ export default function RegularRoute() {
       setCategory(res);
       console.log(res)
     } catch (err) {
-      console.log("fail");
+      handleErrorApi(err)
     }
   }, []);
     return (
