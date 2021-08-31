@@ -5,7 +5,7 @@ import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
 import { Layout, Button, message} from 'antd';
-import { subscribeCourse, unsubscribeCourse} from '../api/user';
+import { subscribeCourse, unsubscribeCourse, getProfileUser} from '../api/user';
 import handleErrorApi from '../utils/handleErrorApi';
 
 const { Content } = Layout;
@@ -16,6 +16,7 @@ export default function CourseDescription() {
     const [subscriber, setSubscriber] = useState(0);
     const [subscribed, setSubscribed] = useState(false);
     const [pending, setPending] = useState(false);
+    const [user, setUser] = useState("");
     const [loading, setLoading] = useState(true);
 
     const fetchCourse = async () => {
@@ -27,6 +28,15 @@ export default function CourseDescription() {
             setPending(res.pending);
             setSubscriber(res.subscriber_count);
             setLoading(false);
+        } catch (err) {
+            handleErrorApi(err);
+        }
+    }
+
+    const fetchUser = async () => {
+        try {
+            const profile = await getProfileUser();
+            setUser(profile._id);
         } catch (err) {
             handleErrorApi(err);
         }
@@ -46,11 +56,14 @@ export default function CourseDescription() {
         try {
             await subscribeCourse(course_id);
             setPending(true);
-            if (course.public){
+            console.log(user == course.tutor._id);
+            if (course.public || user == course.tutor._id){
                 setSubscribed(true);
                 setPending(false);
-                setSubscriber(subscriber + 1);
             }
+            if (user != course.tutor._id && course.public)
+                setSubscriber(subscriber + 1);
+
         } catch (err) {
             handleErrorApi(err);
         }  
@@ -61,13 +74,16 @@ export default function CourseDescription() {
             await unsubscribeCourse(course_id);
             setSubscribed(false);
             setPending(false);
-            setSubscriber(subscriber - 1);
+            if (user != course.tutor._id)
+                setSubscriber(subscriber - 1);
         } catch (err) {
             handleErrorApi(err);
         }  
     }
     useEffect(() => {
         fetchCourse();
+        fetchUser();
+
     }, []);
 
     
