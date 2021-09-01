@@ -90,7 +90,7 @@ export default function CourseDescription({ user, ...props }) {
     return (<>
         { loading && <></>} 
         {!loading && <>
-            <div style={{ backgroundColor: '#001529' }} className="w-full mx-auto shadow-md overflow-hidden">
+            <div style={{ backgroundColor: '#001529' }} className="w-full mx-auto shadow-md overflow-hidden grid place-items-center">
                 <div className="md:hidden block">
                     <div className="relative m-2">
                         <img src={HOST + '/' + course.cover} alt={course.name} className="h-60 w-full object-cover" />
@@ -99,7 +99,7 @@ export default function CourseDescription({ user, ...props }) {
                         </span>
                     </div>
                 </div>
-                <div className="container md:flex xl:px-40 md:ml-20" style={{justifyContent:'space-between'}}>
+                <div className="container md:flex xl:px-40" style={{justifyContent:'space-between'}}>
                     <div className="text-center p-5 justify-center flex flex-col md:text-left">
                         <div className="uppercase block leading-tight text-3xl text-white font-bold">{course.name}</div>
                         <p className="text-white mt-1">{course.description}</p>
