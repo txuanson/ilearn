@@ -58,11 +58,11 @@ export default function DrawerMenu({ category, user, profileUser }) {
             </Link>
             <hr></hr>
             <Link to={"/profile/" + profileUser._id}>
-              <div className="p-2 pl-1 font-bold">My profile</div>
+              <div className="p-2 pl-1 font-bold">Profile</div>
             </Link>
             <hr></hr>
             <Link to="/learning">
-              <div className="p-2 pl-1 font-bold">My learn</div>
+              <div className="p-2 pl-1 font-bold" >My learn</div>
             </Link>
           </div>
         ) : (
@@ -93,9 +93,9 @@ export default function DrawerMenu({ category, user, profileUser }) {
           ))}
         </Drawer>
         <hr></hr>
-        <Link to="/tutor">
-          <div className="p-2 pl-1 font-bold">Tutor</div>
-        </Link>
+        {user && profileUser.role != 0?(<Link to="/tutor">
+          <div className="p-2 pl-1 font-bold" >Tutor Manager</div>
+        </Link>):(<></>)}
         {user ? (
           <>
             <hr></hr>

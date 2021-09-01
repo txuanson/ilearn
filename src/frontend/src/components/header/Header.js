@@ -77,9 +77,10 @@ export default function Header({ user, ...props }) {
       <Menu.Item icon={<FaBook />}>
         <Link to="/learning">My Learn</Link>
       </Menu.Item>
-        <Menu.Item icon={<FaChalkboardTeacher />}>
+      {profileUser.role != 0?(<Menu.Item icon={<FaChalkboardTeacher />}>
           <Link to="/tutor">Tutor Manager</Link>
-        </Menu.Item>
+        </Menu.Item>):(<></>)}
+        
         <Menu.Item icon={<FaSignOutAlt />}>
           <a onClick={logout}>Sign out</a>
         </Menu.Item>
