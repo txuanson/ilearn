@@ -19,7 +19,9 @@ export default function Search() {
   
   const fetch = async () => {
     try {
-      const res = await searchCourse(query.get("query"))
+      console.log(encodeURIComponent(query.get("query")))
+      const res = await searchCourse(encodeURIComponent(query.get("query")))
+      //decodeURIComponent
       setData(res.items);
       setMinValue(0);
       setMaxValue(pageSize);
