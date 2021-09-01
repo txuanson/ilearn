@@ -13,6 +13,7 @@ import { getAllCategory } from "../api/homePage";
 import Search from "../components/search/Search";
 import MyLearn from "../pages/MyLearn";
 import handleErrorApi from "../utils/handleErrorApi";
+import { auth } from "../utils/auth";
 
 export default function RegularRoute() {
     const [category, setCategory] = useState([]);
@@ -43,7 +44,7 @@ export default function RegularRoute() {
 
                 <Route exact path="/course/:course_id">
                     <SplashRoute key="/course/:course_id">
-                        <CourseDescription/>
+                        <CourseDescription user={auth()}/>
                     </SplashRoute>
                 </Route>
             

@@ -1,6 +1,8 @@
 import { Button, Layout, Menu} from 'antd';
 import React, {useState, useEffect} from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Switch } from "react-router-dom";
+import SplashRoute from "../../components/animation/SplashRoute";
+import { Route } from "react-router";
 import SectionRecord from './SectionRecord';
 import { getSectionInfo } from '../../api/user';
 import handleErrorApi from '../../utils/handleErrorApi';
@@ -16,14 +18,14 @@ const { SubMenu } = Menu;
 
 export default function ViewSection() {
   const { course_id, section_id} = useParams();
-  
+  const [section, setSection] = useState(section_id);
   const [activeKeys, setActiveKeys] = useState([])
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const fetchCourse = async () => {
       try {
           setLoading(true);
-          const res = await getSectionInfo(course_id, section_id);
+          const res = await getSectionInfo(course_id, section);
           setData(res);
           setLoading(false);
       } catch (err) {
@@ -34,10 +36,6 @@ export default function ViewSection() {
       fetchCourse();
   }, []);
 
-  const onNewSection = (section_id) => {
-    console.log(section_id);
-    fetchCourse();
-}
   function handleClick({ key }) {
     setActiveKeys([]) // close the menu on click
   }
@@ -87,7 +85,7 @@ export default function ViewSection() {
           <SubMenu key="sub1" title="Course Section">
             {data.course.sections.map(item => (
               <Menu.Item item={item.section.topic} key={item.section._id}>
-              <Link to={`/section/${course_id}/${item.section._id}`} onClick={()=> onNewSection(item.section._id)}>{item.section.topic}</Link>
+              <Link to={`/section/${course_id}/${item.section._id}`} onClick={()=> setSection(item.section._id)}>{item.section.topic}</Link>
             </Menu.Item>
             ))}
           </SubMenu>
@@ -97,7 +95,7 @@ export default function ViewSection() {
         <Menu theme="dark" mode="inline" defaultSelectedKeys={section_id}>
           {data.course.sections.map(item => (
             <Menu.Item item={item.section.topic} key={item.section._id}>
-            <Link to={`/section/${course_id}/${item.section._id}`} onClick={()=> onNewSection(item.section._id)}>{item.section.topic}</Link>
+            <Link to={`/section/${course_id}/${item.section._id}`} onClick={()=> setSection(item.section._id)}>{item.section.topic}</Link>
           </Menu.Item>
           ))}
         </Menu>
@@ -108,10 +106,16 @@ export default function ViewSection() {
             className="site-layout-background"
             style={{minHeight: 360, paddingLeft:10, paddingRight:10}}
           >
-            <SectionRecord 
-              section_id = {section_id}
-              course_id = {course_id}
-              />
+            <Switch>
+              <Route path={`/section/${course_id}/${section}`}>
+                  <SplashRoute key={`/section/${course_id}/${section}`}>
+                  <SectionRecord 
+                    section_id = {section}
+                    course_id = {course_id}
+                    />
+                  </SplashRoute>   
+              </Route>
+            </Switch>
           </div>
         </Content>
         <Footer className="text-center">

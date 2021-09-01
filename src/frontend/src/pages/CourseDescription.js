@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
-import { Link, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import ReadMore from '../components/ui/ReadMore';
 import { getCourseInfo } from "../api/course";
 import { joinCourse } from '../api/user';
-import { Layout, Button, message} from 'antd';
+import { Layout, Button} from 'antd';
 import { subscribeCourse, unsubscribeCourse, getProfileUser} from '../api/user';
 import handleErrorApi from '../utils/handleErrorApi';
 
 const { Content } = Layout;
 
-export default function CourseDescription() {
+export default function CourseDescription({ user, ...props }) {
     const { course_id } = useParams();
     const [course, setCourse] = useState({});
     const [subscriber, setSubscriber] = useState(0);
     const [subscribed, setSubscribed] = useState(false);
     const [pending, setPending] = useState(false);
-    const [user, setUser] = useState({});
+    const [actor, setActor] = useState({});
     const [loading, setLoading] = useState(true);
 
     const fetchCourse = async () => {
@@ -36,8 +36,7 @@ export default function CourseDescription() {
     const fetchUser = async () => {
         try {
             const profile = await getProfileUser();
-            setUser(profile);
-            console.log('user: ', profile);
+            setActor(profile);
         } catch (err) {
             handleErrorApi(err);
         }
@@ -57,11 +56,10 @@ export default function CourseDescription() {
         try {
             await subscribeCourse(course_id);
             setPending(true);
-            if (course.public || user._id == course.tutor._id || user.role == 10){
+            if (course.public || actor._id == course.tutor._id || actor.role == 10){
                 setSubscribed(true);
                 setPending(false);
                 setSubscriber(subscriber + 1);
-                console.log('role: ', user.role);
             }
 
         } catch (err) {
@@ -80,8 +78,10 @@ export default function CourseDescription() {
         }  
     }
     useEffect(() => {
+        if (user){
+            fetchUser();
+        } 
         fetchCourse();
-        fetchUser();
 
     }, []);
 
@@ -99,7 +99,7 @@ export default function CourseDescription() {
                         </span>
                     </div>
                 </div>
-                <div className="container md:flex xl:px-40 md:mx-10" style={{justifyContent:'space-between'}}>
+                <div className="container md:flex xl:px-40 md:ml-20" style={{justifyContent:'space-between'}}>
                     <div className="text-center p-5 justify-center flex flex-col md:text-left">
                         <div className="uppercase block leading-tight text-3xl text-white font-bold">{course.name}</div>
                         <p className="text-white mt-1">{course.description}</p>
