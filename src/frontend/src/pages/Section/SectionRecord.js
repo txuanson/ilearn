@@ -59,10 +59,9 @@ export default function SectionRecord({ section_id, course_id }) {
 
   function ShowVideo(props) {
     const hasVideo = props.hasVideo;
-    const video_code = data.section.video.split("/");
-    const embed_video =
-      "https://www.youtube.com/embed/" + video_code[video_code.length - 1];
     if (hasVideo) {
+      const video_code = data.section.video.split("/");
+      const embed_video = "https://www.youtube.com/embed/" + video_code[video_code.length - 1];
       return (
         <div className="relative md:ml-10" style={{ paddingTop: "56.25%" }}>
           <iframe
