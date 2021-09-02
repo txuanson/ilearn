@@ -28,8 +28,8 @@ export const patchProfile = (data) =>
 export const getHistory = () =>
     callApi({ url: `/user/account/history`, method: 'GET'});
    
-export const getAllCommentSection = (IDSection) =>
-    callApi({ url: `/user/comment/?section_id=${IDSection}`, method: 'GET'});
+export const getAllCommentSection = (section_id,page, page_size) =>
+    callApi({ url: `/user/comment/?section_id=${section_id}&page=${page}&page_size=${page_size}`, method: 'GET'});
 
 export const writeCommentSection = (data) =>
     callApi({ url: `/user/comment`, method: 'POST', data});

@@ -31,7 +31,7 @@ export default function EditComment({section_id, fetch}) {
         try {
             await writeCommentSection({section_id: section_id, content: value});
             setValue('');
-            fetch();
+            fetch(1);
         } catch (err) {
           handleErrorApi(err)
         }

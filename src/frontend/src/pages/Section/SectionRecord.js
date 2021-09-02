@@ -14,9 +14,9 @@ export default function SectionRecord({ section_id, course_id }) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState([]);
-  const [minValue, setMinValue] = useState([]);
-  const [maxValue, setMaxValue] = useState([]);
-  const numberMaxComment = 10;
+  const [page, setPage] = useState([]);
+  const [itemCount, setItemCount] = useState(10);
+  const page_size = 10;
 
   const fetchCourse = async () => {
     try {
@@ -29,30 +29,32 @@ export default function SectionRecord({ section_id, course_id }) {
     }
   };
 
-  const fetchComment = async () => {
+  const fetchComment = async (page) => {
     try {
-      const res = await getAllCommentSection(section_id);
-      setComment(res.items);
-      setMinValue(0);
-      setMaxValue(numberMaxComment);
+      setPage(page);
+      const res = await getAllCommentSection(section_id, page, page_size);
+      const { items, items_count } = res;
+      setComment(items);
+      setItemCount(items_count);
     } catch (err) {
       handleErrorApi(err);
     }
   };
 
   const handleNextPage = (value) => {
-    if (value <= 1) {
-      setMinValue(0);
-      setMaxValue(numberMaxComment);
-    } else {
-      setMinValue((value - 1) * numberMaxComment);
-      setMaxValue(value * numberMaxComment);
-    }
+    // if (value <= 1) {
+    //   setMinValue(0);
+    //   setMaxValue(numberMaxComment);
+    // } else {
+    //   setMinValue((value - 1) * numberMaxComment);
+    //   setMaxValue(value * numberMaxComment);
+    // }
+    fetchComment(value);
   };
 
   useEffect(() => {
     fetchCourse();
-    fetchComment();
+    fetchComment(1);
   }, []);
 
   function ShowVideo(props) {
@@ -106,22 +108,22 @@ export default function SectionRecord({ section_id, course_id }) {
                       section_id={section_id}
                       fetch={fetchComment}
                     ></EditComment>
-                    {comment.slice(minValue, maxValue).map((item) => (
+                    {comment.map((item) => (
                       <div className="my-3">
                         <CommentQA
                           children={item}
                           isChild={true}
                           fetch={fetchComment}
-                          section_id={section_id}
+                          page = {page}
                         ></CommentQA>
                       </div>
                     ))}
                     <div className="p-3 grid justify-items-end">
                       <Pagination
                         defaultCurrent={1}
-                        total={comment.length}
+                        total={itemCount}
                         onChange={handleNextPage}
-                        pageSize={numberMaxComment}
+                        pageSize={page_size}
                       />
                     </div>
                   </TabPane>

@@ -6,7 +6,7 @@ import { getProfileUser, repCommentSection } from "../../api/user";
 import handleErrorApi from "../../utils/handleErrorApi";
 const { Panel } = Collapse;
 
-export default function CommentQA({ children, isChild , fetch, section_id}) {
+export default function CommentQA({ children, isChild , fetch, page}) {
   // const [isReply, setIsReply] = useState(false);
   const [reply, setReply] = useState("");
   const [profileUser, setProfileUser] = useState([]);
@@ -20,7 +20,7 @@ export default function CommentQA({ children, isChild , fetch, section_id}) {
       try {
         await repCommentSection({comment_id: children._id, content: reply});
         setReply('');
-        fetch();
+        fetch(page);
     } catch (err) {
       handleErrorApi(err)
     }

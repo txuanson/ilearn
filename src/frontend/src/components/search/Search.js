@@ -15,14 +15,16 @@ export default function Search() {
   const [data, setData] = useState([]);
   const [minValue, setMinValue] = useState([]);
   const [maxValue, setMaxValue] = useState([]);
-  const pageSize = 20;
+  const [itemCount, setItemCount] = useState(10);
+  const pageSize = 16;
   
   const fetch = async () => {
     try {
       console.log(encodeURIComponent(query.get("query")))
       const res = await searchCourse(encodeURIComponent(query.get("query")))
-      //decodeURIComponent
-      setData(res.items);
+      const { items, items_count } = res;
+      setData(items);
+      setItemCount(items_count);
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
@@ -59,7 +61,7 @@ export default function Search() {
           ))}
         </Row>
         <div className="p-3 grid justify-items-end">
-            <Pagination defaultCurrent={1} total={data.length} onChange={handleChange} pageSize={pageSize}/>
+            <Pagination defaultCurrent={1} total={itemCount} onChange={handleChange} pageSize={pageSize}/>
           </div>
        
       </div>
