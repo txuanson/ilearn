@@ -50,7 +50,7 @@ export default function Search() {
         <div className="p-4 pb-0 font-bold text-lg">Search: {query.get("query")}</div>
         <Row>
           {data.slice(minValue, maxValue).map((item) => (
-            <Col xl={6} md={6}>
+            <Col xl={6} lg={6} md={8} xs={12} sm={12}>
               <div className="p-2">
                 <CardComponent
                   dataCard={item}

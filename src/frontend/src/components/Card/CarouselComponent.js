@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getCategoryID } from "../../api/homePage";
+import { getCategoryID, getCategoryPage } from "../../api/homePage";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -45,7 +45,7 @@ export default function CarouselComponent({ idCategory, nameCategory }) {
 
   useEffect(async () => {
     try {
-      const res = await getCategoryID(idCategory);
+      const res = await getCategoryPage(idCategory, 1, 8);
       setData(res.items);
     } catch (err) {
       console.log(idCategory);
@@ -56,15 +56,15 @@ export default function CarouselComponent({ idCategory, nameCategory }) {
       <div className="text-xl font-bold pl-2 pt-8 pb-0">
         <div className="flex">
           <BookmarkAltOutline></BookmarkAltOutline>
-          <Link to="#" className="pl-1">
+          <Link to={"/category/" + idCategory} className="pl-1">
             {nameCategory}
           </Link>
         </div>
       </div>
       <Slider {...settings}>
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+        {data.map((item) => (
           <div className="p-2">
-            <CardComponent dataCard={data[item]}></CardComponent>
+            <CardComponent dataCard={item}></CardComponent>
           </div>
         ))}
       </Slider>

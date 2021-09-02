@@ -48,6 +48,7 @@ export default function SearchMoblie() {
           alignItems: "center",
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
         }}
       >
         <div className="w-full mb-2">
