@@ -12,7 +12,8 @@ export default function AdminCategory(props) {
   const [category, setCategory] = useState([]);
   const [minValue, setMinValue] = useState([]);
   const [maxValue, setMaxValue] = useState([]);
-  const pageSize = 15;
+  const [itemCount, setItemCount] = useState(10);
+  const pageSize = 10;
 
   const onSearch = (value) => {
     fetchSearchCategory(value);
@@ -23,6 +24,7 @@ export default function AdminCategory(props) {
     try {
       const res = await getSearchCategoryAdmin(key)
       setCategory(res.items);
+      setItemCount(res.items_count);
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
@@ -102,7 +104,7 @@ export default function AdminCategory(props) {
       <div className="p-3 grid justify-items-end">
         <Pagination
           defaultCurrent={1}
-          total={category.length}
+          total={itemCount}
           onChange={handleChange}
           pageSize={pageSize}
         />
