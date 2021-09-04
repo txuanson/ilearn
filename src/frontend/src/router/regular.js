@@ -18,15 +18,18 @@ import { auth } from "../utils/auth";
 
 export default function RegularRoute({ userData }) {
     const [category, setCategory] = useState([]);
-
-    useEffect(async () => {
+    const fetchCategory = async () => {
         try {
             const res = await getAllCategory()
             setCategory(res);
         } catch (err) {
             handleErrorApi(err)
         }
+    }
+    useEffect(() => {
+        fetchCategory();
     }, []);
+
     return (
         <HomeLayout>
             <Switch>
@@ -92,11 +95,12 @@ export default function RegularRoute({ userData }) {
 
                 <Route exact path="/learning">
                     {
-                        !userData ?
-                            <Redirect to="/" /> :
+                        userData ?
                             <SplashRoute key="/learning">
                                 <MyLearn></MyLearn>
                             </SplashRoute>
+                            :
+                            <Redirect to="/" />
                     }
                 </Route>
             </Switch>

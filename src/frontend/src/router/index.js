@@ -9,38 +9,33 @@ import { auth } from "../utils/auth";
 import { useEffect, useState } from "react";
 
 export default function MyRoute() {
-    const [userData, setUserData] = useState(0);
-
-    const getUserData = () => {
-        const user = auth();
-        const userData = user.user_data ? user.user_data : null;
-        return userData;
-    }
-
-    useEffect(() => {
-        const user = getUserData();
-        setUserData(user);
-    }, [])
+    const user = auth();
+    const userData = user.user_data ? user.user_data : undefined;
 
     return (
         <Router>
             <Switch>
                 <Route path="/tutor">
                     {
-                        !userData || userData.role < 5 ?
-                            <Redirect to="/" /> :
+                        userData && userData.role >= 5
+                            ?
                             <SplashRoute key="/tutor">
                                 <TutorDashBoard />
-                            </SplashRoute>}
+                            </SplashRoute>
+                            :
+                            <Redirect to="/" />
+                    }
                 </Route>
 
                 <Route path="/admin">
                     {
-                        !userData || userData.role != 10 ?
-                            <Redirect to="/" /> :
+                        userData && userData.role == 10
+                            ?
                             <SplashRoute key="/admin">
                                 <Admin />
                             </SplashRoute>
+                            :
+                            <Redirect to="/" />
                     }
                 </Route>
 
@@ -55,7 +50,7 @@ export default function MyRoute() {
 
                 <Route path="/">
                     <SplashRoute key="/">
-                        <RegularRoute userData={userData}/>
+                        <RegularRoute userData={userData} />
                     </SplashRoute>
                 </Route>
 

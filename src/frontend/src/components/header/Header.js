@@ -40,13 +40,13 @@ export default function Header({ user, ...props }) {
   const onLogin = () => {
     setTimeout(() => {
       window.location.href = `/login?redirect=${location.pathname}`;
-    }, 1000);
+    }, 200);
   }
 
   const onRegister = () => {
     setTimeout(() => {
       window.location.href = `/register?redirect=${location.pathname}`;
-    }, 1000);
+    }, 200);
   }
 
   const ChangeHandler = (event) => {

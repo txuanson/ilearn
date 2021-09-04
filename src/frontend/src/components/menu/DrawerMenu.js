@@ -4,8 +4,10 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 import ReactImageFallback from "react-image-fallback";
 import { logout } from "../../utils/auth";
+import { useLocation } from "react-router";
 
 export default function DrawerMenu({ category, user, profileUser }) {
+  const location = useLocation();
   const [visible, setVisible] = useState(false);
   const [childrenDrawer, setChildrenDrawer] = useState(false);
   const HOST = process.env.REACT_APP_BASE_HOST;
@@ -23,6 +25,19 @@ export default function DrawerMenu({ category, user, profileUser }) {
   const onChildrenDrawerClose = () => {
     setChildrenDrawer(false);
   };
+
+  const onLogin = () => {
+    setTimeout(() => {
+      window.location.href = `/login?redirect=${location.pathname}`;
+    }, 200);
+  }
+
+  const onRegister = () => {
+    setTimeout(() => {
+      window.location.href = `/register?redirect=${location.pathname}`;
+    }, 200);
+  }
+
   return (
     <>
       <div className="hover:bg-gray-700 hover:text-white p-2 rounded-xl block md:hidden ">
@@ -93,9 +108,9 @@ export default function DrawerMenu({ category, user, profileUser }) {
           ))}
         </Drawer>
         <hr></hr>
-        {user && profileUser.role != 0?(<Link to="/tutor">
+        {user && profileUser.role != 0 ? (<Link to="/tutor">
           <div className="p-2 pl-1 font-bold" >Tutor Manager</div>
-        </Link>):(<></>)}
+        </Link>) : (<></>)}
         {user ? (
           <>
             <hr></hr>
@@ -108,11 +123,11 @@ export default function DrawerMenu({ category, user, profileUser }) {
         ) : (
           <>
             <hr></hr>
-            <Link to="/login">
+            <Link onClick={onLogin}>
               <div className="p-2 pl-1 font-bold">Login</div>
             </Link>
             <hr></hr>
-            <Link to="/register">
+            <Link onClick={onRegister}>
               <div className="p-2 pl-1 font-bold">Register</div>
             </Link>
           </>
