@@ -33,10 +33,9 @@ export function Register() {
   };
   const submitClickHandler = async (event) => {
     if (password !== passwordConfirm) {
-      // handleErrorApi(error);
-      message.error("xác nhận mk sai");
+      message.error("Incorrect confirmation password");
     } else if (username.length < 8) {
-      message.error("Độ dài username dưới 8 kí tự");
+      message.error("Username must be more than 8 characters long");
     } else {
       try {
         const res = await postRegister({
@@ -47,7 +46,7 @@ export function Register() {
         });
         register(res);
         setTimeout(() => {
-          window.location.href = query.get('redirect') ?? "/";
+          window.location.href = query.get("redirect") ?? "/";
         }, 1000);
       } catch (error) {
         handleErrorApi(error);

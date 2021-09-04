@@ -19,7 +19,7 @@ export default function CardComponent({ dataCard }) {
             cover={
               <ReactImageFallback
               style={{height:"140px", width:"100%"}}
-              className="object-fit shadow"
+              className="object-cover shadow"
                 alt=""
                 src={HOST + "/" + dataCard.cover}
                 fallbackImage="/default-class-cover.png"
