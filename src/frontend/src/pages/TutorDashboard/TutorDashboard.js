@@ -6,16 +6,16 @@ import { Link, Switch } from "react-router-dom";
 import ListCourse from "./ListCourse";
 import ListSection from "./ListSection";
 import CreateCourse from "./CreateCourse";
-
+import CreateSection from "./CreateSection";
 import {
   VideoCameraOutlined,
   ContactsOutlined,
 } from "@ant-design/icons";
-import CreateSection from "./CreateSection";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 function TutorDashBoard() {
+
   return (
     <Layout className="min-h-screen">
       <Sider

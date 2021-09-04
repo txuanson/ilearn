@@ -25,11 +25,10 @@ export default function Header({ user, ...props }) {
       const resCategory = await getAllCategory();
       setNameCategory(resCategory);
 
-    if (user){
-      const resProfile = await getProfileUser();
-      setProfileUser(resProfile);
-    } 
-    console.log(resCategory)
+      if (user) {
+        const resProfile = await getProfileUser();
+        setProfileUser(resProfile);
+      }
     } catch (err) {
       handleErrorApi(err);
     }
@@ -77,106 +76,106 @@ export default function Header({ user, ...props }) {
       <Menu.Item icon={<FaBook />}>
         <Link to="/learning">My Learn</Link>
       </Menu.Item>
-      {profileUser.role != 0?(<Menu.Item icon={<FaChalkboardTeacher />}>
-          <Link to="/tutor">Tutor Manager</Link>
-        </Menu.Item>):(<></>)}
-        
-        <Menu.Item icon={<FaSignOutAlt />}>
-          <a onClick={logout}>Sign out</a>
-        </Menu.Item>
+      {profileUser.role != 0 ? (<Menu.Item icon={<FaChalkboardTeacher />}>
+        <Link to="/tutor">Tutor Manager</Link>
+      </Menu.Item>) : (<></>)}
+
+      <Menu.Item icon={<FaSignOutAlt />}>
+        <a onClick={logout}>Sign out</a>
+      </Menu.Item>
     </Menu>
-      );
-      return (
-      <Disclosure as="nav" className="bg-blue-700 animate-none shadow-xl">
-        {({ open }) => (
-          <>
-            <div className="container mx-auto xl:px-40">
-              <div className="relative flex items-center justify-between h-16">
-                <DrawerMenu
-                  category={nameCategory}
-                  user={user}
-                  profileUser={profileUser}
-                ></DrawerMenu>
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+  );
+  return (
+    <Disclosure as="nav" className="bg-blue-700 animate-none shadow-xl">
+      {({ open }) => (
+        <>
+          <div className="container mx-auto xl:px-40">
+            <div className="relative flex items-center justify-between h-16">
+              <DrawerMenu
+                category={nameCategory}
+                user={user}
+                profileUser={profileUser}
+              ></DrawerMenu>
+              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
 
+              </div>
+              <div className="flex-1 flex items-center justify-center md:items-stretch md:justify-start">
+                <div className="flex-shrink-0 flex items-center rounded-lg bg-gray-200">
+                  <Link to="/">
+                    <img
+                      className="block lg:hidden h-8 w-auto"
+                      src="/logo-iLearn.svg"
+                      alt="Workflow"
+                    />
+                    <img
+                      className="hidden lg:block h-8 w-auto"
+                      src="/logo-iLearn.svg"
+                      alt="Workflow"
+                    />
+                  </Link>
                 </div>
-                <div className="flex-1 flex items-center justify-center md:items-stretch md:justify-start">
-                  <div className="flex-shrink-0 flex items-center rounded-lg bg-gray-200">
-                    <Link to="/">
-                      <img
-                        className="block lg:hidden h-8 w-auto"
-                        src="/logo-iLearn.svg"
-                        alt="Workflow"
-                      />
-                      <img
-                        className="hidden lg:block h-8 w-auto"
-                        src="/logo-iLearn.svg"
-                        alt="Workflow"
-                      />
-                    </Link>
+                <div className="hidden md:block md:ml-6">
+                  <div className="flex">
+                    <Button className="bg-blue-700 hover:bg-gray-700 rounded-md text-sm font-medium text-white border-none">
+                      <DropDownMenu category={nameCategory}></DropDownMenu>
+                    </Button>
                   </div>
-                  <div className="hidden md:block md:ml-6">
-                    <div className="flex">
-                      <Button className="bg-blue-700 hover:bg-gray-700 rounded-md text-sm font-medium text-white border-none">
-                        <DropDownMenu category={nameCategory}></DropDownMenu>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <Input
-                    style={{ width: "20rem" }}
-                    placeholder="Search"
-                    className="rounded-full mr-4 hidden md:block"
-                    onChange={ChangeHandler}
-                    onKeyDown={handleSearch}
-                  />
-                  {user ? (
-                    <div className="hidden md:block">
-                      <Dropdown
-                        overlay={menu}
-                        trigger={["click"]}
-                        className="cursor-pointer"
-                      >
-                        <div
-                          className="ring ring-gray flex items-center justify-center overflow-hidden rounded-full cursor-pointer "
-                          style={{ width: 40, height: 40 }}
-                        >
-                          <ReactImageFallback
-                            className="min-w-full min-h-full block flex-shrink-0"
-                            src={HOST + "/" + profileUser.avatar}
-                            alt="logo"
-                            fallbackImage="/avata-default.jpg"
-                          />
-                        </div>
-                      </Dropdown>
-                    </div>
-                  ) : (
-                    <div className="flex space-x-4 ">
-                      <Link
-                        to="/login"
-                        className="hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium hidden md:block"
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        to="/register"
-                        className="hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium hidden md:block"
-                      >
-                        Register
-                      </Link>
-                    </div>
-                  )}
-                </div>
-                <div className="block md:hidden">
-                  <SearchMoblie></SearchMoblie>
                 </div>
               </div>
-            </div>
 
-          </>
-        )}
-      </Disclosure>
-      );
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <Input
+                  style={{ width: "20rem" }}
+                  placeholder="Search"
+                  className="rounded-full mr-4 hidden md:block"
+                  onChange={ChangeHandler}
+                  onKeyDown={handleSearch}
+                />
+                {user ? (
+                  <div className="hidden md:block">
+                    <Dropdown
+                      overlay={menu}
+                      trigger={["click"]}
+                      className="cursor-pointer"
+                    >
+                      <div
+                        className="ring ring-gray flex items-center justify-center overflow-hidden rounded-full cursor-pointer "
+                        style={{ width: 40, height: 40 }}
+                      >
+                        <ReactImageFallback
+                          className="min-w-full min-h-full block flex-shrink-0"
+                          src={HOST + "/" + profileUser.avatar}
+                          alt="logo"
+                          fallbackImage="/avata-default.jpg"
+                        />
+                      </div>
+                    </Dropdown>
+                  </div>
+                ) : (
+                  <div className="flex space-x-4 ">
+                    <Link
+                      to="/login"
+                      className="hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium hidden md:block"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium hidden md:block"
+                    >
+                      Register
+                    </Link>
+                  </div>
+                )}
+              </div>
+              <div className="block md:hidden">
+                <SearchMoblie></SearchMoblie>
+              </div>
+            </div>
+          </div>
+
+        </>
+      )}
+    </Disclosure>
+  );
 }

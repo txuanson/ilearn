@@ -2,7 +2,7 @@ import cookie from "js-cookie";
 
 export const auth = () => {
   const user = cookie.get("user");
-  const parsed = JSON.parse(user);
+  const parsed = user ? JSON.parse(user) : "";
   return parsed;
 };
 
@@ -12,7 +12,7 @@ export const login = (user) => {
 };
 
 export const logout = () => {
-  cookie.remove("token");
+  cookie.remove("user");
   window.location.href = "/";
 };
 

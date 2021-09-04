@@ -7,7 +7,8 @@ export default function handleErrorApi(err) {
     const status = err.response.status;
 
     if (status === 401) {
-      //handle 401 error
+      message.error("Unauthorized!");
+      window.location.href = '/';
     }
     if (status === 400) {
       message.error(err.response.data.detail ?? "There was an error!");
