@@ -1,10 +1,11 @@
 import axios from "axios";
 import cookie from "js-cookie";
+import { auth } from "../utils/auth";
 
 const BASE_API = process.env.REACT_APP_BASE_HOST;
 
 export default async function callApi({ url, method, data, option }) {
-  const token = cookie.get("token") ?? "";
+  const token = auth().token;
   return new Promise((resolve, reject) => {
     axios({
       method,

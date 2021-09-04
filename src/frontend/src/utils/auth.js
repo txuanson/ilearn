@@ -1,13 +1,13 @@
 import cookie from "js-cookie";
 
 export const auth = () => {
-  const token = cookie.get("token");
-  console.log(token);
-  return token;
+  const user = cookie.get("user");
+  const parsed = JSON.parse(user);
+  return parsed;
 };
 
-export const login = ({ token }) => {
-  cookie.set("token", token, { expires: 7 });
+export const login = (user) => {
+  cookie.set("user", user, { expires: 7 });
   window.location.href = "/";
 };
 
@@ -16,7 +16,7 @@ export const logout = () => {
   window.location.href = "/";
 };
 
-export const register = ({ token }) => {
-  cookie.set("token", token, { expires: 7 });
+export const register = (user) => {
+  cookie.set("user", user, { expires: 7 });
   window.location.href = "/";
 };
