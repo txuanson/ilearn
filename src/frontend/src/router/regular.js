@@ -1,4 +1,5 @@
-import { Route, Switch } from "react-router-dom"
+import { Route, Switch } from "react-router-dom";
+import { Redirect } from "react-router";
 import SplashRoute from "../components/animation/SplashRoute";
 
 import Login from "../pages/Login";
@@ -15,39 +16,48 @@ import MyLearn from "../pages/MyLearn";
 import handleErrorApi from "../utils/handleErrorApi";
 import { auth } from "../utils/auth";
 
-export default function RegularRoute() {
+export default function RegularRoute({ userData }) {
     const [category, setCategory] = useState([]);
 
-  useEffect(async () => {
-    try {
-      const res = await getAllCategory()
-      setCategory(res);
-      console.log(res)
-    } catch (err) {
-      handleErrorApi(err)
-    }
-  }, []);
+    useEffect(async () => {
+        try {
+            const res = await getAllCategory()
+            setCategory(res);
+            console.log(res)
+        } catch (err) {
+            handleErrorApi(err)
+        }
+    }, []);
     return (
         <HomeLayout>
             <Switch>
                 <Route exact path="/login">
-                    <SplashRoute key="/login">
-                        <Login></Login>
-                    </SplashRoute>
+                    {
+                        userData ?
+                            <Redirect to="/" /> :
+                            <SplashRoute key="/login">
+                                <Login></Login>
+                            </SplashRoute>
+                    }
+
                 </Route>
 
                 <Route exact path="/register">
-                    <SplashRoute key="/register">
-                        <Register></Register>
-                    </SplashRoute>
+                    {
+                        userData ?
+                            <Redirect to="/" /> :
+                            <SplashRoute key="/register">
+                                <Register></Register>
+                            </SplashRoute>
+                    }
                 </Route>
 
                 <Route exact path="/course/:course_id">
                     <SplashRoute key="/course/:course_id">
-                        <CourseDescription user={auth()}/>
+                        <CourseDescription user={auth()} />
                     </SplashRoute>
                 </Route>
-            
+
 
                 <Route exact path="/register">
                     <SplashRoute key="/register">
@@ -60,31 +70,35 @@ export default function RegularRoute() {
                         <HomePage />
                     </SplashRoute>
                 </Route>
-                
+
                 {category.map((item) => (
                     <Route path={"/category/" + item._id}>
-                    <SplashRoute key={"/category/" + item._id}>
-                        <Category idCategory = {item._id} nameCategory = {item.name}></Category>
-                    </SplashRoute>
+                        <SplashRoute key={"/category/" + item._id}>
+                            <Category idCategory={item._id} nameCategory={item.name}></Category>
+                        </SplashRoute>
                     </Route>
-            ))}
+                ))}
 
                 <Route exact path="/profile/:user_id">
                     <SplashRoute key="/profile/:user_id">
-                     <Profile></Profile>
+                        <Profile></Profile>
                     </SplashRoute>
                 </Route>
 
                 <Route exact path="/search">
                     <SplashRoute key="/search">
-                     <Search></Search>
+                        <Search></Search>
                     </SplashRoute>
                 </Route>
 
                 <Route exact path="/learning">
-                    <SplashRoute key="/learning">
-                     <MyLearn></MyLearn>
-                    </SplashRoute>
+                    {
+                        !userData ?
+                            <Redirect to="/" /> :
+                            <SplashRoute key="/learning">
+                                <MyLearn></MyLearn>
+                            </SplashRoute>
+                    }
                 </Route>
             </Switch>
         </HomeLayout>

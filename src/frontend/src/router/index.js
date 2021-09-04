@@ -56,7 +56,7 @@ export default function MyRoute() {
 
                 <Route path="/">
                     <SplashRoute key="/">
-                        <RegularRoute />
+                        <RegularRoute userData={userData}/>
                     </SplashRoute>
                 </Route>
 
