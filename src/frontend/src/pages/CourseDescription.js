@@ -98,7 +98,7 @@ export default function CourseDescription({ user, ...props }) {
             <div style={{ backgroundColor: '#001529' }} className="w-full mx-auto shadow-md overflow-hidden grid place-items-center">
                 <div className="md:hidden block">
                     <div className="relative m-2">
-                        <img src={HOST + '/' + course.cover} alt={course.name} className="h-60 w-full object-cover" />
+                        <img src={HOST + '/' + course.cover} alt={course.name} className="h-60 w-full object-cover"/>
                         <span className="px-1 py-1 text-white bg-red-700 rounded absolute right-0 bottom-0">
                             {course.public ? 'Public' : 'Private'}
                         </span>
@@ -133,7 +133,7 @@ export default function CourseDescription({ user, ...props }) {
                                     </div>
                                     :
                                     <div>
-                                        <Button type="primary" className="font-bold mt-2 px-5 py-2 md:px-2 md:place-items-start place-items-center" onClick={patchSubscribe} style={{ width: 'fit-content', blockSize: 'fit-content' }}>
+                                        <Button type="primary" className="font-bold px-5 mt-2 md:place-items-start place-items-center" onClick={patchSubscribe} >
                                             Subscribe
                                         </Button>
                                     </div>}
@@ -145,7 +145,9 @@ export default function CourseDescription({ user, ...props }) {
                                 {subscriber > 1 ? 'subscribers' : 'subscriber'}
                             </span>
                             <span className="font-bold text-4xl md:text-5xl pr-1">{course.view}</span>
-                            <span>views</span>
+                            <span>
+                            {course.view > 1 ? 'views' : 'view'}
+                            </span>
 
                         </div>
                     </div>
