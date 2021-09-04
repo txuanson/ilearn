@@ -4,8 +4,10 @@ import { postLogin } from "../api/auth";
 import { message } from "antd";
 import { Link } from "react-router-dom";
 import handleErrorApi from "../utils/handleErrorApi";
+import useQuery from "../utils/query";
 
 export function Login() {
+  const query = useQuery();
   const [username, setEnterUsername] = useState("");
   const [password, setEnterPass] = useState("");
   const usernameChangeHandler = (event) => {
@@ -19,6 +21,9 @@ export function Login() {
     try {
       const res = await postLogin({ username: username, password: password });
       login(res);
+      setTimeout(()=>{
+        window.location.href = query.get('redirect') ?? "/";
+      }, 1000);
     } catch (error) {
       handleErrorApi(error);
     }

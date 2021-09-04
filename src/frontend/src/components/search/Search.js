@@ -3,11 +3,7 @@ import CardComponent from "../Card/CardComponent";
 import { useState, useEffect } from "react";
 import { searchCourse } from "../../api/search";
 import handleErrorApi from "../../utils/handleErrorApi";
-import { useLocation } from "react-router";
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
+import useQuery from "../../utils/query";
 
 export default function Search() {
     const query = useQuery();
@@ -20,7 +16,6 @@ export default function Search() {
   
   const fetch = async () => {
     try {
-      console.log(encodeURIComponent(query.get("query")))
       const res = await searchCourse(encodeURIComponent(query.get("query")))
       const { items, items_count } = res;
       setData(items);

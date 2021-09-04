@@ -14,7 +14,6 @@ export default function MyRoute() {
     const getUserData = () => {
         const user = auth();
         const userData = user.user_data ? user.user_data : null;
-        console.log(userData);
         return userData;
     }
 

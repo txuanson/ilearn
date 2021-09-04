@@ -11,9 +11,12 @@ import { getProfileUser } from "../../api/user";
 import SearchMoblie from "../search/SearchMoblie";
 import handleErrorApi from "../../utils/handleErrorApi";
 import { FaUserCircle, FaBook, FaChalkboardTeacher, FaSignOutAlt } from "react-icons/fa";
+import { useLocation } from 'react-router-dom';
 
 
 export default function Header({ user, ...props }) {
+  const location = useLocation();
+
   const [nameCategory, setNameCategory] = useState([]);
   const [profileUser, setProfileUser] = useState([]);
   const [search, setSearch] = useState([]);
@@ -34,7 +37,17 @@ export default function Header({ user, ...props }) {
     }
   }, []);
 
+  const onLogin = () => {
+    setTimeout(() => {
+      window.location.href = `/login?redirect=${location.pathname}`;
+    }, 1000);
+  }
 
+  const onRegister = () => {
+    setTimeout(() => {
+      window.location.href = `/register?redirect=${location.pathname}`;
+    }, 1000);
+  }
 
   const ChangeHandler = (event) => {
     setSearch(event.target.value);
@@ -154,13 +167,13 @@ export default function Header({ user, ...props }) {
                 ) : (
                   <div className="flex space-x-4 ">
                     <Link
-                      to="/login"
+                      onClick={onLogin}
                       className="hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium hidden md:block"
                     >
                       Login
                     </Link>
                     <Link
-                      to="/register"
+                      onClick={onRegister}
                       className="hover:bg-gray-700 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium hidden md:block"
                     >
                       Register

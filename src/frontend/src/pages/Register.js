@@ -3,8 +3,10 @@ import { register } from "../utils/auth";
 import { postRegister } from "../api/auth";
 import { message } from "antd";
 import handleErrorApi from "../utils/handleErrorApi";
+import useQuery from "../utils/query";
 
 export function Register() {
+  const query = useQuery();
   const [email, setEnterEmail] = useState("");
   const [name, setEnterName] = useState("");
   const [username, setEnterUsername] = useState("");
@@ -44,6 +46,9 @@ export function Register() {
           name: name,
         });
         register(res);
+        setTimeout(() => {
+          window.location.href = query.get('redirect') ?? "/";
+        }, 1000);
       } catch (error) {
         handleErrorApi(error);
       }

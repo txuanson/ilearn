@@ -8,15 +8,13 @@ export const auth = () => {
 
 export const login = (user) => {
   cookie.set("user", user, { expires: 7 });
-  window.location.href = "/";
 };
 
 export const logout = () => {
   cookie.remove("user");
-  window.location.href = "/";
+  window.location.reload();
 };
 
 export const register = (user) => {
   cookie.set("user", user, { expires: 7 });
-  window.location.href = "/";
 };
