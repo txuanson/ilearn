@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CardComponent from "./CardComponent";
 import { BookmarkAltOutline } from "heroicons-react";
+import handleErrorApi from "../../utils/handleErrorApi";
 
 export default function CarouselComponent({ idCategory, nameCategory }) {
   var settings = {
@@ -48,7 +49,7 @@ export default function CarouselComponent({ idCategory, nameCategory }) {
       const res = await getCategoryPage(idCategory, 1, 8);
       setData(res.items);
     } catch (err) {
-      (idCategory);
+      handleErrorApi(err);
     }
   }, []);
   return (

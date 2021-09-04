@@ -9,7 +9,6 @@ const { Meta } = Card;
 
 export default function CardHistory({ dataCard }) {
   const HOST = process.env.REACT_APP_BASE_HOST;
-  (dataCard);
   return (
     <div>
       {dataCard ? (

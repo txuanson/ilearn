@@ -11,7 +11,6 @@ import { deleteSection } from "../../api/section";
 
 export default function ListSection(props) {
     const { course_id } = useParams();
-    (course_id);
     const [value, setValue] = useState('');
     const [sections, setSection] = useState([]);
 
@@ -30,7 +29,6 @@ export default function ListSection(props) {
         try {
             const response = await listSection(course_id);
             const { sections } = response;
-            (sections);
             setSection(sections);
         }
         
@@ -40,7 +38,6 @@ export default function ListSection(props) {
     }
     
     const showConfirmDeleteSection = (section_id) => {
-        (section_id);
         confirm({
             title: "Confirm Delete",
             icon: <ExclamationCircleOutlined />,

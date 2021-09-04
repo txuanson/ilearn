@@ -20,7 +20,6 @@ export default function AdminCategory(props) {
   }
 
   const fetchSearchCategory = async (key) => {
-    (key)
     try {
       const res = await getSearchCategoryAdmin(key)
       setCategory(res.items);

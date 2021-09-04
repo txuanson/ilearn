@@ -53,7 +53,6 @@ function Profile() {
     useEffect(() => {
         fetchUserInfo();
     }, []);
-    ("profile: ", profileUser)
 
     return (
         <Layout className="container mx-auto xl:px-40">

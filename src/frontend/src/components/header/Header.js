@@ -55,7 +55,6 @@ export default function Header({ user, ...props }) {
 
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
-      (search);
       window.location.href = "/search?query=" + encodeURIComponent(search);
     }
   };

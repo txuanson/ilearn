@@ -21,12 +21,6 @@ export default function Admin() {
     <Layout className="min-h-screen">
       <Sider
         collapsible
-        onBreakpoint={(broken) => {
-          (broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          (collapsed, type);
-        }}
       >
         <div className="flex justify-center my-4">
           <Link to="/">

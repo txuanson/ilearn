@@ -44,7 +44,6 @@ function UploadAvatar() {
         try {
             
             const formData = new FormData();
-            (avatar);
             formData.append("avatar", avatar);
             
             const res = await putAvatar(formData);  

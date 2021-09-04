@@ -2,6 +2,7 @@ import { Pagination, Row, Col } from "antd";
 import CardComponent from "../Card/CardComponent";
 import { useState, useEffect } from "react";
 import { getCategoryID } from "../../api/homePage";
+import handleErrorApi from "../../utils/handleErrorApi";
 
 
 export default function Category({ idCategory, nameCategory }) {
@@ -19,7 +20,7 @@ export default function Category({ idCategory, nameCategory }) {
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
-      (idCategory);
+      handleErrorApi(err);
     }
   }, []);
   
