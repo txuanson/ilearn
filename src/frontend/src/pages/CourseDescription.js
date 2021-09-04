@@ -55,7 +55,7 @@ export default function CourseDescription({ user, ...props }) {
 
     const patchSubscribe = async () => {
         try {
-            if (course.subscribed) {
+            if (course.subscribed != undefined) {
                 await subscribeCourse(course_id);
                 setPending(true);
                 if (course.public || actor._id == course.tutor._id || actor.role == 10) {
