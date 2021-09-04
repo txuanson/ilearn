@@ -92,7 +92,7 @@ export default function CommentQA() {
             datetime: moment().fromNow(),
             },
         ])
-        console.log(comments);
+        (comments);
 
     };
 

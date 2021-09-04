@@ -2,7 +2,7 @@ import { message } from "antd";
 
 export default function handleErrorApi(err) {
   if (!err.response || !err.response.status) {
-    console.log(err);
+    (err);
   } else {
     const status = err.response.status;
 
@@ -15,7 +15,7 @@ export default function handleErrorApi(err) {
 
       //   window.location.href = '/500'
 
-      console.log(err);
+      (err);
     } else if (status === 403) {
       message.error(err.response.data.message ?? "There was an error!");
       setTimeout(() => {
@@ -26,7 +26,7 @@ export default function handleErrorApi(err) {
     } else if (status === 429) {
       message.warning("Too fast, try again.");
     } else {
-      console.log(err);
+      (err);
       message.error(err.response.data.message ?? "There was an error!");
     }
   }

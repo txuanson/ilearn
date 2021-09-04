@@ -13,8 +13,8 @@ function ReadMore({ children, maxCharCount = 200 }) {
 
     function toggleIsTruncated() {
         setIsTruncated (!isTruncated);
-        // console.log(text)
-        // console.log(res)
+        // (text)
+        // (res)
     }
     return (
         <div>

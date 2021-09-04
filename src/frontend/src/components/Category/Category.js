@@ -19,7 +19,7 @@ export default function Category({ idCategory, nameCategory }) {
       setMinValue(0);
       setMaxValue(pageSize);
     } catch (err) {
-      console.log(idCategory);
+      (idCategory);
     }
   }, []);
   

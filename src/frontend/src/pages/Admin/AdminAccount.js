@@ -13,7 +13,7 @@ export default function AdminAccount(props) {
   const pageSize = 10;
 
   const onSearch = (value) => {
-    console.log(value);
+    (value);
     fetchUser(value);
   };
 

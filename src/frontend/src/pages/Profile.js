@@ -42,7 +42,7 @@ function Profile() {
     // useEffect(async () => {
     const fetchUserInfo = async () => {
         try {
-            // console.log(user_id);
+            // (user_id);
             const res = await getUserInfo(user_id);
             setProfileUser(res);
         } catch (error) {
@@ -53,7 +53,7 @@ function Profile() {
     useEffect(() => {
         fetchUserInfo();
     }, []);
-    console.log("profile: ", profileUser)
+    ("profile: ", profileUser)
 
     return (
         <Layout className="container mx-auto xl:px-40">

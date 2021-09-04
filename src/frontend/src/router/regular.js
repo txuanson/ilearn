@@ -23,7 +23,7 @@ export default function RegularRoute({ userData }) {
         try {
             const res = await getAllCategory()
             setCategory(res);
-            console.log(res)
+            (res)
         } catch (err) {
             handleErrorApi(err)
         }

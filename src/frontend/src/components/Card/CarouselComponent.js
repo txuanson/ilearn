@@ -48,7 +48,7 @@ export default function CarouselComponent({ idCategory, nameCategory }) {
       const res = await getCategoryPage(idCategory, 1, 8);
       setData(res.items);
     } catch (err) {
-      console.log(idCategory);
+      (idCategory);
     }
   }, []);
   return (

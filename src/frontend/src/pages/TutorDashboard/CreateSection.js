@@ -54,7 +54,7 @@ export default function CreateSection() {
             }
         }
         catch (err) {
-            console.log(err);
+            (err);
             handleErrorApi(err);
         }
     }
@@ -62,7 +62,7 @@ export default function CreateSection() {
     const appendEditData = async (section_id) => {
         try {
             const res = await getSectionInfoTutor(section_id);
-            console.log(res.start_time)
+            (res.start_time)
             form.setFieldsValue(mapSectionIntoForm(res))
         }
         catch (err) {

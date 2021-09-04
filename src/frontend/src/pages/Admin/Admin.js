@@ -22,10 +22,10 @@ export default function Admin() {
       <Sider
         collapsible
         onBreakpoint={(broken) => {
-          console.log(broken);
+          (broken);
         }}
         onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
+          (collapsed, type);
         }}
       >
         <div className="flex justify-center my-4">
