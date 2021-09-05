@@ -5,7 +5,7 @@ import { Modal } from 'antd';
 import handleErrorApi from '../../utils/handleErrorApi';
 
 
-export default function DeleteCategory({id, fetch}) {
+export default function DeleteCategory({id, fetch, valuePagination}) {
     const [visible, setVisible] = useState(false);
 
 
@@ -15,7 +15,7 @@ export default function DeleteCategory({id, fetch}) {
         const res = await deleteCategory(id)
         setVisible(false)
         message.success("Category delete successfully!");
-        fetch("")
+        fetch("", valuePagination);
       } catch (error) {
         handleErrorApi(error)
       }

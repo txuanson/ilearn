@@ -16,7 +16,7 @@ const layout = {
 };
 
 
-export default function AddCategory({fetch}) {
+export default function AddCategory({fetch, valuePagination}) {
     const [nameCategory, setNameCategory] = useState();
     const [visible, setVisible] = useState(false);
 
@@ -31,7 +31,7 @@ export default function AddCategory({fetch}) {
         const res = await addCategory({name: nameCategory});
         setVisible(false);
         message.success("Category added successfully!");
-        fetch("");
+        fetch("", valuePagination);
       } catch (error) {
         handleErrorApi(error)
       }

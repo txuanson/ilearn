@@ -16,7 +16,7 @@ const layout = {
 };
 
 
-export default function EditCategory({id, name, fetch}) {
+export default function EditCategory({id, name, fetch, valuePagination}) {
   const { width } = useWindowSize();
 
     const [nameCategory, setNameCategory] = useState(name);
@@ -31,9 +31,9 @@ export default function EditCategory({id, name, fetch}) {
         const res = await editCategory(id, {name: nameCategory});
         setVisible(false);
         message.success("Category edit successfully!");
-        fetch("");
+        fetch("", valuePagination);
       } catch (error) {
-        handleErrorApi(error)
+        handleErrorApi(error);
       }
 
     };

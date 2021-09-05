@@ -10,39 +10,44 @@ import handleErrorApi from "../../utils/handleErrorApi";
 
 export default function AdminCategory(props) {
   const [category, setCategory] = useState([]);
-  const [minValue, setMinValue] = useState([]);
-  const [maxValue, setMaxValue] = useState([]);
+  const [search, setSearch] = useState("");
+  // const [minValue, setMinValue] = useState([]);
+  // const [maxValue, setMaxValue] = useState([]);
   const [itemCount, setItemCount] = useState(10);
+  const [valuePagination, setValuePagination] = useState(1);
   const pageSize = 10;
 
   const onSearch = (value) => {
-    fetchSearchCategory(value);
+    setSearch(value);
+    fetchSearchCategory(value, 1);
   }
 
-  const fetchSearchCategory = async (key) => {
+  const fetchSearchCategory = async (key, page) => {
     try {
-      const res = await getSearchCategoryAdmin(key)
+      const res = await getSearchCategoryAdmin(key, page, pageSize);
       setCategory(res.items);
       setItemCount(res.items_count);
-      setMinValue(0);
-      setMaxValue(pageSize);
+      // setMinValue(0);
+      // setMaxValue(pageSize);
     } catch (err) {
       handleErrorApi(err);
     }
   };
 
   useEffect(() => {
-    fetchSearchCategory("");
+    fetchSearchCategory("", 1);
   }, []);
 
   const handleChange = (value) => {
-    if (value <= 1) {
-      setMinValue(0);
-      setMaxValue(pageSize);
-    } else {
-      setMinValue((value - 1) * pageSize);
-      setMaxValue(value * pageSize);
-    }
+    // if (value <= 1) {
+    //   setMinValue(0);
+    //   setMaxValue(pageSize);
+    // } else {
+    //   setMinValue((value - 1) * pageSize);
+    //   setMaxValue(value * pageSize);
+    // }
+    setValuePagination(value);
+    fetchSearchCategory(search, value);
   };
 
   const columns = [
@@ -66,8 +71,9 @@ export default function AdminCategory(props) {
             id={child._id}
             name={child.name}
             fetch={fetchSearchCategory}
+            valuePagination={valuePagination}
           ></EditCategory>
-          <DeleteCategory id={child._id} fetch={fetchSearchCategory}></DeleteCategory>
+          <DeleteCategory id={child._id} fetch={fetchSearchCategory} valuePagination={valuePagination}></DeleteCategory>
         </Space>
       ),
     },
@@ -91,10 +97,10 @@ export default function AdminCategory(props) {
           allowClear
           onSearch={onSearch}
         />
-        <AddCategory fetch={fetchSearchCategory}></AddCategory>
+        <AddCategory fetch={fetchSearchCategory} valuePagination={valuePagination}></AddCategory>
       </Row>
       <Table
-        dataSource={category.slice(minValue, maxValue)}
+        dataSource={category}
         pagination={false}
         scroll={{ x: "fit-content" }}
         columns={columns}

@@ -7,20 +7,22 @@ import handleErrorApi from "../../utils/handleErrorApi";
 
 export default function AdminAccount(props) {
   const [user, setUser] = useState([]);
-  const [minValue, setMinValue] = useState([]);
-  const [maxValue, setMaxValue] = useState([]);
+  const [search, setSearch] = useState("");
+  // const [minValue, setMinValue] = useState([]);
+  // const [maxValue, setMaxValue] = useState([]);
   const [itemCount, setItemCount] = useState(10);
   const pageSize = 10;
 
   const onSearch = (value) => {
-    fetchUser(value);
+    setSearch(value);
+    fetchUser(value, 1);
   };
 
-  const fetchUser = async (key) => {
+  const fetchUser = async (key, page) => {
     try {
-      const res = await getUser(key);
+      const res = await getUser(key, page, pageSize);
 
-      setMinValue(0);
+      // setMinValue(0);
       setItemCount(res.items_count);
       res.items.map((items) => {
         if (items.role == 10) items.role = "Admin";
@@ -32,24 +34,25 @@ export default function AdminAccount(props) {
 
       setUser(res.items);
 
-      setMaxValue(pageSize);
+      // setMaxValue(pageSize);
     } catch (err) {
       handleErrorApi(err);
     }
   };
 
   useEffect(() => {
-    fetchUser("");
+    fetchUser("", 1);
   }, []);
 
   const handleChange = (value) => {
-    if (value <= 1) {
-      setMinValue(0);
-      setMaxValue(pageSize);
-    } else {
-      setMinValue((value - 1) * pageSize);
-      setMaxValue(value * pageSize);
-    }
+    // if (value <= 1) {
+    //   setMinValue(0);
+    //   setMaxValue(pageSize);
+    // } else {
+    //   setMinValue((value - 1) * pageSize);
+    //   setMaxValue(value * pageSize);
+    // }
+    fetchUser(search, value);
   };
 
   const columns = [
@@ -100,7 +103,7 @@ export default function AdminAccount(props) {
         onSearch={onSearch}
       />
       <Table
-        dataSource={user.slice(minValue, maxValue)}
+        dataSource={user}
         pagination={false}
         scroll={{ x: "fit-content" }}
         columns={columns}

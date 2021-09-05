@@ -8,19 +8,21 @@ import handleErrorApi from "../../utils/handleErrorApi";
 
 export default function AdminCourse(props) {
   const [course, setCourse] = useState([]);
-  const [minValue, setMinValue] = useState([]);
-  const [maxValue, setMaxValue] = useState([]);
+  const [search, setSearch] = useState("");
+  // const [minValue, setMinValue] = useState([]);
+  // const [maxValue, setMaxValue] = useState([]);
   const [itemCount, setItemCount] = useState(10);
   const pageSize = 10;
 
   const onSearch = (value) => {
-    fetchCourse(value);
+    setSearch(value);
+    fetchCourse(value, 1);
   };
 
-  const fetchCourse = async (key) => {
+  const fetchCourse = async (key, page) => {
     try {
-      const res = await getCourseAdmin(key);
-      setMinValue(0);
+      const res = await getCourseAdmin(key, page, pageSize);
+      //setMinValue(0);
       setItemCount(res.items_count);
       res.items.map((items) => {
         if (items.public == false) items.public = "Private";
@@ -31,7 +33,7 @@ export default function AdminCourse(props) {
 
       setCourse(res.items);
 
-      setMaxValue(pageSize);
+      //setMaxValue(pageSize);
     } catch (err) {
       handleErrorApi(err);
     }
@@ -60,17 +62,18 @@ export default function AdminCourse(props) {
   ];
 
   const handleChange = (value) => {
-    if (value <= 1) {
-      setMinValue(0);
-      setMaxValue(pageSize);
-    } else {
-      setMinValue((value - 1) * pageSize);
-      setMaxValue(value * pageSize);
-    }
+    // if (value <= 1) {
+    //   setMinValue(0);
+    //   setMaxValue(pageSize);
+    // } else {
+    //   setMinValue((value - 1) * pageSize);
+    //   setMaxValue(value * pageSize);
+    // }
+    fetchCourse(search, value);
   };
 
   useEffect(() => {
-    fetchCourse("");
+    fetchCourse("", 1);
   }, []);
   return (
     <Layout>
@@ -91,7 +94,7 @@ export default function AdminCourse(props) {
         onSearch={onSearch}
       />
       <Table
-        dataSource={course.slice(minValue, maxValue)}
+        dataSource={course}
         pagination={false}
         scroll={{ x: "fit-content" }}
         columns={columns}
