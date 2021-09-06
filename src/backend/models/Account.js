@@ -43,7 +43,11 @@ const accountSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Section'
         }
-    }]
+    }],
+    banned:{
+        type: Date,
+        default: Date.now
+    }
     // ,
     // courses: [
     //     {

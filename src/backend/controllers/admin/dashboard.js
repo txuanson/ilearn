@@ -20,7 +20,9 @@ const dashboard = asyncCatch(async (req, res, next) => {
             },
             create_at: "$createdAt",
             subscriber: { $size: "$subscriber" }
-        });
+        })
+        .sort({ create_at: -1 })
+        .limit(5);
     res.send({
         course_count: courseCount,
         new_course_count: newCourseCount,

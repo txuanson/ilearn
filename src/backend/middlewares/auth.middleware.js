@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { Unauthorized } = require("../helpers/response");
+const { Unauthorized, Forbidden } = require("../helpers/response");
 const { asyncCatch } = require("../helpers/utils");
 const { JWT_SECRET } = require('../configs/env');
 const Account = require('../models/Account');
@@ -17,8 +17,9 @@ module.exports = asyncCatch(async (req, res, next) => {
 			else
 				decodedData = decoded;
 		});
-		const user_data = await Account.findById(decodedData._id, "_id username email role").lean().exec()
+		const user_data = await Account.findById(decodedData._id, "_id username email role banned").lean().exec()
 		if(!user_data) throw new Unauthorized("Unauthorized!");
+		if(user_data.banned > Date.now()) throw new Forbidden(`You have been banned until ${user_data.banned}`);
 		req.user_data = user_data;
 	}
 	next();

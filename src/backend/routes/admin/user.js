@@ -26,7 +26,24 @@ const user = require('../../controllers/admin/account');
  *         schema:
  *           type: integer
  *         description: Page Size 
+ *   /admin/user/ban:
+ *     post:
+ *       summary: Ban an user except Admin!
+ *       tags:
+ *         - admin
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user_id:
+ *                   type: string
+ *                 amount:
+ *                   type: integer
  */
  router.get('/', user.find);
+ router.post('/ban', user.ban);
 
  module.exports = router;

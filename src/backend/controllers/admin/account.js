@@ -1,6 +1,8 @@
-const { PAGE_SIZE } = require("../../configs/env");
+const { Admin } = require("../../configs/role");
+const { BadReqest } = require("../../helpers/response");
 const { asyncCatch, pagination } = require("../../helpers/utils");
 const Account = require('../../models/Account');
+const accountBanValidator = require("../../validators/accountBan.validator");
 const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
 
 const listAccount = asyncCatch(async (req, res, next) => {
@@ -50,7 +52,23 @@ const findAccount = asyncCatch(async (req, res, next) => {
     });
 })
 
+const banAccount = asyncCatch(async (req, res, next) => {
+    const { error, value } = accountBanValidator.validate(req.body);
+    if (error) {
+        throw new BadRequest(error.message);
+    }
+
+    const { user_id, amount } = value;
+    const user = await Account.findById(user_id, "role").exec();
+    if (user.role === Admin) throw new BadReqest("You can not ban an ADMIN!");
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + amount);
+    await Account.updateOne({ _id: user_id }, { banned: currentDate });
+    res.send("Success!");
+})
+
 module.exports = {
     list: listAccount,
-    find: findAccount
+    find: findAccount,
+    ban: banAccount
 }
