@@ -17,3 +17,6 @@ export const getUser = (key, page, page_size) =>
 
 export const getCourseAdmin = (key, page, page_size) =>
     callApi({url: `/admin/course?query=${key}&page=${page}&page_size=${page_size}`, method:'GET'});
+    
+export const getDashboard = () =>
+    callApi({ url: `/admin/dashboard`, method: 'GET'});
