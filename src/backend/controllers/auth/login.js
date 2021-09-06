@@ -10,7 +10,7 @@ module.exports = asyncCatch(async (req, res, next) => {
     if (error)
         throw new BadReqest(error.message);
     const account = await Account.findOne({ username: value.username }, 'name username password avatar role banned').exec();
-    if (banned > Date.now()) throw new Forbidden(`You have been banned until ${banned}`);
+    if (account.banned > Date.now()) throw new Forbidden(`You have been banned until ${account.banned}`);
     if (!account)
         throw new BadReqest('Wrong username or password!');
 
