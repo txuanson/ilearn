@@ -51,6 +51,6 @@ const accountSchema = new mongoose.Schema({
     //         ref: 'Course'
     //     }
     // ]
-})
+}, { timestamp: true })
 
 module.exports = mongoose.model('Account', accountSchema);
