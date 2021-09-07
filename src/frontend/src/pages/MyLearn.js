@@ -9,7 +9,7 @@ export default function MyLearn() {
   const [minValue, setMinValue] = useState([]);
   const [maxValue, setMaxValue] = useState([]);
   const [itemCount, setItemCount] = useState(10);
-  const pageSize = 20;
+  const pageSize = 16;
 
   const handleChange = (value) => {
     if (value <= 1) {

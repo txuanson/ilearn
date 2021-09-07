@@ -98,7 +98,6 @@ export default function AdminDashBoard(props) {
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             </Breadcrumb>
-            <Search className="py-2 md:w-1/5 w-full" placeholder="Search" enterButton="Search" allowClear />
             <div className="site-card-wrapper my-5 flex md:flex-row flex-col">
                 <Card title="Accounts" bordered={false} style={{backgroundColor:'#FA306C', color:'#fff'}} className="text-center md:p-5 md:mx-2 mb-2">
                     <span className="text-3xl font-bold">{accountCount}</span>

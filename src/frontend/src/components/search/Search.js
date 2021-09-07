@@ -9,42 +9,43 @@ export default function Search() {
     const query = useQuery();
 
   const [data, setData] = useState([]);
-  const [minValue, setMinValue] = useState([]);
-  const [maxValue, setMaxValue] = useState([]);
+  // const [minValue, setMinValue] = useState([]);
+  // const [maxValue, setMaxValue] = useState([]);
   const [itemCount, setItemCount] = useState(10);
   const pageSize = 16;
   
-  const fetch = async () => {
+  const fetch = async (page) => {
     try {
-      const res = await searchCourse(encodeURIComponent(query.get("query")))
+      const res = await searchCourse(encodeURIComponent(query.get("query")), page, pageSize)
       const { items, items_count } = res;
       setData(items);
       setItemCount(items_count);
-      setMinValue(0);
-      setMaxValue(pageSize);
+      // setMinValue(0);
+      // setMaxValue(pageSize);
     } catch (err) {
       handleErrorApi(err)
     }
   }
   
   const handleChange = (value) => {
-    if (value <= 1) {
-      setMinValue(0);
-      setMaxValue(pageSize);
-    } else {
-      setMinValue((value - 1) * pageSize);
-      setMaxValue(value * pageSize);
-    }
+    // if (value <= 1) {
+    //   setMinValue(0);
+    //   setMaxValue(pageSize);
+    // } else {
+    //   setMinValue((value - 1) * pageSize);
+    //   setMaxValue(value * pageSize);
+    // }
+    fetch(value);
   };
   useEffect(() => {
-    fetch();
+    fetch(1);
   }, []);
   return (
     <div className="relative">
       <div className="container mx-auto xl:px-40">
         <div className="p-4 pb-0 font-bold text-lg">Search: {query.get("query")}</div>
         <Row>
-          {data.slice(minValue, maxValue).map((item) => (
+          {data.map((item) => (
             <Col xl={6} lg={6} md={8} xs={12} sm={12}>
               <div className="p-2">
                 <CardComponent
