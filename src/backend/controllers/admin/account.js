@@ -5,21 +5,6 @@ const Account = require('../../models/Account');
 const accountBanValidator = require("../../validators/accountBan.validator");
 const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
 
-const listAccount = asyncCatch(async (req, res, next) => {
-    const pagi = pagination(req.query.page);
-
-    const items = await Account.find({}, "_id name username email")
-        .skip(pagi.skip)
-        .limit(pagi.limit)
-        .exec();
-    const itemsCount = await Account.estimatedDocumentCount().exec();
-
-    res.send({
-        items,
-        items_count: itemsCount
-    });
-});
-
 const findAccount = asyncCatch(async (req, res, next) => {
     const { error, value } = queryWithPagiValidator.validate(req.query);
     if (error) {
@@ -29,12 +14,21 @@ const findAccount = asyncCatch(async (req, res, next) => {
     const { query, page, page_size } = value;
     const pagi = pagination(page, page_size);
 
-    const items = await Account.find({
-        username: {
-            $regex: query, $options: "i"
-        }
-    },
-        "_id name username email role")
+    const items = await Account.aggregate()
+        .match({
+            username: {
+                $regex: query, $options: "i"
+            }
+        }).project({
+            _id: 1,
+            name: 1,
+            username: 1,
+            email: 1,
+            role: 1,
+            banned: {
+                $cond: [{ $gt: ["$banned", "$$NOW"] }, true, false]
+            }
+        })
         .skip(pagi.skip)
         .limit(pagi.limit)
         .exec();
@@ -68,7 +62,6 @@ const banAccount = asyncCatch(async (req, res, next) => {
 })
 
 module.exports = {
-    list: listAccount,
     find: findAccount,
     ban: banAccount
 }
