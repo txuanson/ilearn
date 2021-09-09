@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import Search from "antd/lib/input/Search";
 import { getUser } from "../../api/admin";
 import handleErrorApi from "../../utils/handleErrorApi";
+import BanAccount from "./BanAccount";
 
 export default function AdminAccount(props) {
   const [user, setUser] = useState([]);
   const [search, setSearch] = useState("");
+  const [valuePagination, setValuePagination] = useState(1);
   // const [minValue, setMinValue] = useState([]);
   // const [maxValue, setMaxValue] = useState([]);
   const [itemCount, setItemCount] = useState(10);
@@ -52,6 +54,7 @@ export default function AdminAccount(props) {
     //   setMinValue((value - 1) * pageSize);
     //   setMaxValue(value * pageSize);
     // }
+    setValuePagination(value);
     fetchUser(search, value);
   };
 
@@ -78,9 +81,18 @@ export default function AdminAccount(props) {
     },
     {
       title: "Action",
-      key: "action",
+      key: "banned",
       width: 100,
-      render: (child) => <Space size="middle">Ban</Space>,
+      render: (child) => (
+        <>
+          <BanAccount
+            id={child._id}
+            fetch={fetchUser}
+            valuePagination={valuePagination}
+            Ban={child.banned}
+          ></BanAccount>
+        </>
+      ),
     },
   ];
 

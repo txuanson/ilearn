@@ -20,3 +20,6 @@ export const getCourseAdmin = (key, page, page_size) =>
     
 export const getDashboard = () =>
     callApi({ url: `/admin/dashboard`, method: 'GET'});
+
+export const banAccount = (data) =>
+    callApi({ url: `/admin/user/ban`, method: 'POST', data});
