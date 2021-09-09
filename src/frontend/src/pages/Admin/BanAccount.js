@@ -5,21 +5,25 @@ import { Modal } from "antd";
 import handleErrorApi from "../../utils/handleErrorApi";
 
 export default function BanAccount({ id, fetch, valuePagination, Ban }) {
-  const [dayDuration, setDayDuration] = useState(-1);
+  const [dayDuration, setDayDuration] = useState(3);
   const [visible, setVisible] = useState(false);
 
   const ChangeHandler = (value) => {
     setDayDuration(value);
   };
 
-  const onBan = async () => {
+  const onUnban = () => {
+    onBan(-1);
+  }
+
+  const onBan = async (day) => {
     try {
-      const res = await banAccount({ amount: dayDuration, user_id: id });
+      const res = await banAccount({ amount: day, user_id: id });
       setVisible(false);
       if (Ban) message.success("Unban account successfully!");
       else message.success("Ban account successfully!");
       fetch("", valuePagination);
-      setDayDuration(-1);
+      setDayDuration(3);
     } catch (error) {
       handleErrorApi(error);
     }
@@ -36,7 +40,7 @@ export default function BanAccount({ id, fetch, valuePagination, Ban }) {
             title="Unban Account"
             centered
             visible={visible}
-            onOk={() => onBan()}
+            onOk={() => onUnban()}
             onCancel={() => setVisible(false)}
             okText="Confirm"
             width={500}
@@ -53,7 +57,7 @@ export default function BanAccount({ id, fetch, valuePagination, Ban }) {
             title="Ban Account"
             centered
             visible={visible}
-            onOk={() => onBan()}
+            onOk={() => onBan(dayDuration)}
             onCancel={() => setVisible(false)}
             okText="Confirm"
             width={300}
