@@ -5,6 +5,7 @@ import Column from "antd/lib/table/Column";
 import Search from "antd/lib/input/Search";
 import { getCourseAdmin } from "../../api/admin";
 import handleErrorApi from "../../utils/handleErrorApi";
+import DeleteCourse from "./DeleteCourese";
 
 export default function AdminCourse(props) {
   const [course, setCourse] = useState([]);
@@ -12,6 +13,7 @@ export default function AdminCourse(props) {
   // const [minValue, setMinValue] = useState([]);
   // const [maxValue, setMaxValue] = useState([]);
   const [itemCount, setItemCount] = useState(10);
+  const [valuePagination, setValuePagination] = useState(1);
   const pageSize = 10;
 
   const onSearch = (value) => {
@@ -59,6 +61,16 @@ export default function AdminCourse(props) {
       dataIndex: "public",
       key: "public",
     },
+    {
+      title: "Action",
+      key: "action",
+      width: 100,
+      render: (child) => (
+        <Space size="middle">
+          <DeleteCourse id={child._id} fetch={fetchCourse} valuePagination={valuePagination}></DeleteCourse>
+        </Space>
+      ),
+    },
   ];
 
   const handleChange = (value) => {
@@ -69,6 +81,7 @@ export default function AdminCourse(props) {
     //   setMinValue((value - 1) * pageSize);
     //   setMaxValue(value * pageSize);
     // }
+    setValuePagination(value);
     fetchCourse(search, value);
   };
 
