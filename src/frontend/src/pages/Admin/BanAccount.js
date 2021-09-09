@@ -1,6 +1,6 @@
-import { message, Button, Input } from "antd";
+import { message, Button, Input, InputNumber } from "antd";
 import React, { useState } from "react";
-import { banAccount, deleteCategory } from "../../api/admin";
+import { banAccount } from "../../api/admin";
 import { Modal } from "antd";
 import handleErrorApi from "../../utils/handleErrorApi";
 
@@ -8,8 +8,8 @@ export default function BanAccount({ id, fetch, valuePagination, Ban }) {
   const [dayDuration, setDayDuration] = useState(-1);
   const [visible, setVisible] = useState(false);
 
-  const ChangeHandler = (event) => {
-    setDayDuration(event.target.value);
+  const ChangeHandler = (value) => {
+    setDayDuration(value);
   };
 
   const onBan = async () => {
@@ -40,7 +40,9 @@ export default function BanAccount({ id, fetch, valuePagination, Ban }) {
             onCancel={() => setVisible(false)}
             okText="Confirm"
             width={500}
-          ><h1 className = "text-center ">Are you sure you want to unban?</h1></Modal>
+          >
+            <h1 className="text-center ">Are you sure you want to unban?</h1>
+          </Modal>
         </>
       ) : (
         <>
@@ -54,13 +56,22 @@ export default function BanAccount({ id, fetch, valuePagination, Ban }) {
             onOk={() => onBan()}
             onCancel={() => setVisible(false)}
             okText="Confirm"
-            width={500}
+            width={300}
           >
-            <Input
+            {/* <Input
               placeholder="Ban duration"
               value={dayDuration}
               onChange={ChangeHandler}
-            />
+            /> */}
+            <div style={{ textAlign: "center" }}>
+              <InputNumber
+                style={{ width: 150 }}
+                min={1}
+                max={100000}
+                defaultValue={3}
+                onChange={ChangeHandler}
+              />
+            </div>
           </Modal>
         </>
       )}
