@@ -4,6 +4,7 @@ const { asyncCatch, pagination } = require("../../helpers/utils");
 const Account = require('../../models/Account');
 const accountBanValidator = require("../../validators/accountBan.validator");
 const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
+const escapeStringRgx = require('escape-string-regexp');
 
 const findAccount = asyncCatch(async (req, res, next) => {
     const { error, value } = queryWithPagiValidator.validate(req.query);
@@ -12,12 +13,14 @@ const findAccount = asyncCatch(async (req, res, next) => {
     }
 
     const { query, page, page_size } = value;
+    const regexStr = escapeStringRgx(query);
+    const $regex = new RegExp(regexStr, "i");
     const pagi = pagination(page, page_size);
 
     const items = await Account.aggregate()
         .match({
             username: {
-                $regex: query, $options: "i"
+                $regex
             }
         }).project({
             _id: 1,
@@ -35,7 +38,7 @@ const findAccount = asyncCatch(async (req, res, next) => {
 
     const itemsCount = await Account.countDocuments({
         username: {
-            $regex: query, $options: "i"
+            $regex
         }
     })
         .exec();

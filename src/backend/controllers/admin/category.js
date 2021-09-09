@@ -3,8 +3,8 @@ const { asyncCatch, pagination } = require("../../helpers/utils");
 const cateCreateValidator = require("../../validators/cateCreate.validator");
 const Category = require('../../models/Category');
 const Course = require("../../models/Course");
-const { PAGE_SIZE } = require("../../configs/env");
 const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
+const escapeStringRgx = require('escape-string-regexp');
 
 const getCategory = asyncCatch(async (req, res, next) => {
     const { error, value } = queryWithPagiValidator.validate(req.query);
@@ -13,11 +13,13 @@ const getCategory = asyncCatch(async (req, res, next) => {
     }
 
     const { query, page, page_size } = value;
-    const pagi = pagination(page, page_size);
 
+    const pagi = pagination(page, page_size);
+    const regexStr = escapeStringRgx(query);
+    const $regex = new RegExp(regexStr, "i");
     const items = await Category.aggregate()
         .match({
-            "name": { $regex: query, $options: "i" }
+            "name": { $regex }
         })
         .lookup({ from: 'courses', localField: '_id', foreignField: 'category', as: 'courses' })
         .project({
@@ -31,7 +33,7 @@ const getCategory = asyncCatch(async (req, res, next) => {
 
     const items_count = await Category.countDocuments({
         name: {
-            $regex: query, $options: "i"
+            $regex
         }
     })
         .exec();

@@ -2,6 +2,7 @@ const { BadReqest } = require("../../helpers/response");
 const { asyncCatch, pagination } = require("../../helpers/utils");
 const Course = require("../../models/Course");
 const queryWithPagiValidator = require("../../validators/queryWithPagi.validator");
+const escapeStringRgx = require('escape-string-regexp');
 
 const getCourseAdmin = asyncCatch(async (req, res, next) => {
     const { error, value } = queryWithPagiValidator.validate(req.query);
@@ -10,10 +11,12 @@ const getCourseAdmin = asyncCatch(async (req, res, next) => {
     }
 
     const { query, page, page_size } = value;
+    const regexStr = escapeStringRgx(query);
+    const $regex = new RegExp(regexStr, "i");
     const pagi = pagination(page, page_size);
 
     const items = await Course.aggregate()
-        .match({ "name": { $regex: query, $options: "i" } })
+        .match({ "name": { $regex } })
         .project({
             _id: 1,
             name: 1,
@@ -28,7 +31,7 @@ const getCourseAdmin = asyncCatch(async (req, res, next) => {
 
     const items_count = await Course.countDocuments({
         name: {
-            $regex: query, $options: "i"
+            $regex
         }
     })
         .exec();

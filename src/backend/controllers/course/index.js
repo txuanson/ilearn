@@ -14,6 +14,7 @@ const queryWithPagiValidator = require("../../validators/queryWithPagi.validator
 const getCurrentSectionValidator = require("../../validators/getCurrentSection.validator");
 const Account = require("../../models/Account");
 const courseUserActionValidator = require("../../validators/courseUserAction.validator");
+const escapeStringRgx = require('escape-string-regexp');
 
 const getCourseByName = asyncCatch(async (req, res, next) => {
     const { error, value } = queryWithPagiValidator.validate(req.query);
@@ -22,10 +23,12 @@ const getCourseByName = asyncCatch(async (req, res, next) => {
     }
 
     const { query, page, page_size } = value;
+    const regexStr = escapeStringRgx(query);
+    const $regex = new RegExp(regexStr, "i");
     const pagi = pagination(page, page_size);
 
     const items = await Course.aggregate()
-        .match({ name: { $regex: query, $options: "i" } })
+        .match({ name: { $regex } })
         .lookup({ from: 'accounts', localField: 'tutor', foreignField: '_id', as: 'tutor' })
         .lookup({ from: 'categories', localField: 'category', foreignField: '_id', as: 'category' })
         .unwind('category')
@@ -51,7 +54,7 @@ const getCourseByName = asyncCatch(async (req, res, next) => {
 
     const itemsCount = await Course.countDocuments({
         name: {
-            $regex: query, $options: "i"
+            $regex
         }
     })
         .exec();
@@ -158,11 +161,13 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
     }
 
     const { query, page, page_size } = value;
+    const regexStr = escapeStringRgx(query);
+    const $regex = new RegExp(regexStr, "i");
     const user_id = req.user_data._id;
     const pagi = pagination(page, page_size);
 
     const items = await Course.aggregate()
-        .match({ "tutor": user_id, "name": { $regex: query, $options: "i" } })
+        .match({ "tutor": user_id, "name": { $regex } })
         .project({
             _id: 1,
             name: 1,
@@ -178,7 +183,7 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
     const items_count = await Course.countDocuments({
         tutor: user_id,
         name: {
-            $regex: query, $options: "i"
+            $regex
         }
     })
         .exec();
@@ -428,7 +433,7 @@ const banUser = asyncCatch(async (req, res, next) => {
     if (error) {
         throw new BadReqest(error.message);
     }
-    const { user_id} = value;
+    const { user_id } = value;
     await Course.updateOne({ _id: course_id }, {
         $pull: {
             pending: user_id
