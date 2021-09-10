@@ -13,6 +13,7 @@ import {
   FolderOpenOutlined
 } from "@ant-design/icons";
 import AdminCategory from "./AdminCategory";
+import AdminCover from "./AdminCover";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -42,6 +43,9 @@ export default function Admin() {
           <Menu.Item key="4" icon={<FolderOpenOutlined />}>
             <Link to="/admin/category">Category</Link>
           </Menu.Item>
+          <Menu.Item key="5" icon={<FolderOpenOutlined />}>
+            <Link to="/admin/cover">Cover</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>
@@ -70,6 +74,11 @@ export default function Admin() {
                   <SplashRoute key="/admin/account">
                       <AdminAccount />
                   </SplashRoute>   
+              </Route>
+              <Route path="/admin/cover">
+                  <SplashRoute key="/admin/cover">
+                    <AdminCover />
+                  </SplashRoute>
               </Route>
               <Route path="/admin">
                   <SplashRoute key="/admin">

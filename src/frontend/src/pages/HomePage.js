@@ -7,8 +7,8 @@ export default function HomePage() {
     <div className="relative">
       <div className="container mx-auto xl:px-40 bg-gray-10 pb-5">
         <div
-          className="flex item-center justify-center h-96 w-auto hidden md:block pg-cover"
-          style={{ backgroundImage: 'url("/backgroundHeader.jpg")' }}
+          className="flex item-center justify-center h-96 w-auto hidden md:block bg-auto bg-no-repeat bg-center"
+          style={{ backgroundImage: 'url("https://ilearn.yurineko.net/storage/cover.jpeg")' }}
         >
           <div
             className="flex items-center justify-center w-full h-full"

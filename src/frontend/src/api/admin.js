@@ -23,3 +23,6 @@ export const getDashboard = () =>
 
 export const banAccount = (data) =>
     callApi({ url: `/admin/user/ban`, method: 'POST', data});
+
+export const putCover = (data) =>
+    callApi({ url: `/admin/resource`, method: 'PUT', data, option: { headers: { 'Content-Type': 'multipart/form-data' } } });
