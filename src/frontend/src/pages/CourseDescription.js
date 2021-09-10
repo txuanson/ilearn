@@ -109,6 +109,7 @@ export default function CourseDescription({ user, ...props }) {
                         <div className="uppercase block leading-tight text-3xl text-white font-bold">{course.name}</div>
                         <p className="text-white mt-1">{course.description}</p>
                         <p className="text-white mt-1">Category: {course.category.name}</p>
+                        <p className="text-white mt-1">Course content: {course.section_count} {course.section_count > 1 ? 'sections' : 'section'}</p>
 
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
 
