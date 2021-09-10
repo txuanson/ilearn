@@ -379,9 +379,11 @@ const listSectionTutor = asyncCatch(async (req, res, next) => {
 
 const subscribeToCourse = asyncCatch(async (req, res, next) => {
     const course_id = req.params.course_id;
-    const checkCourse = await Course.findById(course_id, "-_id public tutor").exec();
+    const checkCourse = await Course.findById(course_id, "-_id public tutor banned").exec();
     if (!checkCourse)
         throw new BadReqest("Course not found!");
+    if (checkCourse.banned.includes(req.user_data._id) === true)
+        throw new BadReqest("You have been banned from this course!");
     const payload = checkCourse.public == true || checkCourse.tutor.equals(req.user_data._id) || req.user_data.role == Admin ?
         {
             subscriber: new mongoose.Types.ObjectId(req.user_data._id)
