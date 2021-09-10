@@ -50,7 +50,7 @@ export default function CreateSection() {
             else if (section_id) {
                 await editSection(section_id, payload);
                 message.success("Section edited successfully!");
-                window.location.hread = `/tutor`;
+                window.location.href = `/tutor`;
             }
         }
         catch (err) {
