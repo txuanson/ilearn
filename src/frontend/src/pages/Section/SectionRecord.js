@@ -92,7 +92,7 @@ export default function SectionRecord({ section_id, course_id }) {
       {!loading && (
         <>
         <div className="grid place-items-end md:h-16 h-0">
-          <Button htmlType="submit" type="primary" className="hidden md:block z-30 mb-4 mr-4"> 
+          <Button htmlType="submit" type="primary" className="hidden md:block z-30 mb-4 mr-4 fixed"> 
           <a href={data.section.join_url}>Join Zoom Meeting</a>
         </Button>
         </div>
