@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="absolute mt-auto bottom-0 w-screen">
-      <footer className="bg-blue-700 dark:bg-gray-800 pt-4 pb-4 xl:pt-8">
-        <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 text-gray-400 dark:text-gray-300">
+    <div className="absolute mt-auto bottom-0 w-screen bg-blue-700 dark:bg-gray-800">
+      <footer className="container mx-auto xl:px-40 pt-4 pb-4 xl:pt-8">
+        <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto text-gray-400 dark:text-gray-300">
           <ul className="text-lg font-light flex flex-wrap justify-center">
             <div className="text-left mb-4 md:w-1/3 lg:w-1/3">
               <div className="flex-1 flex sm:items-stretch sm:justify-center">
