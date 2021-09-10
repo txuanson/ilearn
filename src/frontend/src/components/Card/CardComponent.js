@@ -28,8 +28,12 @@ export default function CardComponent({ dataCard }) {
             <br></br>
             <h>{dataCard.subscriber_count} {dataCard.subscriber_count > 1 ? 'subscribers' : 'subscriber'}</h>
             <br></br>
-            <p className="mt-2 px-2 py-1 bg-red-700 rounded text-white w-min">{dataCard.public ? 'Public' : 'Private'}</p>
-
+            {dataCard.public ? 
+            <p className="mt-2 px-2 py-1 bg-blue-600 rounded text-white w-min">Public</p> 
+            :
+            <p className="mt-2 px-2 py-1 bg-red-700 rounded text-white w-min">Private</p>
+          
+          }
           </Card>
         </Link>
       ) : (
