@@ -35,7 +35,7 @@ export default function ListCourse() {
         try {
             setCurrentQuery(query);
             setCurrentPage(page);
-            const response = await listCourse(page, query);
+            const response = await listCourse(page, encodeURIComponent(query));
             const { items, items_count } = response;
             setCourses(items);
             setItemCount(items_count);
