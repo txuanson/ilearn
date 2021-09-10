@@ -18,12 +18,12 @@ export default function CardHistory({ dataCard }) {
           }
         >
           <Card
-            className="m-auto"
+            className="m-auto bg-gray-100 shadow-md"
             hoverable
             cover={
               <ReactImageFallback
                 style={{ height: "140px", width: "100%" }}
-                className="object-fit shadow"
+                className="object-cover shadow"
                 alt=""
                 src={HOST + "/" + dataCard.course_id.cover}
                 fallbackImage="/default-class-cover.png"
