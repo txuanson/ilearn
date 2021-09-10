@@ -42,7 +42,7 @@ export default function Course({
                     </span>
                 </Col>
                 <Col xs={24} md={21} className="relative flex flex-col space-between w-full md:flex-row">
-                    <div className="text-center flex-col items-start justify-between text-gray-700 dark:text-white my-2 md:m-0">
+                    <div className="text-center flex-col items-start justify-between text-gray-700 dark:text-white my-2 md:m-0 md:ml-3">
                         <p className="md:text-xl text-lg leading-5 pb-2">
                             {data.name}
                         </p>

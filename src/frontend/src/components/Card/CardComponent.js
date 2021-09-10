@@ -1,9 +1,6 @@
 import ReactImageFallback from "react-image-fallback";
 import { Card } from "antd";
-import SplashRoute from '../../components/animation/SplashRoute';
-import { Route } from "react-router";
-import { Link, Switch } from "react-router-dom";
-import CourseDescription from "../../pages/CourseDescription";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -14,7 +11,7 @@ export default function CardComponent({ dataCard }) {
       {dataCard ? (
         <Link to={"/course/" + dataCard._id}>
           <Card
-            className="m-auto"
+            className="m-auto "
             hoverable
             cover={
               <ReactImageFallback
@@ -29,7 +26,14 @@ export default function CardComponent({ dataCard }) {
             <Meta title={dataCard.name} />
             <h>{dataCard.tutor.name}</h>
             <br></br>
-            <h>{dataCard.subscriber_count} subscriber</h>
+            <h>{dataCard.subscriber_count} {dataCard.subscriber_count > 1 ? 'subscribers' : 'subscriber'}</h>
+            <br></br>
+            {dataCard.public ? 
+            <p className="mt-2 px-2 py-1 bg-blue-600 rounded text-white w-min">Public</p> 
+            :
+            <p className="mt-2 px-2 py-1 bg-red-700 rounded text-white w-min">Private</p>
+          
+          }
           </Card>
         </Link>
       ) : (
