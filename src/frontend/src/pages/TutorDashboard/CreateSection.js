@@ -24,7 +24,7 @@ const mapSectionIntoForm = (section) => ({
     content: section.content,
     duration: section.duration,
     video: section.video,
-    start_time: moment('2021-08-26T16:45:18.027Z')
+    start_time: moment(section.start_time)
 })
 
 export default function CreateSection() {
