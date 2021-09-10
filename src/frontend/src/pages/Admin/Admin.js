@@ -10,7 +10,8 @@ import {
   FieldTimeOutlined,
   BookOutlined,
   UserOutlined, 
-  FolderOpenOutlined
+  FolderOpenOutlined,
+  UploadOutlined
 } from "@ant-design/icons";
 import AdminCategory from "./AdminCategory";
 import AdminCover from "./AdminCover";
@@ -43,7 +44,7 @@ export default function Admin() {
           <Menu.Item key="4" icon={<FolderOpenOutlined />}>
             <Link to="/admin/category">Category</Link>
           </Menu.Item>
-          <Menu.Item key="5" icon={<FolderOpenOutlined />}>
+          <Menu.Item key="5" icon={<UploadOutlined />}>
             <Link to="/admin/cover">Cover</Link>
           </Menu.Item>
         </Menu>
