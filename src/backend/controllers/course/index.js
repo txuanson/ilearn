@@ -143,6 +143,7 @@ const getCourseInfo = asyncCatch(async (req, res, next) => {
                 name: 1
             },
             subscriber_count: { $size: "$subscriber" },
+            section_count: { $size: "$sections" },
             view: 1,
             ...extraPayload
         })
@@ -174,7 +175,8 @@ const getOwnedCourse = asyncCatch(async (req, res, next) => {
             cover: 1,
             public: 1,
             subscriber_count: { $size: "$subscriber" },
-            view: 1
+            view: 1,
+            section_count: { $size: "$sections" }
         })
         .skip(pagi.skip)
         .limit(pagi.limit)

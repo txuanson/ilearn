@@ -23,7 +23,8 @@ const getCourseAdmin = asyncCatch(async (req, res, next) => {
             cover: 1,
             public: 1,
             subscriber_count: { $size: "$subscriber" },
-            view: 1
+            view: 1,
+            section_count: { $size: "$sections" }
         })
         .skip(pagi.skip)
         .limit(pagi.limit)
