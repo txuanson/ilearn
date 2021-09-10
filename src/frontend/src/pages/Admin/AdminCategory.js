@@ -24,7 +24,7 @@ export default function AdminCategory(props) {
 
   const fetchSearchCategory = async (key, page) => {
     try {
-      const res = await getSearchCategoryAdmin(key, page, pageSize);
+      const res = await getSearchCategoryAdmin(encodeURIComponent(key), page, pageSize);
       setCategory(res.items);
       setItemCount(res.items_count);
       // setMinValue(0);
