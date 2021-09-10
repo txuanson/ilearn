@@ -30,12 +30,19 @@ export default function DrawerMenu({ category, user, profileUser }) {
     setTimeout(() => {
       window.location.href = `/login?redirect=${location.pathname}`;
     }, 200);
+    setVisible(false);
+  }
+
+  const onCloseCatgory = () => {
+    setChildrenDrawer(false);
+    setVisible(false);
   }
 
   const onRegister = () => {
     setTimeout(() => {
       window.location.href = `/register?redirect=${location.pathname}`;
     }, 200);
+    setVisible(false);
   }
 
   return (
@@ -56,7 +63,7 @@ export default function DrawerMenu({ category, user, profileUser }) {
       >
         {user ? (
           <div>
-            <Link to={"/profile/" + profileUser._id}>
+            <Link to={"/profile/" + profileUser._id} onClick={onCloseCatgory}>
               <ReactImageFallback
                 className="min-w-full block flex-shrink-0 rounded-full ring ring-gray-500"
                 src={HOST + "/" + profileUser.avatar}
@@ -72,12 +79,12 @@ export default function DrawerMenu({ category, user, profileUser }) {
               </div>
             </Link>
             <hr></hr>
-            <Link to={"/profile/" + profileUser._id}>
+            <Link to={"/profile/" + profileUser._id} onClick={onCloseCatgory}>
               <div className="p-2 pl-1 font-bold">Profile</div>
             </Link>
             <hr></hr>
             <Link to="/learning">
-              <div className="p-2 pl-1 font-bold" >My learn</div>
+              <div className="p-2 pl-1 font-bold" onClick={onCloseCatgory} >My learn</div>
             </Link>
           </div>
         ) : (
@@ -101,14 +108,14 @@ export default function DrawerMenu({ category, user, profileUser }) {
           {category.map((item) => (
             <>
               <div className="p-6 font-medium">
-                <Link to={"/category/" + item._id}>{item.name}</Link>
+                <Link onClick={onCloseCatgory} to={"/category/" + item._id}>{item.name}</Link>
               </div>
               <hr></hr>
             </>
           ))}
         </Drawer>
         <hr></hr>
-        {user && profileUser.role != 0 ? (<Link to="/tutor">
+        {user && profileUser.role != 0 ? (<Link to="/tutor" onClick={onCloseCatgory}>
           <div className="p-2 pl-1 font-bold" >Tutor Manager</div>
         </Link>) : (<></>)}
         {user ? (
