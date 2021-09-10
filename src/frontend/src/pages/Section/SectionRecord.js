@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
-import { Layout, Tabs, Row, Col, Tag, Pagination } from "antd";
+import { Layout, Tabs, Row, Col, Tag, Pagination, Button } from "antd";
 import CommentQA from "../../components/comment/CommentQaA";
 import { getAllCommentSection, getSectionInfo } from "../../api/user";
 import handleErrorApi from "../../utils/handleErrorApi";
 import EditComment from "../../components/comment/EditComment";
+import moment from 'moment';
+
+import {
+  VideoCameraFilled
+} from "@ant-design/icons";
 
 const { TabPane } = Tabs;
 
@@ -86,7 +91,20 @@ export default function SectionRecord({ section_id, course_id }) {
       {loading && <></>}
       {!loading && (
         <>
+        <div className="grid place-items-end md:h-16 h-0">
+          <Button htmlType="submit" type="primary" className="hidden md:block z-30 mb-4 mr-4"> 
+          <a href={data.section.join_url}>Join Zoom Meeting</a>
+        </Button>
+        </div>
+      
+        
           <Layout className="md:ml-20">
+          <a href={data.section.join_url}>
+          <Tag color="blue" className="text-center text-lg mb-2 w-full">
+          <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-xl"/> {moment(data.section.start_time).format('MMMM Do YYYY, h:mm a')}
+          </Tag>
+          </a>
+        
             <ShowVideo hasVideo={data.section.video} />
             <Row className="md:ml-10">
               <Col span={24}>

@@ -1,4 +1,4 @@
-import { Button, Layout, Menu} from 'antd';
+import { Button, Layout, Menu, Tag} from 'antd';
 import React, {useState, useEffect} from "react";
 import { Link, useParams, Switch } from "react-router-dom";
 import SplashRoute from "../../components/animation/SplashRoute";
@@ -6,10 +6,10 @@ import { Route } from "react-router";
 import SectionRecord from './SectionRecord';
 import { getSectionInfo } from '../../api/user';
 import handleErrorApi from '../../utils/handleErrorApi';
+
 import {
   DoubleRightOutlined,
-  DoubleLeftOutlined,
-  VideoCameraFilled
+  DoubleLeftOutlined
 } from "@ant-design/icons";
 
 
@@ -22,10 +22,11 @@ export default function ViewSection() {
   const [activeKeys, setActiveKeys] = useState([])
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
-  const fetchCourse = async () => {
+  
+  const fetchCourse = async (section_id) => {
       try {
           setLoading(true);
-          const res = await getSectionInfo(course_id, section);
+          const res = await getSectionInfo(course_id, section_id);
           setData(res);
           setLoading(false);
       } catch (err) {
@@ -33,7 +34,7 @@ export default function ViewSection() {
       }
   }
   useEffect(() => {
-      fetchCourse();
+      fetchCourse(section);
   }, []);
 
   function handleClick({ key }) {
@@ -62,18 +63,10 @@ export default function ViewSection() {
         
         <Link to={`/course/${course_id}`} className="w-full">
             <h2 className="text-white font-semibold md:text-2xl md:mx-2 text-xl">
-            {data.course.name}
+            {data.course.name} 
             </h2>
+
         </Link>
-        <div className=" grid place-items-end">
-            <Button htmlType="submit" type="primary" className="hidden md:block"> 
-                <a href={data.section.join_url}>Join Zoom Meeting</a>
-            </Button>
-            <a href={data.section.join_url}>
-                <VideoCameraFilled style={{color:"#2db7f5"}} className="block md:hidden text-2xl mx-2"/>
-            </a>
-        </div>
-         
       </Header>
 
 
@@ -100,12 +93,14 @@ export default function ViewSection() {
           ))}
         </Menu>
       </Sider>
-      <Layout className="md:mt-16 md:ml-20">
+      <Layout className="md:ml-20">
+      
+
         <Content>
           <div
             className="site-layout-background"
             style={{minHeight: 360, paddingLeft:10, paddingRight:10}}
-          >
+          >        
             <Switch>
               <Route path={`/section/${course_id}/${section}`}>
                   <SplashRoute key={`/section/${course_id}/${section}`}>
