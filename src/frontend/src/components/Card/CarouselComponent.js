@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getCategoryID, getCategoryPage } from "../../api/homePage";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
@@ -9,6 +9,22 @@ import { BookmarkAltOutline } from "heroicons-react";
 import handleErrorApi from "../../utils/handleErrorApi";
 
 export default function CarouselComponent({ idCategory, nameCategory }) {
+  const [swiped, setSwiped] = useState(false)
+
+  const handleSwiped = useCallback(() => {
+    setSwiped(true)
+  }, [setSwiped])
+
+  const handleOnItemClick = useCallback(
+    (e) => {
+      if (swiped) {
+        e.stopPropagation()
+        e.preventDefault()
+        setSwiped(false)
+      }
+    },
+    [swiped],
+  )
   var settings = {
     dots: false,
     arrows: false,
@@ -62,9 +78,9 @@ export default function CarouselComponent({ idCategory, nameCategory }) {
           </Link>
         </div>
       </div>
-      <Slider {...settings}>
+      <Slider {...settings} onSwipe={handleSwiped}>
         {data.map((item) => (
-          <div className="p-2">
+          <div className="p-2" onClickCapture={handleOnItemClick}>
             <CardComponent dataCard={item}></CardComponent>
           </div>
         ))}
