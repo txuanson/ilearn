@@ -1,0 +1,16 @@
+const mongoose = require('mongoose');
+const Course = require('./Course');
+const categorySchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    }
+})
+
+categorySchema.pre('remove', (next) => {
+    console.log('Prehook category:');
+    Course.updateMany({ category: { $in: this._id } }, { category: null })
+})
+
+module.exports = mongoose.model('Category', categorySchema);
