@@ -11,7 +11,7 @@ export default function CardComponent({ dataCard }) {
       {dataCard ? (
         <Link to={"/course/" + dataCard._id}>
           <Card
-            className="m-auto "
+            className="m-auto bg-gray-100 shadow-md"
             hoverable
             cover={
               <ReactImageFallback
@@ -29,7 +29,7 @@ export default function CardComponent({ dataCard }) {
             <h>{dataCard.subscriber_count} {dataCard.subscriber_count > 1 ? 'subscribers' : 'subscriber'}</h>
             <br></br>
             {dataCard.public ? 
-            <p className="mt-2 px-2 py-1 bg-blue-600 rounded text-white w-min">Public</p> 
+            <p className="mt-2 px-2 py-1 bg-green-600 rounded text-white w-min">Public</p> 
             :
             <p className="mt-2 px-2 py-1 bg-red-700 rounded text-white w-min">Private</p>
           

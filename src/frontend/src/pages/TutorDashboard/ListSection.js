@@ -71,9 +71,9 @@ export default function ListSection(props) {
                 <Column title="Type" dataIndex="section_type" key="type" />
                 <Column title="Action" key="action" render={((text, record) => (
                     <Space size="small">
-                        <a href={record.section.start_url} target="_blank">Start</a>
-                        <Link to={`/tutor/section/${record.section._id}/edit`}>Edit</Link>
-                        <a onClick={() => showConfirmDeleteSection(record.section._id)}>Delete</a>
+                        <Button className="bg-yellow-400 hover:bg-yellow-300 text-white hover:text-white"><a href={record.section.start_url} target="_blank">Start</a></Button>
+                        <Button type="primary"><Link to={`/tutor/section/${record.section._id}/edit`}>Edit</Link></Button>
+                        <Button type="primary" danger><a onClick={() => showConfirmDeleteSection(record.section._id)}>Delete</a></Button>
                     </Space>
                 ))}></Column>
             </Table>

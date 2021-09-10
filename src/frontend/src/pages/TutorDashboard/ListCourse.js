@@ -133,7 +133,7 @@ export default function ListCourse() {
                     onOpenModal={onOpenModal}
                 />
             ))}
-            <Pagination className="ml-auto" defaultCurrent={currentPage} pageSize={10} total={itemCount} onChange={handleChangePage} />
+            <Pagination className="ml-auto" defaultCurrent={1} pageSize={10} total={itemCount} onChange={handleChangePage} />
             <Modal
                 title={titleModal}
                 visible={visibleModal}
