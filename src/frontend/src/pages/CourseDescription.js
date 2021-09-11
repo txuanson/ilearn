@@ -82,6 +82,15 @@ export default function CourseDescription({ user, ...props }) {
             handleErrorApi(err);
         }
     }
+
+    const patchPending = async () => {
+        try {
+            await unsubscribeCourse(course_id);
+            setPending(false);
+        } catch (err) {
+            handleErrorApi(err);
+        }
+    }
     useEffect(() => {
         if (user) {
             fetchUser();
@@ -124,10 +133,10 @@ export default function CourseDescription({ user, ...props }) {
                             : <>
                                 {pending ?
 
-                                    <div className="md:place-items-start place-items-center">
-                                        <div className="font-bold p-2 mr-4 mt-2 bg-yellow-500 text-center text-white text-l md:w-min w-full">
+                                    <div>
+                                        <Button className="font-bold px-5 mt-2 bg-yellow-500 border-none" onClick={patchPending}>
                                             Pending
-                                        </div>
+                                        </Button>
 
                                     </div>
                                     :

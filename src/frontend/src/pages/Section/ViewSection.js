@@ -23,7 +23,7 @@ export default function ViewSection() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   
-  const fetchCourse = async (section_id) => {
+  const fetchCourse = async () => {
       try {
           setLoading(true);
           const res = await getSectionInfo(course_id, section_id);
@@ -34,7 +34,7 @@ export default function ViewSection() {
       }
   }
   useEffect(() => {
-      fetchCourse(section);
+      fetchCourse();
   }, []);
 
   function handleClick({ key }) {
