@@ -36,7 +36,7 @@ export default function Course({
         <Row className="block">
             <div className="p-2 mb-2 bg-white shadow-xl flex  flex-col md:flex-row justify-start dark:bg-gray-800">
                 <Col xs={24} md={3} className="relative justify-center items-center flex">
-                    <img src={`${process.env.REACT_APP_BASE_HOST}/${data.cover}`} alt={data.name} className="h-52 w-auto md:max-h-24" />
+                    <img src={`${process.env.REACT_APP_BASE_HOST}/${data.cover}`} alt={data.name} className="object-cover h-52 w-auto md:max-h-24" />
                     <span className="px-1 py-1 text-white bg-blue-700 rounded absolute right-0 bottom-0 bg-opacity-50">
                         {data.public ? 'Public' : 'Private'}
                     </span>

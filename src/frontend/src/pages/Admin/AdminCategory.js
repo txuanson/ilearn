@@ -20,11 +20,15 @@ export default function AdminCategory(props) {
   const onSearch = (value) => {
     setSearch(value);
     fetchSearchCategory(value, 1);
-  }
+  };
 
   const fetchSearchCategory = async (key, page) => {
     try {
-      const res = await getSearchCategoryAdmin(encodeURIComponent(key), page, pageSize);
+      const res = await getSearchCategoryAdmin(
+        encodeURIComponent(key),
+        page,
+        pageSize
+      );
       setCategory(res.items);
       setItemCount(res.items_count);
       // setMinValue(0);
@@ -73,7 +77,11 @@ export default function AdminCategory(props) {
             fetch={fetchSearchCategory}
             valuePagination={valuePagination}
           ></EditCategory>
-          <DeleteCategory id={child._id} fetch={fetchSearchCategory} valuePagination={valuePagination}></DeleteCategory>
+          <DeleteCategory
+            id={child._id}
+            fetch={fetchSearchCategory}
+            valuePagination={valuePagination}
+          ></DeleteCategory>
         </Space>
       ),
     },
@@ -97,7 +105,10 @@ export default function AdminCategory(props) {
           allowClear
           onSearch={onSearch}
         />
-        <AddCategory fetch={fetchSearchCategory} valuePagination={valuePagination}></AddCategory>
+        <AddCategory
+          fetch={fetchSearchCategory}
+          valuePagination={valuePagination}
+        ></AddCategory>
       </Row>
       <Table
         dataSource={category}

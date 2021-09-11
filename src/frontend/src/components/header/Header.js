@@ -11,6 +11,7 @@ import { getProfileUser } from "../../api/user";
 import SearchMoblie from "../search/SearchMoblie";
 import handleErrorApi from "../../utils/handleErrorApi";
 import { FaUserCircle, FaBook, FaChalkboardTeacher, FaSignOutAlt } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 import { useLocation } from 'react-router-dom';
 
 
@@ -90,6 +91,10 @@ export default function Header({ user, ...props }) {
       </Menu.Item>
       {profileUser.role != 0 ? (<Menu.Item icon={<FaChalkboardTeacher />}>
         <Link to="/tutor">Tutor Manager</Link>
+      </Menu.Item>) : (<></>)}
+
+      {profileUser.role == 10 ? (<Menu.Item icon={<RiAdminFill />}>
+        <Link to="/admin">Admin</Link>
       </Menu.Item>) : (<></>)}
 
       <Menu.Item icon={<FaSignOutAlt />}>
