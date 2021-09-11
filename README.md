@@ -38,40 +38,49 @@ iLearn uses a number of tools to work properly:
 - [Mongoose] - a MongoDB object modeling tool designed to work in an asynchronous environment
 - [Yarn] - fast, reliable, and secure dependency management
 - [Node.js] - evented I/O for the backend
+- [React.js] - an open-source front-end JavaScript library for building user interfaces or UI components.
 - [Express] - fast node.js network app framework [@tjholowaychuk]
 - [Swagger] - online api document
+- [Antd] - A Reactjs component library
+- [Tailwind] - A atomic CSS library
 - ...
 
 ## Installation
 
-### Frontend
-
-```
-git pull
-git checkout frontend
-cd src/frontend
-yarn
-yarn start
-```
 ### Backend
 
-#### API-DOC: <https://ilearn-19clc3.herokuapp.com/api-docs>
+#### API-DOC: <https://ilearn.yurineko.net/api-docs>
 
 iLearn server-side requires [Node.js] v14+ and [Yarn] to run.
 
 Install the dependencies and devDependencies and start the server.
 
 ```sh
-git pull
-git checkout backend
+# Location: root
 cd src/backend
 yarn
 yarn start
 ```
+
+### Frontend
+
+iLearn client-side require [React.js] and [Yarn] to run.
+
+Install the dependencies and devDependencies and start the server.
+```sh
+# Location: root
+cd src/frontend
+yarn
+yarn start
+```
+
    [Yarn]: <https://yarnpkg.com/>
+   [React.js]: <https://reactjs.org/>
    [Node.js]: <https://nodejs.org>
    [Mongodb]: <https://www.mongodb.com>
    [Mongoose]: <https://mongoosejs.com>
    [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
    [express]: <http://expressjs.com>
    [Swagger]: <https://swagger.io>
+   [Tailwind]: <https://tailwindcss.com>
+   [Antd]: <https://ant.design>
