@@ -23,7 +23,7 @@ export default function AdminCourse(props) {
 
   const fetchCourse = async (key, page) => {
     try {
-      const res = await getCourseAdmin(key, page, pageSize);
+      const res = await getCourseAdmin(encodeURIComponent(key), page, pageSize);
       //setMinValue(0);
       setItemCount(res.items_count);
       res.items.map((items) => {

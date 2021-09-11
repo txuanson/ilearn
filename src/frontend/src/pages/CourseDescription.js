@@ -109,7 +109,6 @@ export default function CourseDescription({ user, ...props }) {
                         <div className="uppercase block leading-tight text-3xl text-white font-bold">{course.name}</div>
                         <p className="text-white mt-1">{course.description}</p>
                         <p className="text-white mt-1">Category: {course.category.name}</p>
-
                         <div className="tracking-wide text-sm text-indigo-500 font-semibold">Tutor: {course.tutor.name}</div>
 
                         {subscribed ?
@@ -145,9 +144,14 @@ export default function CourseDescription({ user, ...props }) {
                                 {subscriber > 1 ? 'subscribers' : 'subscriber'}
                             </span>
                             <span className="font-bold text-4xl md:text-5xl pr-1">{course.view}</span>
-                            <span>
+                            <span className="pr-4">
                             {course.view > 1 ? 'views' : 'view'}
                             </span>
+                            <span className="font-bold text-4xl md:text-5xl pr-1">{course.section_count}</span>
+                            <span>
+                            {course.section_count > 1 ? 'sections' : 'section'}
+                            </span>
+
 
                         </div>
                     </div>

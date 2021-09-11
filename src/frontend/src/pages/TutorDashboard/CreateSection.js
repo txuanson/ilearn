@@ -24,7 +24,7 @@ const mapSectionIntoForm = (section) => ({
     content: section.content,
     duration: section.duration,
     video: section.video,
-    start_time: moment('2021-08-26T16:45:18.027Z')
+    start_time: moment(section.start_time)
 })
 
 export default function CreateSection() {
@@ -50,7 +50,7 @@ export default function CreateSection() {
             else if (section_id) {
                 await editSection(section_id, payload);
                 message.success("Section edited successfully!");
-                window.location.hread = `/tutor`;
+                window.location.href = `/tutor`;
             }
         }
         catch (err) {
