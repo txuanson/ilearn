@@ -49,7 +49,7 @@ iLearn uses a number of tools to work properly:
 
 ### Backend
 
-#### API-DOC: <https://ilearn.yurineko.net/api-docs>
+#### API-DOC:
 
 iLearn server-side requires [Node.js] v14+ and [Yarn] to run.
 
